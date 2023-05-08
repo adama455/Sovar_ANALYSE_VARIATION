@@ -1,0 +1,334 @@
+
+{% if session.logged==True %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+
+
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+   
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+            <h5 id="section11" class="main-subtitle text-dark"><i class="ri-admin-fill"></i> GESTION ÉQUIPES</h5>
+            <br>
+
+            <div class="card bg-gray-100">
+              <div class="card-body">
+                <div class="row g-2 g-xxl-3 mb-5">
+                  {% for ele in equipe %}
+                  <div class="col-sm-2 col-md-2 ">
+                    <div class="card card-people" >
+                      <div class="card-body">
+                        <a href="#info{{ele.idequip}}" data-bs-toggle="modal" data-target="#info{{ele.idquip}}" class="avatar avatar-xl online"><img src="../static/assets/img/autocomplet.png"
+                            alt=""></a>
+                        <h6 class="mt-3 "><a href="#info{{ele.id}}" data-bs-toggle="modal" data-target="#info{{ele.idequip}}" class="text-dark">{{ele.libelle}}</a></h6>
+                        <p class="text-dark">{{ele.description}}</p>
+                        <div class="mutual-badge mb-3">
+                          <ul>
+                            <li><a href="" class="avatar"><img src="../static/assets/img/profile.png" alt=""></a></li>
+                            <li><a href="" class="avatar"><img src="../static/assets/img/profile.png" alt=""></a></li>
+                          </ul>
+                          <label class="text-dark">{{ele.nbr}} utlisteurs actifs</label>
+                        </div><!-- mutual-badge -->
+
+                      </div><!-- card-body -->
+                    </div><!-- card -->
+                  </div>
+
+                  <div class="modal fade" id="info{{ele.idequip}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                  
+                        <div class="modal-body">
+                          <div class="card card-title">
+                  
+                            <div class="card-header bg-light">
+                              <h5 id="section11" class="main-subtitle text-dark"><i class="ri-contacts-book-2-line"></i> DÉTAIL PROFIL
+                              </h5>
+                            </div>
+                  
+                            <div class="card-body">
+                  
+                  
+                              <div class="media-body">
+                  
+                                <div class="row">
+                                  <div class="col-12">
+                                    <label for="inputEmail4" class="form-label">Libelle</label>
+                                    <input type="text" class="form-control" name="libelle" value="{{ele.name}}" readonly>
+                                  </div>
+                                 
+                  
+                                </div>
+                                <br>
+                               
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <label for="inputCity" class="form-label">Description</label>
+                                    <input type="text" class="form-control" name="description" value="{{ele.description}}" required>
+                  
+                                  </div>
+                  
+                                </div>
+                                <br>
+                  
+                                <div class="col-12">
+                                  <br>
+                                  <div class="d-grid gap-2">
+                                    <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i>
+                                      Valider</button>
+                  
+                                  </div>
+                  
+                                </div>
+                  
+                              </div><!-- media-body -->
+                  
+                  
+                  
+                  
+                            </div><!-- modal-body -->
+                  
+                          </div><!-- modal-content -->
+                        </div><!-- modal -->
+                  
+                      </div>
+                    </div>
+                  </div><!-- modal -->
+                  {% endfor %}
+                </div><!-- row -->
+
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+  <br><br><br>
+
+
+            
+    <br><br><br>
+          </div><!-- main -->
+        </div>
+      </div>
+    </div><br><br><br><br><br><br>
+    {% endblock content %}
+
+
+    <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/db.data.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/db.finance.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+
+    <script
+      src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+
+    <script
+      src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+
+    <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/prismjs/prism.js"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+    <script src="../static/assets/js/script.js"></script>
+    <script>
+      'use strict'
+
+
+
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+        pagination: true,
+        sort: false
+      });
+
+
+
+    </script>
+</body>
+
+</html>
+
+{% else %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/css/style.min.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $("#myform").on("submit", function () {
+      $("#pageloader").fadeIn();
+    });//submit
+  });//document ready
+</script>
+<style>
+  #pageloader {
+    background: rgba(148, 46, 46, 0);
+    display: none;
+    height: 20%;
+    position: fixed;
+    width: 20%;
+    z-index: 9999;
+  }
+
+  #pageloader img {
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+  }
+</style>
+
+<body class="page-sign d-block py-0">
+
+  <div class="row g-0">
+
+    <div class="col d-none d-lg-block"
+      style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+    </div><!-- row -->
+    <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+      <div class="card card-sign">
+        <div class="card-header">
+
+          <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+              SO</span>'<span style="color: #009088; ">VAR</span></a>
+          <div class="divider"><span>Outil d'analyse de la variation</span></div>
+          <h3 class="card-title">Authentification</h3>
+          <p class="card-text">Renseigner vos paramétres de connexion.</p>
+        </div><!-- card-header -->
+
+
+        <form action="{{url_for('home')}}" method="post" id="myform">
+          <div class="card-body">
+            <div id="pageloader">
+              <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                alt="processing..." />
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                value="{{request.form.so_login}}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label d-flex justify-content-between">Password </label>
+              <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                value="{{request.form.so_password}}">
+            </div>
+            <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+
+
+
+          </div><!-- card-body -->
+
+        </form>
+        <div class="card-footer">
+
+          Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+        </div><!-- card-footer -->
+
+        <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+      </div><!-- card -->
+    </div><!-- col -->
+
+
+
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+
+{% endif%}

@@ -1,0 +1,437 @@
+
+{% if session.logged==True %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.min.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+    
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body bg-gray-100">
+
+
+
+
+          <div class="row g-3">
+
+              
+                <div class="card-body">
+                 
+                  <div class="row g-2 g-xxl-3 mb-5">
+                  
+                    <div class="col-xl-7">
+                  
+                  
+                  
+                  
+                  
+                      <div class="card card-title">
+                  {% for ele in infos %}
+                  
+                        <div class="card-body">
+                          <div class="media-profile mb-5">
+                            <div class="media-img mb-3 mb-sm-0">
+                              <img src="../static/assets/img/working_0.png" class="img-fluid" alt="...">
+                            </div><!-- media-img -->
+                            <div class="media-body">
+                              <h5 class="media-name">{{ele.prenom}} {{ele.nom}}</h5>
+                              <p class="d-flex gap-2 mb-4"><i class="ri-at-line"></i> {{ele.email}}</p>
+                              <p class="mb-0">L’analyse de la variation qui permet de contrôler les KCRP doit être exécutée au niveau le plus près de l’activité avec
+                              un dispositif de pilotage des actions issues de l’analyse des causes de valeurs aberrantes... <a href="{{ url_for('methode')}}">Read
+                                  more</a>
+                              </p>
+                            </div><!-- media-body -->
+                          </div><!-- media-profile -->
+                  
+                          <div class="row row-cols-sm-auto g-4">
+
+                              <div class="col">
+                                <div class="profile-item">
+                                  <i class="ri-login-box-line"></i>
+                                  <div class="profile-item-body">
+                                    <p>Login</p>
+                                    <span>{{ele.username}}</span>
+                                  </div><!-- profile-item-body -->
+                                </div><!-- profile-item -->
+                              </div><!-- col -->
+                            <div class="col">
+                              <div class="profile-item">
+                                <i class="ri-medal-2-line"></i>
+                                <div class="profile-item-body">
+                                  <p>Profil</p>
+                                  <span>{{ele.name}}</span>
+                                </div><!-- profile-item-body -->
+                              </div><!-- profile-item -->
+                            </div><!-- col -->
+
+                            <div class="col">
+                              <div class="profile-item">
+                                <i class="ri-loch-unlock-line"></i>
+                                <div class="profile-item-body">
+                                  <p>Mot de passe</p>
+                                  <span>{{ele.recover}}</span>
+                                </div><!-- profile-item-body -->
+                              </div><!-- profile-item -->
+                            </div><!-- col -->
+                            <div class="col">
+                              <div class="profile-item">
+                                <i class="ri-suitcase-line"></i>
+                                <div class="profile-item-body">
+                                  <p>Entité</p>
+                                  <span>{{ele.libelle.upper()}}</span>
+                                </div><!-- profile-item-body -->
+                              </div><!-- profile-item -->
+                            </div><!-- col -->
+                           
+                            <div class="col">
+                              <div class="profile-item">
+                                <i class="ri-calendar-line"></i>
+                                <div class="profile-item-body">
+                                  <p>Date Création</p>
+                                  <span>{{ele.date_prod}}</span>
+                                </div><!-- profile-item-body -->
+                              </div><!-- profile-item -->
+                            </div><!-- col -->
+                  
+                            <div class="col">
+                              <div class="profile-item">
+                                <i class="ri-smartphone-line"></i>
+                                <div class="profile-item-body">
+                                  <p>Mobile</p>
+                                  <span>{{ele.contact}}</span>
+                                </div><!-- profile-item-body -->
+                              </div><!-- profile-item -->
+                            </div><!-- col -->
+
+                                    <div class="col">
+                                      <div class="profile-item">
+                                        <i class="ri-team-line"></i>
+                                        <div class="profile-item-body">
+                                          <p>Équipe</p>
+                                          <span>{{ele.equipe}}</span>
+                                        </div><!-- profile-item-body -->
+                                      </div><!-- profile-item -->
+                                    </div><!-- col -->
+
+                            
+                          </div><!-- row -->
+                        </div><!-- card-body -->
+                  {% endfor %}
+                         
+                      </div><!-- card -->
+                  
+                     
+                
+                  
+                    </div>
+                    <div class="col-xl-5">
+                  
+                  
+                  
+                  
+                  
+                      <div class="card card-title ">
+                  
+                  
+                        <div class="card-body">
+
+                          {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                          {% if messages %}
+                          
+                          {% for message in messages %}
+                          <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                          {% endfor %}
+                          
+                          {% endif %}
+                          {% endwith %}
+                          
+                          
+                          {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                          {% if messages %}
+                          
+                          {% for message in messages %}
+                          
+                          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                          
+                          {% endfor %}
+                          
+                          {% endif %}
+                          {% endwith %}
+                          <div class="media-profile mb-5">
+                  
+                            <div class="media-body">
+                             
+                                <form class="row g-3" action="/updat_monprfil" method="POST">
+                                  <input type="text" name="so_login" class="form-control wd-380" value="{{session.so_login}}" hidden>
+{% for ele in infos %}
+                                <div class="col-12">
+                                  <label for="inputEmail4" class="form-label">Email</label>
+                                  <input type="email" class="form-control" name="so_email" value="{{ele.email}}">
+                                </div>
+                                <div class="col-12">
+                                  <label for="inputPassword4" class="form-label">Contact</label>
+                                  <input type="text" class="form-control" value="{{ele.contact}}" name="so_contact">
+                                </div>
+
+                                <div class="col-12">
+                                  <label for="inputPassword4" class="form-label">Password</label>
+                                  <input type="text" class="form-control" value="{{ele.recover}}" name="so_password" >
+                                </div>
+                               
+                                {% endfor %}
+                  
+                        
+                                <div class="col-12">
+                                    <br>
+                                  <button class="btn btn-primary btn-sm btn-sign" type="submit"><i class="ri-edit-2-line"></i> Modifier</button>
+                                </div>
+                              </form>
+                            </div><!-- media-body -->
+                          </div><!-- media-profile -->
+                  
+                  
+                        </div><!-- card-body -->
+                  
+                      </div><!-- card -->
+                  
+                  
+                  
+                    </div>
+                  </div>
+                </div><!-- card-body -->
+
+
+              </div><!-- row -->
+            </div>
+          </div><!-- card-body -->
+
+        </div><!-- card -->
+
+      
+
+
+
+   
+
+    {% endblock content %}
+
+
+    <script src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+
+    <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/prismjs/prism.js"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+    <script src="../static/assets/js/script.js"></script>
+    <script>
+      'use strict'
+
+
+
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+        pagination: true,
+        sort: false
+      });
+
+
+
+    </script>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/db.data.js"></script>
+    <script src="../static/js/db.helpdesk.js"></script>
+
+
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+{% else %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/css/style.min.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $("#myform").on("submit", function () {
+      $("#pageloader").fadeIn();
+    });//submit
+  });//document ready
+</script>
+<style>
+  #pageloader {
+    background: rgba(148, 46, 46, 0);
+    display: none;
+    height: 20%;
+    position: fixed;
+    width: 20%;
+    z-index: 9999;
+  }
+
+  #pageloader img {
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+  }
+</style>
+
+<body class="page-sign d-block py-0">
+
+  <div class="row g-0">
+
+    <div class="col d-none d-lg-block"
+      style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+    </div><!-- row -->
+    <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+      <div class="card card-sign">
+        <div class="card-header">
+
+          <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+              SO</span>'<span style="color: #009088; ">VAR</span></a>
+          <div class="divider"><span>Outil d'analyse de la variation</span></div>
+          <h3 class="card-title">Authentification</h3>
+          <p class="card-text">Renseigner vos paramétres de connexion.</p>
+        </div><!-- card-header -->
+
+
+        <form action="{{url_for('home')}}" method="post" id="myform">
+          <div class="card-body">
+            <div id="pageloader">
+              <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                alt="processing..." />
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                value="{{request.form.so_login}}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label d-flex justify-content-between">Password </label>
+              <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                value="{{request.form.so_password}}">
+            </div>
+            <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+
+
+
+          </div><!-- card-body -->
+
+        </form>
+        <div class="card-footer">
+
+          Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+        </div><!-- card-footer -->
+
+        <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+      </div><!-- card -->
+    </div><!-- col -->
+
+
+
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+
+{% endif%}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
+    rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+
+            <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folder-upload-line"></i> DONNÉES BRUTES</h5>
+            <br>
+
+
+
+
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0" id="tableGrid3">
+
+                    <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Libelle</th>
+                      <th scope="col">Responsable</th>
+                      <th scope="col" class="text-center">Effectif</th>
+                      <th scope="col">Métrique</th>
+                      <th scope="col">Chargé le</th>
+                      <th scope="col" class="text-center">Dataset</th>
+                    
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for ele in dataset %}
+                    
+                      <tr>
+                        <td>{{ele.idfic}}</td>
+                        <td>{{ele.libelle}}</td>
+                        <td>{{ele.prenom}} {{ele.nom}}</td>
+                        <td class="text-center">{{ele.effectif}}</td>
+                        <td>{{ele.metrique}}</td>
+                        <td>{{ele.date}}</td>
+                        <td class="text-center">
+
+                          <a href="{{ url_for('datafic',idgss=ele.idfic)}}" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Données Brutes">
+                            <button type="button" class="btn btn-primary btn-sm"><i
+                                class="ri-menu-unfold-fill fs-13 lh-1"></i></button></a>
+
+                          </a>
+
+
+
+
+
+                        </td>
+                      </tr>
+
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br>
+
+
+          </div><!-- main -->
+        </div>
+      </div>
+      {% endblock content %}
+
+
+      <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+
+      <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+
+      <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+      <script src="../static/assets/js/script.js"></script>
+      <script src="../static/lib/jquery/jquery.min.js'"></script>
+      <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
+      <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
+
+
+
+
+      <script>
+        'use strict'
+
+
+
+
+        // Search
+        $("#tableGrid3").Grid({
+          className: {
+            table: 'table table-striped mb-0'
+          },
+          search: true,
+          pagination: true,
+          sort: false
+        });
+
+
+
+      </script>
+      <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+      </script>
+
+
+
+
+</body>
+
+</html>

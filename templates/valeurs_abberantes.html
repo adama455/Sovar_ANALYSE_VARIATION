@@ -1,0 +1,522 @@
+
+{% if session.logged==True %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='../static/assets/img/favicon.png') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.min.css">
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+  mediane={{media}}
+
+
+
+            <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folders-line"></i> {% for ele in fic %}
+              {{ele.libelle.upper()}}</h5>{% endfor %}
+            <div class="card bg-light">
+              <div class="card-body ">
+                <div class="col-xl-12">
+
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+        <div class="col-xl-6">
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped mb-0">
+            <thead>
+              <tr style="background-color: #FF7900 ;">
+                <th scope="col" colspan="5" class="text-white">SYNTHESE </th>
+               
+              </tr>
+            </thead>
+            <tbody>
+            
+              <tr>
+                <th scope="row">Moyenne</th>
+                {% for ele in indic %}
+                <td class="text-center">{{ele.moyenne|round(2,'floor')}}</td>
+{% endfor %}
+                </tr>
+                <tr>
+                  <th scope="row">Ecart type</th>
+                  {% for ele in indic %}
+                  <td class="text-center">{{ele.ecart|round(2,'floor')}}</td>
+                  {% endfor %}
+                </tr>
+
+                <tr>
+                  <th scope="row">Variance Significance Factor (VSF)</th>
+                  {% for ele in indic %}
+                   
+                  {% if ((6*ele.ecart)/ele.moyenne)|round(2,'floor')<=1 %}
+                  <th class="text-center bg-success" scope="row">
+    
+                    {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+
+                      {% else %}
+                      <th class="text-center bg-danger" scope="row">
+                      
+                        {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+
+                      {% endif %}
+                  {% endfor %}
+                </tr>
+
+                <tr>
+                  <th scope="row">Total Valeurs Aberrantes</th>
+                  {% for ele in indic %}
+                  <th class="text-center" scope="row"> {{va}}</th>
+                  {% endfor %}
+                </tr>
+
+                <tr>
+                  <th scope="row">Limite Contrôle Supérieure</th>
+                  {% for ele in indic %}
+                  <td class="text-center">{{ele.max|round(2,'floor')}}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <th scope="row">Limite Contrôle Inférieure</th>
+                  {% for ele in indic %}
+                  <td class="text-center">{{ele.min|round(2,'floor')}}</td>
+                  {% endfor %}
+                </tr>
+             
+
+
+            </tbody>
+          </table>
+        </div><!-- table-responsive -->
+        </div>
+
+        <div class="col-xl-6">
+        
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped mb-0">
+              <thead>
+                <tr style="background-color: #FF7900 ;">
+                  <th scope="col" colspan="5" class="text-white">INFORMATIONS</th>
+        
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <th scope="row">Date Création</th>
+                  {% for ele in fic %}
+                  <td class="text-center">{{ele.date.strftime('%d/%m/%Y')}}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <th scope="row">Métrique</th>
+                  {% for ele in fic %}
+                  <td class="text-center">{{ele.description}}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <th scope="row">Type Métrique</th>
+                  {% for ele in fic %}
+                  <td class="text-center">{{ele.type}}</td>
+                  {% endfor %}
+                </tr>
+                  <tr>
+                    <th scope="row">Effectif Total</th>
+                    {% for ele in indic %}
+                    <th class="text-center" scope="row">{{ele.effectif}} </th>
+                    {% endfor %}
+                  </tr>
+              
+                <tr>
+                  <th scope="row">Périodicité</th>
+                  {% for ele in fic %}
+                  <td class="text-center">{{ele.periodicite}}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <th scope="row">Responsable</th>
+                  {% for ele in fic %}
+                  <td class="text-center">{{ele.prenom}} {{ele.nom}} </td>
+                  {% endfor %}
+                </tr>
+              
+              
+              
+              </tbody>
+            </table>
+          </div><!-- table-responsive -->
+        </div>
+        </div>
+      </div><!-- card-body -->
+     
+    </div><!-- card -->
+
+
+                
+
+
+
+
+                </div>
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br>
+
+
+            <div class="card bg-light">
+            
+              <div class="card-body">
+                  <h5 id="section2" class="main-subtitle"> <i class="ri-apps-line fs-13 lh-1"></i> VALEURS ABBERANTES</h5>
+                  
+                  <br>
+                      <div class="card">
+                        <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0" id="tableGrid3">
+
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Conseiller</th>
+                        <th scope="col">Mesures</th>
+                        <th scope="col">Statut</th>
+
+  
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for ele in results %}
+                      <tr>
+                        <td>{{ele.idvaleur}}</td>
+                        <td>{{ele.conseiller}}</td>
+                        <td>{{ele.valeur}}</td>
+                              <td>
+                                {% if ele.statut=="Encours"  %}
+                                <span class="badge bg-warning tx-13">{{ele.statut}}</span>
+                                {% else %}
+                                <span class="badge bg-success">{{ele.statut}}</span>
+                                {% endif %}
+                              </td>
+
+                        <td>
+                          {# {% if (session.so_equipe==ele.idequipe) or (session.so_login==ele.user_login)%} #}
+                          <a href="{{ url_for('debuter_AV',id=ele.idvaleur) }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Analyser">
+                            <button type="button" class="btn btn-info btn-sm"><i class="ri-eye-line fs-13 lh-1 text-white"></i></button></a>
+                          
+                          </a>
+                          
+                          {# {% endif %} #}
+                          
+                        </td>
+                      </tr>
+    
+
+                
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+                </div></div>
+                <br><br>
+                
+                {% if nbabber==0 %}
+                
+                <a href="#Exporter" data-bs-toggle="modal">
+
+                  <button type="button" class="btn btn-info  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Importer"><i class="ri-download-2-fill text-white"></i></button></a>
+                    {% endif %}
+              </div><!-- card-body -->
+  <br><br>
+            </div><!-- card -->
+
+            <br>
+<div class="modal fade" id="Exporter" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="card card-title">
+
+          <div class="card-header bg-light">
+            <h5 id="section2" class="main-subtitle text-dark"><i class="ri-database-2-fill"></i> CHARGEMENT FICHIER</h5>
+          </div>
+          <div class="card-body">
+
+
+          <div class="media-body">
+            <form action="{{url_for('import_data')}}" method="post" enctype=multipart/form-data class="row g-3">
+          
+              <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+            {% for ele in fic %}
+            
+              <input type="text" name="idfic" class="form-control wd-380" value="{{id}}" hidden>
+              {% endfor %}
+              <br><br><br>
+          
+              <div class="col-md-12">
+                <br><br>
+                <label for="inputFile" class="form-label"><i class="ri-file-copy-2-line"></i> Choisir Fichier</label>
+                <input type="file" class="form-control" id="inputFile" name="files">
+          
+          
+              </div>
+          
+          
+          
+              <div class="col-12">
+                <br><br>
+                <div class="d-grid gap-2">
+          
+                  <button class="btn btn-primary btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Charger"><i class="ri-upload-2-line"></i> Upload</button>
+          
+                </div>
+          
+              </div>
+            </form>
+          </div><!-- media-body -->
+
+
+
+          </div><!-- card-body -->
+        </div>
+      </div><!-- modal-body -->
+
+    </div><!-- modal-content -->
+  </div><!-- modal-content -->
+</div><!-- modal -->
+
+
+          </div><!-- main -->
+        </div>
+      </div>
+
+
+      
+
+     <script src="{{ url_for('static', filename='../../static/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+    
+    <script
+      src="{{ url_for('static', filename='../static/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/lib/select2/js/select2.min.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='../static/lib/jquery/jquery.min.js') }}"></script>
+    
+    <script src="../../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+    
+    <script src="../static/assets/js/script.js"></script>
+    <script src="../static/lib/jquery/jquery.min.js'"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
+    
+    
+    
+    
+    <script>
+      'use strict'
+
+
+
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+        pagination: true,
+        sort: false
+      });
+
+
+
+    </script>
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    </script>
+    
+    
+    
+    
+    </body>
+    {% endblock content %}
+    
+    </html>
+
+      {% else %}
+      
+      
+      <!DOCTYPE html>
+      <html lang="en">
+      
+      <head>
+      
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+        <!-- Meta -->
+        <meta name="description" content="">
+        <meta name="author" content="SONATEL">
+      
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+      
+        <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+      
+        <!-- Vendor CSS -->
+        <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+      
+        <!-- Template CSS -->
+        <link rel="stylesheet" href="../static/css/style.min.css">
+      </head>
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script>
+
+        $(document).ready(function () {
+          $("#myform").on("submit", function () {
+            $("#pageloader").fadeIn();
+          });//submit
+        });//document ready
+      </script>
+      <style>
+        #pageloader {
+          background: rgba(148, 46, 46, 0);
+          display: none;
+          height: 20%;
+          position: fixed;
+          width: 20%;
+          z-index: 9999;
+        }
+      
+        #pageloader img {
+          left: 50%;
+          margin-left: -32px;
+          margin-top: -32px;
+          position: absolute;
+          top: 50%;
+        }
+      </style>
+      
+      <body class="page-sign d-block py-0">
+      
+        <div class="row g-0">
+      
+          <div class="col d-none d-lg-block"
+            style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+          </div><!-- row -->
+          <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+            <div class="card card-sign">
+              <div class="card-header">
+      
+                <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+                    SO</span>'<span style="color: #009088; ">VAR</span></a>
+                <div class="divider"><span>Outil d'analyse de la variation</span></div>
+                <h3 class="card-title">Authentification</h3>
+                <p class="card-text">Renseigner vos paramétres de connexion.</p>
+              </div><!-- card-header -->
+      
+      
+              <form action="{{url_for('home')}}" method="post" id="myform">
+                <div class="card-body">
+                  <div id="pageloader">
+                    <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                      alt="processing..." />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Login</label>
+                    <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                      value="{{request.form.so_login}}">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label d-flex justify-content-between">Password </label>
+                    <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                      value="{{request.form.so_password}}">
+                  </div>
+                  <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+      
+      
+      
+                </div><!-- card-body -->
+      
+              </form>
+              <div class="card-footer">
+      
+                Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+              </div><!-- card-footer -->
+      
+              <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+            </div><!-- card -->
+          </div><!-- col -->
+      
+      
+      
+          <script src="../static/lib/jquery/jquery.min.js"></script>
+          <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+      
+      </body>
+      
+      </html>
+      
+      
+      {% endif %}

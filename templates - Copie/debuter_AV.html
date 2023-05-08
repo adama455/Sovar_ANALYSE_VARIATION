@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link href="../static/lib/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/select2/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+  <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/assets/css/style.min.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+<div class="main main-app p-3 p-lg-4">
+
+  {% extends 'index.html' %}
+
+  {% block content %}
+
+
+
+  <div class="col-xl-12">
+
+    <div class="card card-title ">
+
+
+      <div class="card-body">
+
+
+
+
+        <div class="row g-3">
+
+     
+{% for ele in results %}
+      <h5 id="section2" class="main-subtitle"> <i class="ri-file-list-3-line fs-13 lh-1"></i> FICHE ANALYSE : {{ele.libelle}}</h5>
+     
+    
+{% endfor %}
+      <div class="card">
+        <div class="card-body">
+            <div class="row">
+              <div class="col-xl-6">
+            
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr style="background-color: #FF7900 ;">
+                        <th scope="col" colspan="5" class="text-white">SYNTHESE </th>
+            
+                      </tr>
+                    </thead>
+                    <tbody>
+            
+                      <tr>
+                        <th scope="row">Moyenne</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.moyenne|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Ecart type</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.ecart|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+            
+                      <tr>
+                        <th scope="row">Variance Significance Factor (VSF)</th>
+                        {% for ele in results %}
+                      
+                        {% if ((6*ele.ecart)/ele.moyenne)|round(2,'floor')<=1 %} <th class="text-center bg-success" scope="row">
+                      
+                          {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+                      
+                          {% else %}
+                          <th class="text-center bg-danger" scope="row">
+                      
+                            {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+                      
+                          {% endif %}
+                          {% endfor %}
+                      </tr>
+            
+                    
+            
+                      <tr>
+                        <th scope="row">Limite Contrôle Supérieure</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.max|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Limite Contrôle Inférieure</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.min|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                        <tr>
+                          <th scope="row">Conseiller</th>
+                          {% for ele in results %}
+                          <th class="text-center" scope="row"> {{ele.conseiller}}</th>
+                          {% endfor %}
+                        </tr>
+            
+            
+            
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div>
+            
+              <div class="col-xl-6">
+            
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr style="background-color: #FF7900 ;">
+                        <th scope="col" colspan="5" class="text-white">INFORMATIONS</th>
+            
+                      </tr>
+                    </thead>
+                    <tbody>
+            
+                      <tr>
+                        <th scope="row">Date Création</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.date.strftime('%d/%m/%Y')}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Métrique</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.description}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Type Métrique</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.type}}</td>
+                        {% endfor %}
+                      </tr>
+                     
+            
+                      <tr>
+                        <th scope="row">Périodicité</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.periodicite}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Responsable</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.prenom}} {{ele.nom}} </td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Mesure à analyser</th>
+                        {% for ele in results %}
+                        <th class="text-center" scope="row">{{ele.valeur}} </th>
+                        {% endfor %}
+                      </tr>
+            
+            
+            
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div>
+            </div>
+        </div><!-- card-body -->
+        
+      </div><!-- card -->
+
+      <br><br>
+
+
+
+      <div class="card bg-light">
+        <form action="/add_pourquoi" method="POST">
+          <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+        {% for ele in results %}
+          <input type="text" name="file_id" class="form-control wd-380" value="{{ele.idfic}}" hidden>
+          <input type="text" name="id_mesure" class="form-control wd-380" value="{{ele.idvaleur}}" hidden>
+          <input type="text" name="nom_cc" class="form-control wd-380" value="{{ele.conseiller}}" hidden>
+{% endfor %}
+        <div class="card-body">
+          <h5 id="section2" class="main-subtitle"> <i class="ri-apps-line fs-13 lh-1"></i> AXES D'ANALYSE CAUSES RACINES</h5>
+       
+       <br>   <div class="table-responsive">
+        <table class="table table-striped mb-0 table-bordered">
+          <thead>
+            <tr>
+              {% for ele in results %}
+              <th scope="col" colspan="7"><input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème au conseiller {{ele.conseiller}}"></th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 1">1</th>
+              <td colspan="2"><input type="text" name="input_1" id="input_1"  class="form-control" placeholder="pourquoi 1" ></td>
+              <td  colspan="2"><input type="text" name="input_12" id="input_12"  class="form-control" placeholder="pourquoi 1_2"></td>
+              <td colspan="2" ><input type="text" name="input_13" id="input_13"  class="form-control" placeholder="pourquoi 1_3"></td>
+         
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 2">2</th>
+              <td><input type="text" name="input_2" class="form-control" placeholder="pourquoi 2"></td>
+              <td><input type="text" name="input_22" class="form-control" placeholder="pourquoi 2_2"></td>
+              <td><input type="text" name="input_23" class="form-control" placeholder="pourquoi 2_3"></td>
+              <td><input type="text" name="input_24" class="form-control" placeholder="pourquoi 2_4"></td>
+              <td><input type="text" name="input_25" class="form-control" placeholder="pourquoi 2_5"></td>
+              <td><input type="text" name="input_26" class="form-control" placeholder="pourquoi 2_6"></td>
+              
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">3</th>
+            <td><input type="text" name="input_3" class="form-control" placeholder="pourquoi 3"></td>
+            <td><input type="text" name="input_32" class="form-control" placeholder="pourquoi 3_2"></td>
+            <td><input type="text" name="input_33" class="form-control" placeholder="pourquoi 3_3"></td>
+            <td><input type="text" name="input_34" class="form-control" placeholder="pourquoi 3_4"></td>
+            <td><input type="text" name="input_35" class="form-control" placeholder="pourquoi 3_5"></td>
+            <td><input type="text" name="input_36" class="form-control" placeholder="pourquoi 3_6"></td>
+              
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">4</th>
+                <td><input type="text" name="input_4" class="form-control" placeholder="pourquoi 4"></td>
+                <td><input type="text" name="input_42" class="form-control" placeholder="pourquoi 4_2"></td>
+                <td><input type="text" name="input_43" class="form-control" placeholder="pourquoi 4_3"></td>
+                <td><input type="text" name="input_44" class="form-control" placeholder="pourquoi 4_4"></td>
+                <td><input type="text" name="input_45" class="form-control" placeholder="pourquoi 4_5"></td>
+                <td><input type="text" name="input_46" class="form-control" placeholder="pourquoi 4_6"></td>
+            
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">5</th>
+              <td><input type="text" name="input_5" class="form-control" placeholder="pourquoi 5"></td>
+              <td><input type="text" name="input_52" class="form-control" placeholder="pourquoi 5_2"></td>
+              <td><input type="text" name="input_53" class="form-control" placeholder="pourquoi 5_3"></td>
+              <td><input type="text" name="input_54" class="form-control" placeholder="pourquoi 5_4"></td>
+              <td><input type="text" name="input_55" class="form-control" placeholder="pourquoi 5_5"></td>
+              <td><input type="text" name="input_56" class="form-control" placeholder="pourquoi 5_6"></td>
+             
+            </tr>
+            <tr>
+            <th scope="row"><i class="ri-menu-fill fs-13 lh-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Famille Causes"></i></th>
+       
+            <td>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_1_analyse" >
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_2_analyse">
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_3_analyse">
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_4_analyse">
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_5_analyse">
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_6_analyse">
+              <option selected>Choisir Famile</option>
+              {% for ele in causes %}
+              <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+              {% endfor %}
+            </select>
+          </td>
+            
+       
+        
+            
+            </tr>
+          </tbody>
+        </table>
+        </div><!-- table-responsive -->
+
+          <br><br>
+          <div class="d-grid gap-2">
+        
+            <button class="btn btn-primary btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Valider"><i class="ri-save-2-line"></i> Valider</button>
+        
+          </div>
+        
+        </div>
+        </div><!-- card-body -->
+      </div>
+    </form>
+         
+        
+      </div><!-- card -->
+
+     
+
+
+
+   
+</div></div>
+
+    </div><!-- container -->
+
+
+  </div><!-- main -->
+  {% endblock content %}
+
+
+  <script src="../static/lib/jquery/jquery.min.js"></script>
+  <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/prismjs/prism.js"></script>
+  <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+  <script src="../static/assets/js/script.js"></script>
+  <script src="../static/lib/select2/js/select2.full.min.js"></script>
+
+  <script>
+    'use strict'
+
+    // Basic usage
+    $('#select2A').select2({
+      placeholder: 'Choose one',
+      minimumResultsForSearch: Infinity
+    });
+
+    // With search
+    $('#select2B').select2({
+      placeholder: 'Choose one'
+    });
+
+    $('#select2B').one('select2:open', function (e) {
+      $('input.select2-search__field').prop('placeholder', 'Search...');
+    });
+
+    // Disabled
+    $('#select2C').select2({
+      placeholder: 'Choose one',
+      minimumResultsForSearch: Infinity
+    });
+
+    // Multiple
+    $('#select2D').select2({
+      placeholder: 'Choose multiple',
+      minimumResultsForSearch: Infinity
+    });
+
+    // Clearable
+    $('#select2E').select2({
+      placeholder: 'Choose one',
+      allowClear: true,
+      minimumResultsForSearch: Infinity
+    });
+
+    // Limit selection
+    $('#select2F').select2({
+      placeholder: 'Choose one or two',
+      maximumSelectionLength: 2,
+      minimumResultsForSearch: Infinity
+    });
+
+  </script>
+</body>
+
+</html>

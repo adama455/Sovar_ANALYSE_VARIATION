@@ -1,0 +1,439 @@
+{% if session.logged==True %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+  <link rel="shortcut icon" type="image/x-icon"
+    href="{{ url_for('static', filename='../static/assets/img/favicon.png') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.min.css">
+  <body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+  
+    <div class="main main-app p-3 p-lg-4">
+     
+      {% extends 'index.html' %}
+  
+      {% block content %}
+  
+  
+  
+      <div class="col-xl-12">
+  
+        <div class="card card-title bg-light">
+  
+  
+          <div class="card-body ">
+  
+  
+  
+  
+            <div class="row g-3">
+
+      
+      <h2 class="main-title mb-3"><i class="ri-archive-line"></i> Méthodologie</h2>
+ 
+        
+         
+
+          <div class="accordion accordion-faq" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Qu’est-ce qu’un processus?
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse bg-white show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>Tous les processus, quels qu’ils soient, sont incapables de produire toujours
+                  exactement le même résultat.De multiples phénomènes, résultant de la combinaison des facteurs des 5 M,
+                  viennent influencer les caractéristiques du produit,Lorsqu’on contrôle une des caractéristiques du produit, on observe donc une
+                  dispersion des valeurs mesurées autour de la valeur cible. Cette dispersion est la variabilité du processus.</p>
+                  <p>On distingue deux causes de variation d’un processus :</p>
+                  <ol>
+                    <li>Les causes communes (ou naturelles ou aléatoires ou non assignables) : elles sont constantes, aléatoires, inhérentes et propres au processus étudié.
+                    Aucune relation cause-effet ne peut être mise en évidence ;</li>
+                    <li>Les causes spéciales (ou accidentelles ou assignables) : elles sont irrégulières, inhabituelles, non aléatoires. Une relation cause-effet
+                    peut être mise en évidence</li>
+                   
+                  </ol>
+
+                  <p>La variation est une opportunité d’amélioration d’un processus : diminuer la
+                  variabilité des résultats d’un processus permet de l’améliorer.L’objectif de la gestion de la variation est d’éliminer les causes spéciales et
+                  de réduire les causes communes pour améliorer les processus.Les causes communes ne sont pas identifiables et sont incontrôlables. Elles
+                  sont responsables de la variabilité intrinsèque du processus.L’identification du type de cause permet de prendre les décisions adaptées.</p>
+
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered mb-0 table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Type de cause</th>
+                              <th scope="col">Décision</th>
+                              <th scope="col">tat du processus</th>
+                             
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">Cause commune de
+                              variation</th>
+                              <td>Agir sur le processus ou ne
+                              rien changer</td>
+                              <td>Stable,
+                              prédictibler</td>
+                              
+                            </tr>
+                            <tr>
+                              <th scope="row">Cause spéciale de
+                              variation
+</th>
+                              <td>Agir sur un élément supposé
+                              être responsable</td>
+                              <td>Instable,
+                              non prédictible
+</td>
+                              
+                            </tr>
+                            
+                          </tbody>
+                        </table>
+                      </div><!-- table-responsive -->
+                    </div><!-- card-body -->
+                    </p>
+                  <p class="mb-0">Synthèse comparative des causes de variation:
+
+<div class="table-responsive">
+  <br>
+  <table class="table table-bordered mb-0 table-striped">
+    <thead>
+      <tr>
+        <th scope="col" style="background-color: #ff7900;"></th>
+        <th scope="col" class="bg-dark text-white">Causes spéciales
+        (ou assignables)</th>
+        <th scope="col" class="bg-dark text-white">Causes communes
+        (ou non assignables)
+</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Caractéristiques</th>
+        <td>Evénements particuliers ou passagers
+        Difficiles à prévoir mais repérables.
+        Irrégulières. Non aléatoire</td>
+        <td>Inhérentes au processus, causes
+        nombreuses et indépendantes entre
+        elles. Constantes. Aléatoires.
+</td>
+
+      </tr>
+      <tr>
+        <th scope="row">Sources
+        </th>
+        <td>Externe processus </td>
+        <td>Interne processus </td>
+
+      </tr>
+
+      <tr>
+        <th scope="row">Nombre de causes </th>
+        <td>Petit</td>
+        <td>Grand</td>
+      
+      </tr>
+
+        <tr>
+          <th scope="row">Effet </th>
+          <td>Fort
+          Ponctuel et pouvant se répéter.
+          Variation dispersée et non maîtrisée</td>
+          <td>Faible
+          Permanent.
+          Variation répétitive et maîtrisée</td>
+        
+        </tr>
+
+          <tr>
+            <th scope="row">Actions </th>
+            <td>Elimination au fur et à mesure</td>
+            <td>Réduction par modification du
+            processus</td>
+          
+          </tr>
+
+          <tr>
+            <th scope="row">Exemples </th>
+            <td>Diagnostic / Analyse erroné ou
+            imprécis, non respect d’un point de
+            procédure…</td>
+            <td>Imprécision des procédures, qualité
+            des outils, interactions entre les
+            fonctions de l’entreprise</td>
+          
+          </tr>
+
+    </tbody>
+  </table>
+</div><!-- table-responsive -->
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Qu’est-ce que la variabilité d’un processus?
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>
+                    <ol>
+                      <li>Mesure et caractérisation de la variation:</ol>
+                  
+                    Pour une série de N mesures (N ≥ 10) d’une caractéristique X du produit, la
+                  variabilité du processus est matérialisée par l’intervalle de variation :<br>
+                  [ 𝐦𝐨𝐲𝐞𝐧𝐧𝐞 − 𝐊 ∗ é𝐜𝐚𝐫𝐭 𝐭𝐲𝐩𝐞 ; 𝐦𝐨𝐲𝐞𝐧𝐧𝐞 + 𝐊 ∗ é𝐜𝐚𝐫𝐭 𝐭𝐲𝐩𝐞 ].
+                  K sera fixé par défaut à 1.
+<br>Les bornes de cet intervalle sont les limites de contrôle du processus.Les causes spéciales correspondent à des valeurs situées en dehors de l'intervalle
+de variation : ce sont des valeurs aberrantes (ou outliers).L’intensité de la variation est mesurée par la Variance Significance Factor (VSF).
+<br><strong>𝐕𝐒𝐅(𝐗) =𝟔 × (é𝐜𝐚𝐫𝐭 𝐭𝐲𝐩𝐞)/ 𝐦𝐨𝐲𝐞𝐧𝐧𝐞</strong>
+                  <strong>𝐕𝐒𝐅(𝐗) =𝟔 × (é𝐜𝐚𝐫𝐭 𝐭𝐲𝐩𝐞)/ 𝐦𝐨𝐲𝐞𝐧𝐧𝐞</strong>
+                    
+                    <ol>At the top of the Tax Information section you will be able to ‘opt in’ to view your online Tax Summary by ticking ‘Access Digital Tax Summaries’</li>
+                  </ol>
+
+                  <p class="mb-0"><i><strong>Please note:</strong> You can opt-out of having your tax summary available digitally at any time, as well as disabling 2FA, however, we don’t recommend this.</i></p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Comment analyser la variabilité?
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>Envato is required by law to withhold certain taxes from your earnings as an author. The relevant section of the author agreement says:</p>
+                  <p><i>If required by law, we may deduct or withhold taxes (including withholding tax) in connection with your being an author. If so, we will give you relevant document that’s required by law about the deduction or withholding (like documentation allowing you to access rebates or credits, or to manage your tax affairs).</i></p>
+                  <p>As an Australian company, Envato Elements Pty Ltd is required to withhold Australian Royalty Withholding Tax (AU RWT) from earnings paid out to authors located in other countries. The tax rate that applies can vary between 0% and 30%, depending on the tax treaty (if any) between Australia and your country.</p>
+                  <p>We use the country information from your tax form (W8/W9) to calculate the amount to withhold. So please make sure you keep this information up to date if you move countries.</p>
+                  <p class="mb-0">If taxes are withheld from your earnings, we will provide you with a relevant document each year to help you manage your tax affairs, for example, to claim a credit on your tax return for the amount withheld.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Use Cases :
+                  Utilisations possibles pour le 2.2 et 3.5 : process?
+                </button>
+              </h2>
+              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>From time to time you may receive requests from customers requesting a certificate of residency from you.</p>
+                  <p>There are a number of reasons why they might be doing this, a couple are:</p>
+                  <ul>
+                    <li>Some countries, such as Poland, require customers to submit certain tax information that includes information about where they have purchased from, and how much they paid.</li>
+                    <li>Some companies, such as US companies, may have a code of business conduct that requires proper certification from you as to your tax residency status.</li>
+                  </ul>
+                  <p class="mb-0">Please note that if you do not provide your tax information to the customer, they may not be able to purchase your item.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Comment exploiter les résultats ?
+                </button>
+              </h2>
+              <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>Any earnings that you receive from Envato Market are your responsibility to manage appropriately within your local country. We cannot provide advice on how you should proceed to pay taxes on your author earnings as tax laws vary greatly from country to country.</p>
+                  <p>We encourage you to seek out professional advice on tax-law and filing taxes. While the specifics of your country’s tax laws might be different, there’s a good chance that your government still wants you to declare your income.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                Comment déployer la démarche?
+                </button>
+              </h2>
+              <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                <div class="accordion-body pt-0">
+                  <p>It is Envato’s policy to suspend access to and prohibit the removal of funds from author accounts that Envato determines are related to individuals located in or associated with restricted countries. Funds held in suspended accounts will be held by Envato until the user is permitted to receive them. If you believe your account has been suspended in error, please <a href="">contact us</a> immediately.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- col -->
+       
+      </div><!-- row -->
+<br><br>
+   </div>
+ {% endblock content %}
+<script src="../lib/jquery/jquery.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+<script src="../assets/js/script.js"></script>
+<script>
+  'use strict'
+</script>
+  
+
+
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  </script>
+  </body>
+  
+  </html>
+
+    {% else %}
+    
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+    
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+      <!-- Meta -->
+      <meta name="description" content="">
+      <meta name="author" content="Themepixels">
+    
+      <!-- Favicon -->
+      <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+    
+      <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+    
+      <!-- Vendor CSS -->
+      <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+    
+      <!-- Template CSS -->
+      <link rel="stylesheet" href="../static/css/style.min.css">
+    </head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+
+      $(document).ready(function () {
+        $("#myform").on("submit", function () {
+          $("#pageloader").fadeIn();
+        });//submit
+      });//document ready
+    </script>
+    <style>
+      #pageloader {
+        background: rgba(148, 46, 46, 0);
+        display: none;
+        height: 20%;
+        position: fixed;
+        width: 20%;
+        z-index: 9999;
+      }
+    
+      #pageloader img {
+        left: 50%;
+        margin-left: -32px;
+        margin-top: -32px;
+        position: absolute;
+        top: 50%;
+      }
+    </style>
+    
+    <body class="page-sign d-block py-0">
+    
+      <div class="row g-0">
+    
+        <div class="col d-none d-lg-block"
+          style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+        </div><!-- row -->
+        <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+          <div class="card card-sign">
+            <div class="card-header">
+    
+              <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+                  SO</span>'<span style="color: #009088; ">VAR</span></a>
+              <div class="divider"><span>Outil d'analyse de la variation</span></div>
+              <h3 class="card-title">Authentification</h3>
+              <p class="card-text">Renseigner vos paramétres de connexion.</p>
+            </div><!-- card-header -->
+    
+    
+            <form action="{{url_for('home')}}" method="post" id="myform">
+              <div class="card-body">
+                <div id="pageloader">
+                  <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                    alt="processing..." />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label">Login</label>
+                  <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                    value="{{request.form.so_login}}">
+                </div>
+                <div class="mb-4">
+                  <label class="form-label d-flex justify-content-between">Password </label>
+                  <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                    value="{{request.form.so_password}}">
+                </div>
+                <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+    
+    
+    
+              </div><!-- card-body -->
+    
+            </form>
+            <div class="card-footer">
+    
+              Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+            </div><!-- card-footer -->
+    
+            <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+          </div><!-- card -->
+        </div><!-- col -->
+    
+    
+    
+        <script src="../static/lib/jquery/jquery.min.js"></script>
+        <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    </body>
+    
+    </html>
+    
+    
+    {% endif%}

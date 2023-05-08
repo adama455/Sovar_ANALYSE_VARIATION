@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/assets/css/style.min.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+ 
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+
+            <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folder-5-line fs-18 lh-1"></i> Dossiers / Kpi </h5>
+          
+
+            <br>
+            <div class="card bg-light">
+              <div class="card-body ">
+
+                <div class="row g-2 g-lg-3 mb-2 ">
+
+                  {% for ele in dossiers %}
+                  
+                  <div class="col-6 col-md-3 col-xl-3">
+                  
+                    <div class="card card-folder">
+                      <div class="dropdown-file">
+                        <a  class="dropdown-link" data-bs-toggle="dropdown" aria-expanded="false"><i
+                            class="ri-more-2-fill"></i></a>
+                      
+                      </div><!-- dropdown -->
+                     
+                      <div class="card-body">
+                        <i class="ri-folder-5-line fs-18 lh-1"></i>
+                      
+                        <div class="card-content">
+                          <h6><a href="{{ url_for('dossier_fic',id=ele.idkpi) }}" class="link-02" data-bs-toggle="tooltip"
+                          data-bs-placement="top" title="Fichiers {{ele.metrique}}">{{ele.description}}</a></h6>
+                          <span>{{ele.nbre}} fichiers chargés dans la base .</span>
+                        </div><!-- card-content -->
+                         
+                      </div><!-- card-body -->
+
+                   
+                    </div><!-- card -->
+                 
+                  </div><!-- col -->
+
+                  {% endfor %}
+                </div><!-- table-responsive -->
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br><br><br>
+         
+
+          </div><!-- main --><br><br><br>
+        </div>
+      </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+
+
+    {% endblock content %}
+

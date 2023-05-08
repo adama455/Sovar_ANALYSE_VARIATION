@@ -1,0 +1,312 @@
+{% if session.logged==True %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
+    rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title bg-light">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+
+            <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folder-upload-line"></i> DONNÉES BRUTES</h5>
+            <br>
+
+
+
+
+            <div class="card ">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0" id="tableGrid3">
+
+                    <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Libelle</th>
+                      <th scope="col">Responsable</th>
+                      <th scope="col" class="text-center">Équipe</th>
+                      <th scope="col">Métrique</th>
+                      <th scope="col">Chargé le</th>
+                      <th scope="col" class="text-center">Dataset</th>
+                    
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for ele in dataset %}
+                    
+                      <tr>
+                        <td>{{ele.idfic}}</td>
+                        <td>{{ele.libelle}}</td>
+                        <td>{{ele.prenom}} {{ele.nom}}</td>
+                        <td class="text-center">{{ele.equipe}}</td>
+                        <td>{{ele.metrique}}</td>
+                        <td>{{ele.date.strftime('%d/%m/%Y')}}</td>
+                        <td class="text-center">
+
+                          <a href="{{ url_for('datafic',idgss=ele.idfic)}}" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Données Brutes">
+                            <button type="button" class="btn btn-info btn-sm"><i
+                                class="ri-menu-unfold-fill fs-13 lh-1 text-white"></i></button></a>
+
+                          </a>
+
+
+
+
+
+                        </td>
+                      </tr>
+
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br>
+
+
+          </div><!-- main -->
+        </div><br><br>
+      </div>
+      {% endblock content %}
+
+
+      <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+
+      <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+
+      <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+      <script src="../static/assets/js/script.js"></script>
+      <script src="../static/lib/jquery/jquery.min.js'"></script>
+      <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
+      <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
+
+
+
+
+      <script>
+        'use strict'
+
+
+
+
+        // Search
+        $("#tableGrid3").Grid({
+          className: {
+            table: 'table table-striped mb-0'
+          },
+          search: true,
+          pagination: true,
+          sort: true,
+          resizable: true
+        });
+
+
+
+      </script>
+      <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+      </script>
+
+
+
+
+</body>
+
+</html>
+{% else %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/css/style.min.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $("#myform").on("submit", function () {
+      $("#pageloader").fadeIn();
+    });//submit
+  });//document ready
+</script>
+<style>
+  #pageloader {
+    background: rgba(148, 46, 46, 0);
+    display: none;
+    height: 20%;
+    position: fixed;
+    width: 20%;
+    z-index: 9999;
+  }
+
+  #pageloader img {
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+  }
+</style>
+
+<body class="page-sign d-block py-0">
+
+  <div class="row g-0">
+
+    <div class="col d-none d-lg-block"
+      style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+    </div><!-- row -->
+    <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+      <div class="card card-sign">
+        <div class="card-header">
+
+          <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+              SO</span>'<span style="color: #009088; ">VAR</span></a>
+          <div class="divider"><span>Outil d'analyse de la variation</span></div>
+          <h3 class="card-title">Authentification</h3>
+          <p class="card-text">Renseigner vos paramétres de connexion.</p>
+        </div><!-- card-header -->
+
+
+        <form action="{{url_for('home')}}" method="post" id="myform">
+          <div class="card-body">
+            <div id="pageloader">
+              <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                alt="processing..." />
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                value="{{request.form.so_login}}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label d-flex justify-content-between">Password </label>
+              <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                value="{{request.form.so_password}}">
+            </div>
+            <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+
+
+
+          </div><!-- card-body -->
+
+        </form>
+        <div class="card-footer">
+
+          Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+        </div><!-- card-footer -->
+
+        <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+      </div><!-- card -->
+    </div><!-- col -->
+
+
+
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+
+{% endif%}

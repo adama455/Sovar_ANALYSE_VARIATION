@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="">
+    <meta name="author" content="Themepixels">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+    
+    <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../static/css/style.min.css">
+  </head>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $("#myform").on("submit", function () {
+      $("#pageloader").fadeIn();
+    });//submit
+  });//document ready
+</script>
+<style>
+  #pageloader {
+    background: rgba(148, 46, 46, 0);
+    display: none;
+    height: 20%;
+    position: fixed;
+    width: 20%;
+    z-index: 9999;
+  }
+
+  #pageloader img {
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+  }
+</style>
+  <body class="page-sign d-block py-0">
+
+    <div class="row g-0">
+     
+      <div class="col d-none d-lg-block" style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+    </div><!-- row -->
+<div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+  <div class="card card-sign">
+    <div class="card-header">
+
+      <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+          SO</span>'<span style="color: #009088; ">VAR</span></a>
+      <div class="divider"><span>Outil d'analyse de la variation</span></div>
+      <h3 class="card-title">Authentification</h3>
+      <p class="card-text">Renseigner vos paramétres de connexion.</p>
+    </div><!-- card-header -->
+    
+  
+  <form action="{{url_for('home')}}" method="post" id="myform">
+    <div class="card-body">
+      <div id="pageloader">
+        <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
+      </div>
+      <div class="mb-4">
+        <label class="form-label">Login</label>
+        <input type="text" class="form-control" placeholder="Login" required name="so_login" value="{{request.form.so_login}}">
+      </div>
+      <div class="mb-4">
+        <label class="form-label d-flex justify-content-between">Password </label>
+        <input type="password" class="form-control" placeholder="Password" required name="so_password" value="{{request.form.so_password}}">
+      </div>
+      <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+
+
+
+    </div><!-- card-body -->
+
+    </form>
+    <div class="card-footer">
+
+      Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+    </div><!-- card-footer -->
+
+    <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+  </div><!-- card -->
+</div><!-- col -->
+ 
+
+
+<script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+  </body>
+</html>

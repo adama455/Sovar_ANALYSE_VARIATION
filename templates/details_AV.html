@@ -1,0 +1,853 @@
+{% if session.logged==True %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link href="../static/lib/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/select2/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+  <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/assets/css/style.min.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+<div class="main main-app p-3 p-lg-4">
+
+  {% extends 'index.html' %}
+
+  {% block content %}
+
+
+
+  <div class="col-xl-12">
+
+    <div class="card card-title bg-white">
+
+
+      <div class="card-body">
+
+
+
+
+        <div class="row g-3">
+
+     
+{% for ele in results %}
+      <h5 id="section2" class="main-subtitle"> <i class="ri-file-list-3-line fs-13 lh-1"></i> DÉTAILS FICHE ANALYSE : AV_{{ele.idvaleur}}_{{ele.metrique}}_{{ele.date.strftime('%d-%m-%Y')}}</h5>
+    
+        
+    
+{% endfor %}
+      <div class="card bg-white">
+        <div class="card-body">
+            <div class="row">
+              <div class="col-xl-6">
+            
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr style="background-color: #FF7900 ;">
+                        <th scope="col" colspan="5" class="text-white">SYNTHESE </th>
+            
+                      </tr>
+                    </thead>
+                    <tbody>
+            
+                      <tr>
+                        <th scope="row">Moyenne</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.moyenne|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Ecart type</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.ecart|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+            
+                      <tr>
+                        <th scope="row">Variance Significance Factor (VSF)</th>
+                        {% for ele in results %}
+                      
+                        {% if ((6*ele.ecart)/ele.moyenne)|round(2,'floor')<=1 %} <th class="text-center bg-success" scope="row">
+                      
+                          {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+                      
+                          {% else %}
+                          <th class="text-center bg-danger" scope="row">
+                      
+                            {{((6*ele.ecart)/ele.moyenne)|round(2,'floor')}} </th>
+                      
+                          {% endif %}
+                          {% endfor %}
+                      </tr>
+            
+                    
+            
+                      <tr>
+                        <th scope="row">Limite Contrôle Supérieure</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.max|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Limite Contrôle Inférieure</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.min|round(2,'floor')}}</td>
+                        {% endfor %}
+                      </tr>
+                        <tr>
+                          <th scope="row">Analyse effectué par</th>
+                          {% for ele in problem %}
+                          <th class="text-center" scope="row">{{ele.prenom}} {{ele.nom}}</th>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <th scope="row">Date de l'analyse</th>
+                          {% for ele in problem %}
+                          <td class="text-center" scope="row"> {{ele.date_analyse}}</td>
+                          {% endfor %}
+                        </tr>
+            
+            
+            
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div>
+            
+              <div class="col-xl-6">
+            
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr style="background-color: #FF7900 ;">
+                        <th scope="col" colspan="5" class="text-white">INFORMATIONS</th>
+            
+                      </tr>
+                    </thead>
+                    <tbody>
+            
+                      <tr>
+                        <th scope="row">Date création analyse</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.date.strftime('%d/%m/%Y')}}</td>
+                        {% endfor %}
+                      </tr>
+
+                        <tr>
+                          <th scope="row">Équipe</th>
+                          {% for ele in results %}
+                          <td class="text-center">{{ele.equipe}}</td>
+                          {% endfor %}
+                        </tr>
+                      <tr>
+                        <th scope="row">Métrique</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.description}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Type Métrique</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.type}}</td>
+                        {% endfor %}
+                      </tr>
+                     
+            
+                      <tr>
+                        <th scope="row">Périodicité</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.periodicite}}</td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Responsable</th>
+                        {% for ele in results %}
+                        <td class="text-center">{{ele.prenom}} {{ele.nom}} </td>
+                        {% endfor %}
+                      </tr>
+                      <tr>
+                        <th scope="row">Mesure à analyser</th>
+                        {% for ele in results %}
+                        <th class="text-center" scope="row">{{ele.valeur}} </th>
+                        {% endfor %}
+                      </tr>
+            
+            
+            
+                    </tbody>
+                  </table>
+                </div><!-- table-responsive -->
+              </div>
+            </div>
+        </div><!-- card-body -->
+        
+      </div><!-- card -->
+
+      <br>
+      
+      <div class="card bg-white">
+        <div class="card-body ">
+                  {% for ele in problem %}
+          <h5><i class="ri-question-line "></i> Problème : <code>{{ele.probleme}}</code>.</h5>
+                  {% endfor %}
+                  <br>
+          <div class="row">
+            <div class="col-xl-12">
+              
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped mb-0 bg-white">
+                  <thead>
+                    <tr style="background-color: #FF7900 ;">
+                      <th scope="col" colspan="12" class="text-white"><i class="ri-book-open-line fs-13 lh-1"></i> RÉCAP ANALYSE INDIVIDUELLE</th>
+                    </tr>
+                      <tr style="background-color: #009088 ;">
+                        <th scope="row" class="text-white">Conseiller</th>
+                        <th scope="row" class="text-white">Mesure</th>
+                        <th scope="row" class="text-white">Pourquoi1</th>
+                        <th scope="row" class="text-white">Pourquoi2</th>
+                        <th scope="row" class="text-white">Pourquoi3</th>
+                        <th scope="row" class="text-white">Pourquoi4</th>
+                        <th scope="row" class="text-white">Pourquoi5</th>
+                        <th scope="row" class="text-center text-white">Famille</th>
+                        <th scope="row" class="text-white">Actions</th>
+                        <th scope="row" class="text-white">Porteurs</th>
+                        <th scope="row" class="text-white">Échéance</th>
+                        <th scope="row" class="text-white">Statut</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+      
+                 
+                   
+
+                    
+                    <tr>
+      
+                      {% for ele in results %}
+                      <td  scope="row" rowspan="10"> <br><br><br><br><br>{{ele.conseiller}}</td>
+                      
+                      <td class="text-center" rowspan="10" scope="row"><br><br><br><br><br> {{ele.valeur}}</td>
+                      {% endfor %}
+
+                      {% for ele in p1 %}
+                      <td scope="row" rowspan="2"> <br>{{ele.p1}}</td>
+                      {% endfor %}
+                     
+      
+                      {% for ele in p2 %}
+                      <td scope="row">{{ele.p2}}</td>
+                      
+                      {% endfor %}
+                      {% for ele in p3 %}
+                      <td scope="row">{{ele.p3}}</td>
+                      {% endfor %}
+
+                      {% for ele in p4 %}
+                      <td  scope="row">{{ele.p4}}</td>
+                      {% endfor %}
+
+                      {% for ele in p5 %}
+                      <th scope="row">{{ele.p5}}</th>
+                      {% endfor %}
+                      {% for ele in axes %}
+                      <td class="text-center" scope="row">{{ele.a1}}</td>
+                      {% endfor %}
+                    </tr>
+
+                    <tr>
+                    
+                      {% for ele in p2 %}
+                      <td scope="row">{{ele.p22}}</td>
+                    
+                    
+                      {% endfor %}
+                    
+                      {% for ele in p3 %}
+                      <td  scope="row">{{ele.p32}}</td>
+                      {% endfor %}
+                    
+                    
+                      {% for ele in p4 %}
+                      <td scope="row"> {{ele.p42}}</td>
+                      {% endfor %}
+
+                      {% for ele in p5 %}
+                      <td scope="row"> {{ele.p52}}</td>
+                      {% endfor %}
+                    
+                      {% for ele in axes %}
+                      <td class="text-center" scope="row"> {{ele.a2}}</td>
+                      {% endfor %}
+                    </tr>
+      
+      
+                      <tr>
+                      
+                      
+                        {% for ele in p1 %}
+                        <td scope="row" rowspan="2"><br>{{ele.p12}} </td>
+                        {% endfor %}
+                      
+                      
+                        {% for ele in p2 %}
+                        <td  scope="row"> {{ele.p23}}</td>
+                      
+                        {% endfor %}
+                        {% for ele in p3 %}
+                        <td scope="row">{{ele.p33}}</td>
+                        {% endfor %}
+                      
+                        {% for ele in p4 %}
+                        <td scope="row">{{ele.p43}}</td>
+                        {% endfor %}
+
+                        {% for ele in p5 %}
+                        <td  scope="row">{{ele.p53}}</td>
+                        {% endfor %}
+                        {% for ele in axes %}
+                        <td  scope="row" class="text-center">{{ele.a3}}</td>
+                        {% endfor %}
+                      </tr>
+
+                        <tr>
+                          {% for ele in p2 %}
+                          <td scope="row" > {{ele.p24}}</td>
+                          
+                          
+                          {% endfor %}
+                        
+                          {% for ele in p3 %}
+                          <td scope="row" > {{ele.p34}}</td>
+                        
+                        
+                          {% endfor %}
+                        
+                          {% for ele in p4 %}
+                          <td  scope="row"> {{ele.p44}}</td>
+                          {% endfor %}
+                        
+                     
+                          {% for ele in p5 %}
+                          <td scope="row"> {{ele.p54}}</td>
+                          {% endfor %}
+                          
+                          {% for ele in axes %}
+                          <td class="text-center" scope="row"> {{ele.a4}}</td>
+                          {% endfor %}
+                        </tr>
+
+<!-- p3 -->
+
+
+                          <tr>
+                          
+                          
+                            {% for ele in p1 %}
+                            <td  scope="row" rowspan="2"><br>{{ele.p13}} </td>
+                            {% endfor %}
+                          
+                          
+                            {% for ele in p2 %}
+                            <td scope="row"> {{ele.p25}}</td>
+                          
+                            {% endfor %}
+                            {% for ele in p3 %}
+                            <td scope="row">{{ele.p35}}</td>
+                            {% endfor %}
+                          
+                            {% for ele in p4 %}
+                            <td scope="row">{{ele.p45}}</td>
+                              {% endfor %}
+
+                              {% for ele in p5 %}
+                            <td scope="row">{{ele.p55}}</td>
+                            {% endfor %}
+
+                            {% for ele in axes %}
+                            <td scope="row" class="text-center" >{{ele.a5}}</td>
+                            {% endfor %}
+                          </tr>
+                          
+                          <tr>
+                            {% for ele in p2 %}
+                            <td scope="row"> {{ele.p26}}</td>
+                          
+                          
+                            {% endfor %}
+                          
+                            {% for ele in p3 %}
+                            <td scope="row"> {{ele.p36}}</td>
+                          
+                          
+                            {% endfor %}
+                          
+                            {% for ele in p4 %}
+                            <td scope="row"> {{ele.p46}}</td>
+                            {% endfor %}
+                          
+                          
+                            {% for ele in p5 %}
+                            <td scope="row"> {{ele.p56}}</td>
+                            {% endfor %}
+                          
+                            {% for ele in axes %}
+                            <td class="text-center" scope="row"> {{ele.a6}}</td>
+                            {% endfor %}
+                          </tr>
+      
+                  </tbody>
+                </table>
+              </div><!-- table-responsive --><br>
+<a href="Export_AV" >
+
+  <button type="button" class="btn btn-info  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+    title="Exporter"><i class="ri-download-2-fill text-white"></i></button></a>
+
+            </div>
+      
+      
+          </div>
+        </div><!-- card-body -->
+      
+      </div><!-- card -->
+      
+      <br>
+
+{% for ele in problem %}
+  {% if (session.so_login==ele.user_log) %}
+
+      <div class="card bg-light">
+        <form action="/add_pourquoi" method="POST">
+          <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+          {% for ele in results %}
+          <input type="text" name="file_id" class="form-control wd-380" value="{{ele.idfic}}" hidden>
+          <input type="text" name="id_mesure" class="form-control wd-380" value="{{ele.idvaleur}}" hidden>
+          <input type="text" name="nom_cc" class="form-control wd-380" value="{{ele.conseiller}}" hidden>
+          {% endfor %}
+          <div class="card-body">
+            <h5 id="section2" class="main-subtitle"> <i class="ri-apps-line fs-13 lh-1"></i> AXES D'ANALYSE CAUSES RACINES
+            </h5>
+            {% for ele in results %}
+            <p>Réference de l'analyse = <code>AV_{{ele.idvaleur}}_{{ele.metrique}}_{% if mois== 1 %}Janvier_{{annee}}
+      {% elif mois== 2 %}Février_{% elif mois== 3 %}Mars
+      {% elif mois== 4 %}Avril_{{annee}}
+      {% elif mois== 5 %}Mai_{{annee}}
+      {% elif mois== 6 %}Juin_{{annee}}
+      {% elif mois== 7 %}Juillet_{{annee}}
+      {% elif mois== 8 %}Aout_{{annee}}
+      {% elif mois== 9 %}Septembre_{{annee}}
+      {% elif mois== 10 %}Octobre_{{annee}}
+      {% elif mois== 11 %}Novembre_{{annee}}
+      {% elif mois== 12 %} Décembre_{% endif %}</code>.</p>{% endfor %}
+      
+            <br>
+            <div class="table-responsive">
+              <table class="table table-bordered mb-0">
+                <thead>
+                  <tr>
+                    {% for ele in problem %}
+                    <th scope="col" colspan="7">
+                      <label for="inputEmail4" class="form-label">Problème :</label>
+                      <input type="text" name="probleme" value="{{ele.probleme}}"
+                        class="form-control" placeholder="Problème au conseiller {{ele.conseiller}}"></th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+      
+                <tbody>
+                  {% for ele in p1 %}
+                  <tr>
+                    <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 1">1</th>
+                    
+                    <td colspan="2">
+                      <input type="text" name="input_1" value="{{ele.p1}}" class="form-control"></td>
+                    <td colspan="2"><input type="text" name="input_12" value="{{ele.p12}}" class="form-control"></td>
+                    <td colspan="2"><input type="text" name="input_13" value="{{ele.p13}}" class="form-control"
+                        placeholder="pourquoi 1_3"></td>
+      
+                  </tr>
+                  {% endfor %}
+      
+                  <tr>
+                    <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 2">2</th>
+                    {% for ele in p2 %}
+                    <td><input type="text" name="input_2" class="form-control" value="{{ele.p2}}"></td>
+                    <td><input type="text" name="input_22" class="form-control" value="{{ele.p22}}"></td>
+                    <td><input type="text" name="input_23" class="form-control" value="{{ele.p23}}"></td>
+                    <td><input type="text" name="input_24" class="form-control" value="{{ele.p24}}"></td>
+                    <td><input type="text" name="input_25" class="form-control" value="{{ele.p25}}"></td>
+                    <td><input type="text" name="input_26" class="form-control" value="{{ele.p26}}"></td>
+                    {% endfor %}
+                  </tr>
+                  <tr>
+                    <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">3</th>
+                    {% for ele in p3 %}
+                    <td><input type="text" name="input_3" class="form-control" value="{{ele.p3}}"></td>
+                    <td><input type="text" name="input_32" class="form-control" value="{{ele.p32}}"></td>
+                    <td><input type="text" name="input_33" class="form-control" value="{{ele.p33}}"></td>
+                    <td><input type="text" name="input_34" class="form-control" value="{{ele.p34}}"></td>
+                    <td><input type="text" name="input_35" class="form-control" value="{{ele.p35}}"></td>
+                    <td><input type="text" name="input_36" class="form-control" value="{{ele.p36}}"></td>
+                    {% endfor %}
+                  </tr>
+                  <tr>
+                    <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">4</th>
+                    {% for ele in p4 %}
+                    <td><input type="text" name="input_4" class="form-control" value="{{ele.p4}}"></td>
+                    <td><input type="text" name="input_42" class="form-control" value="{{ele.p42}}"></td>
+                    <td><input type="text" name="input_43" class="form-control" value="{{ele.p43}}"></td>
+                    <td><input type="text" name="input_44" class="form-control" value="{{ele.p44}}"></td>
+                    <td><input type="text" name="input_45" class="form-control" value="{{ele.p45}}"></td>
+                    <td><input type="text" name="input_46" class="form-control" value="{{ele.p46}}"></td>
+                    {% endfor %}
+                  </tr>
+                  <tr>
+                    <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">5</th>
+                    {% for ele in p5 %}
+                    <td><input type="text" name="input_5" class="form-control" value="{{ele.p5}}"></td>
+                    <td><input type="text" name="input_52" class="form-control" value="{{ele.p52}}"></td>
+                    <td><input type="text" name="input_53" class="form-control" value="{{ele.p53}}"></td>
+                    <td><input type="text" name="input_55" class="form-control" value="{{ele.p54}}"></td>
+                    <td><input type="text" name="input_55" class="form-control" value="{{ele.p55}}"></td>
+                    <td><input type="text" name="input_56" class="form-control" value="{{ele.p56}}"></td>
+                    {% endfor %}
+                  </tr>
+                  <tr>
+                    <th scope="row"><i class="ri-menu-fill fs-13 lh-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Famille Causes"></i></th>
+                    {% for ele in axes %}
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_1_analyse">
+                        <option value="{{ele.a1}}">{{ele.a1}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_2_analyse">
+                        <option value="{{ele.a2}}">{{ele.a2}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_3_analyse">
+                        <option value="{{ele.a3}}">{{ele.a3}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_4_analyse">
+                        <option value="{{ele.a4}}">{{ele.a4}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_5_analyse">
+                        <option value="{{ele.a5}}">{{ele.a5}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    <td>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="axes_6_analyse">
+                        <option value="{{ele.a6}}">{{ele.a6}}</option>
+                        {% for ele in causes %}
+                        <option value="{{ele.id}}">{{ ele.libelle }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+      
+                    {% endfor %}
+      
+      
+                  </tr>
+      
+                </tbody>
+              </table>
+            </div><!-- table-responsive -->
+      
+            <br><br>
+           
+      <div align="right">
+              <button class="btn btn-info btn-sm  text-white" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Terminer"><i class="ri-check-double-line text-white"></i> Terminer</button>
+      &nbsp;
+          <button class="btn btn-warning btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i
+              class="ri-edit-2-line"></i> Modifier</button>
+  &nbsp;
+  {% for ele in results %}
+              <a href="{{ url_for('delete_user',id=0) }}"
+                onclick="return confirm('Voulez vous supprimer cette analyse : AV_{{ele.idvaleur}}_{{ele.metrique}}_{{mois}}/{{annee}}?')" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Supprimer">
+              
+                <button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-5-fill fs-11 lh-1"></i> Supprimer</button>
+              </a>
+{% endfor %}
+      </div>
+          </div>
+      </div><!-- card-body -->
+      </div>
+        {% endif %}
+      {% endfor %}
+    </form>
+         
+        
+      </div><!-- card -->
+
+     
+
+
+
+
+
+    </div><!-- container -->
+
+
+  </div><!-- main -->
+  {% endblock content %}
+
+
+  <script src="../static/lib/jquery/jquery.min.js"></script>
+  <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/prismjs/prism.js"></script>
+  <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+  <script src="../static/assets/js/script.js"></script>
+  <script src="../static/lib/select2/js/select2.full.min.js"></script>
+
+  <script>
+    'use strict'
+
+    // Basic usage
+    $('#select2A').select2({
+      placeholder: 'Choose one',
+      minimumResultsForSearch: Infinity
+    });
+
+    // With search
+    $('#select2B').select2({
+      placeholder: 'Choose one'
+    });
+
+    $('#select2B').one('select2:open', function (e) {
+      $('input.select2-search__field').prop('placeholder', 'Search...');
+    });
+
+    // Disabled
+    $('#select2C').select2({
+      placeholder: 'Choose one',
+      minimumResultsForSearch: Infinity
+    });
+
+    // Multiple
+    $('#select2D').select2({
+      placeholder: 'Choose multiple',
+      minimumResultsForSearch: Infinity
+    });
+
+    // Clearable
+    $('#select2E').select2({
+      placeholder: 'Choose one',
+      allowClear: true,
+      minimumResultsForSearch: Infinity
+    });
+
+    // Limit selection
+    $('#select2F').select2({
+      placeholder: 'Choose one or two',
+      maximumSelectionLength: 2,
+      minimumResultsForSearch: Infinity
+    });
+
+  </script>
+
+
+<script>
+
+   function html_table_to_excel(type) {
+      var data = document.getElementById('datatable1');
+
+      var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
+
+      XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+
+      XLSX.writeFile(file, 'file.' + type);
+    }
+
+    const export_button = document.getElementById('export_button');
+
+    export_button.addEventListener('click', () => {
+      html_table_to_excel('xlsx');
+    });
+  </script>
+</script>
+</body>
+
+</html>
+
+{% else%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/css/style.min.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $("#myform").on("submit", function () {
+      $("#pageloader").fadeIn();
+    });//submit
+  });//document ready
+</script>
+<style>
+  #pageloader {
+    background: rgba(148, 46, 46, 0);
+    display: none;
+    height: 20%;
+    position: fixed;
+    width: 20%;
+    z-index: 9999;
+  }
+
+  #pageloader img {
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+  }
+</style>
+
+<body class="page-sign d-block py-0">
+
+  <div class="row g-0">
+
+    <div class="col d-none d-lg-block"
+      style="background-image: url('../static/assets/img/sass-3-banner-image.png'); width: 100%;">
+    </div><!-- row -->
+    <div class="col-md-5 col-lg-5 col-xl-5 col-wrapper">
+      <div class="card card-sign">
+        <div class="card-header">
+
+          <a href="#" class="sidebar-logo mb-5"><i class="ri-bubble-chart-fill"></i><span style="color: #FF7900; ">
+              SO</span>'<span style="color: #009088; ">VAR</span></a>
+          <div class="divider"><span>Outil d'analyse de la variation</span></div>
+          <h3 class="card-title">Authentification</h3>
+          <p class="card-text">Renseigner vos paramétres de connexion.</p>
+        </div><!-- card-header -->
+
+
+        <form action="{{url_for('home')}}" method="post" id="myform">
+          <div class="card-body">
+            <div id="pageloader">
+              <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif"
+                alt="processing..." />
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" placeholder="Login" required name="so_login"
+                value="{{request.form.so_login}}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label d-flex justify-content-between">Password </label>
+              <input type="password" class="form-control" placeholder="Password" required name="so_password"
+                value="{{request.form.so_password}}">
+            </div>
+            <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
+
+
+
+          </div><!-- card-body -->
+
+        </form>
+        <div class="card-footer">
+
+          Forgot password? <a href="{{ url_for('recover')}}"> Mot de passe</a>
+        </div><!-- card-footer -->
+
+        <h1 class="az-logo">&nbsp;<img src="../static/assets/img/orange_logo.svg" width="40" height="40" /> </h1>
+      </div><!-- card -->
+    </div><!-- col -->
+
+
+
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+
+{% endif%}

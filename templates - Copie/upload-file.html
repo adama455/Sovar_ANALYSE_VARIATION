@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="Themepixels">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+  <link href="../static/lib/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet">
+  <link href="../static/lib/select2/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+  <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../static/assets/css/style.min.css">
+  <!-- Vendor CSS -->
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+          <h5 id="section13" class="main-subtitle text-dark"><i class="ri-file-copy-2-line"></i> CHARGER DONNÉES D'ANALYSE</h5>
+            <div class="card" style="background-color: #FF7900;">
+              <div class="card-body ">
+                <div class="col-xl-12">
+
+
+
+
+
+                  <div class="card card-title" style="background-color: #FF7900;">
+
+                  {% for ele in results %}
+                    <div class="card-body">
+
+
+                      <div class="row row-cols-sm-auto g-4 g-md-5 g-xl-4 g-xxl-5">
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-medal-2-line text-white"></i>
+                            <div class="profile-item-body text-white">
+                              <p>Libelle Analyse</p>
+                              <span class="text-white">{{ele.libelle}}</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-stack-line text-white"></i>
+                            <div class="profile-item-body">
+                              <p>Kpi</p>
+                              <span class="text-white">{{ele.metrique}}</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-calendar-line text-white"></i>
+                            <div class="profile-item-body">
+                              <p>Date</p>
+                              <span class="text-white">{{ele.date.strftime('%d/%m/%Y')}}</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-team-line text-white"></i>
+                            <div class="profile-item-body">
+                              <p>Effectif</p>
+                              <span class="text-white">{{ele.effectif}} Conseillers</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-suitcase-line text-white"></i>
+                            <div class="profile-item-body">
+                              <p>Périodicité</p>
+                              <span class="text-white">{{ele.periodicite}}</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+
+
+
+                        <div class="col">
+                          <div class="profile-item">
+                            <i class="ri-award-line text-white"></i>
+                            <div class="profile-item-body">
+                              <p>Responsable</p>
+                              <span class="text-white">{{ele.prenom}} {{ele.nom}}</span>
+                            </div><!-- profile-item-body -->
+                          </div><!-- profile-item -->
+                        </div><!-- col -->
+                      </div><!-- row -->
+                    </div><!-- card-body -->
+                    {% endfor %}
+
+                  </div><!-- card -->
+
+
+
+
+                </div>
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br>
+  <br><br>
+
+            <div class="card bg-white">
+              <div class="card-body">
+               
+                      <div class="media-body">
+                        <form action="{{url_for('import_data')}}" method="post" enctype=multipart/form-data class="row g-3">
+                      
+                          <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+                            {% for ele in results %}
+                          <input type="text" name="idfic" class="form-control wd-380" value="{{ele.idfic}}" hidden>
+                        {% endfor %}
+                          <br><br><br>
+                      
+                          <div class="col-md-12">
+                            <br><br>
+                            <label for="inputFile" class="form-label"><i class="ri-file-copy-2-line"></i> Choisir Fichier</label>
+                            <input type="file" class="form-control" id="inputFile" name="files">
+                      
+                      
+                          </div>
+                      
+                      
+                      
+                          <div class="col-12">
+                            <br><br>
+                            <div class="d-grid gap-2">
+                      
+                              <button class="btn btn-primary btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Charger"><i class="ri-upload-2-line"></i> Upload</button>
+                      
+                            </div>
+                      
+                          </div>
+                        </form>
+                      </div><!-- media-body -->
+                <br><br>
+               
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+            <br>
+        
+
+
+          </div><!-- main -->
+        </div>
+      </div>
+      {% endblock content %}
+      
+      
+      <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+      
+      <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+      
+      <script src="{{ url_for('static', filename='js/db.data.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/db.finance.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+      
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+      
+      <script
+        src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+      
+      
+      <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+      <script src="../static/lib/jquery/jquery.min.js"></script>
+      <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="../static/lib/prismjs/prism.js"></script>
+      <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+      <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+      
+      <script src="../static/assets/js/script.js"></script>
+      <script>
+        'use strict'
+
+
+
+
+        // Search
+        $("#tableGrid3").Grid({
+          className: {
+            table: 'table table-striped mb-0'
+          },
+          search: true,
+          pagination: true,
+          sort: false
+        });
+
+
+
+      </script>
+      </body>
+      
+      </html>

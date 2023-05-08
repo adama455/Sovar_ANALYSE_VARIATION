@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="">
+    <meta name="author" content="Themepixels">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+    <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+    
+    {% block css %}{% endblock css %}
+    <!-- Vendor CSS -->
+    <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+    
+    
+    
+    <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+      rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+    <!-- Template CSS -->
+    <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+    <link href="../static/lib/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet">
+    <link href="../static/lib/select2/css/select2.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+      <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+      
+      <!-- Template CSS -->
+      <link rel="stylesheet" href="../static/assets/css/style.min.css">
+    </head>
+    
+  <body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+  
+    <div class="main main-app p-3 p-lg-4">
+     
+      {% extends 'index.html' %}
+  
+      {% block content %}
+  
+  
+  
+      <div class="col-xl-12">
+  
+        <div class="card card-title ">
+  
+  
+          <div class="card-body">
+  
+  
+  
+  
+            <div class="row g-3">
+
+       
+
+   
+
+
+        <h5 id="section11" class="main-subtitle text-dark"><i class="ri-group-fill"></i> UTILISATEURS</h5>
+        <br>
+{% with messages = get_flashed_messages(category_filter=["success"]) %}
+{% if messages %}
+
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% endif %}
+{% endwith %}
+
+
+{% with messages = get_flashed_messages(category_filter=["error"]) %}
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+{% endif %}
+{% endwith %}
+        <div class="card">
+          
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0" id="tableGrid3" >
+  
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Utilisateur</th>
+                 
+                    <th scope="col">Login</th>
+                    <th scope="col">Profil</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Entité</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ele in users %}
+                  <tr>
+                    <td>{{ele.id}}</td>
+                    <td>{{ele.prenom}} {{ele.nom}}</td>
+                    
+                    <td>{{ele.username}}</td>
+                    <td>{{ele.name}}</td>
+                    <td>{{ele.email}}</td>
+                    <td>{{ele.contact}}</td>
+                    <td>{{ele.libelle}}</td>
+                    <td>
+                      <a href="#info{{ele.id}}" data-bs-toggle="modal" data-target="#info{{ele.id}}" >
+                        <button type="button" class="btn btn-secondary  btn-sm  align-items-center gap-2" data-bs-toggle="tooltip"
+                          data-bs-placement="top" title="Modifier" ><i class="ri-edit-line fs-11 lh-1"></i></button>
+                      </a>
+                        
+                      
+                      <a href="{{ url_for('delete_user',id=ele.id) }}"  onclick="return confirm('Voulez vous supprimer utilisateur : {{ele.prenom}}  {{ele.nom}}?')"
+                       data-bs-toggle="tooltip"
+                          data-bs-placement="top" title="Supprimer">
+
+                      <button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-5-fill fs-11 lh-1"></i></button>
+                          </a>
+
+                          
+                    </td>
+                  </tr>
+                 
+                      <div class="modal fade" id="info{{ele.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                      
+                            <div class="modal-body">
+                              <div class="card card-title">
+                      
+                                <div class="card-header bg-light">
+                                  <h5 id="section2" class="main-subtitle text-dark"><i class="ri-user-follow-fill fs-15 lh-1"></i> MODIFIER UTILISATEUR</h5>
+                                </div>
+                                <form action="/update_utilisateur/{{ele.id}}" method="POST">
+                   
+                        <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+
+                                <div class="card-body">
+                      
+                      
+                                  <div class="media-body">
+                      
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <label for="inputEmail4" class="form-label">Prénoms</label>
+                                        <input type="text" class="form-control" value="{{ele.prenom}}"  name="user_prenom" required>
+                                      </div>
+                                      <div class="col-6">
+                                        <label for="inputPassword4" class="form-label">Nom</label>
+                                        <input type="text" class="form-control" name="user_nom" value="{{ele.nom}}"  required>
+                                      </div>
+                      
+                                    </div>
+<br>
+                                    <div class="row">
+                                    <div class="col-6">
+                                      <label for="inputAddress" class="form-label">Login</label>
+                                      <input type="text" class="form-control" name="user_login" value="{{ele.username}}" required>
+                                    </div>
+                                    <div class="col-6">
+                                      <label for="inputAddress2" class="form-label">Email</label>
+                                      <input type="email" class="form-control" name="user_email" value="{{ele.email}}"  required>
+                                    </div>
+
+                                    </div>
+
+                                    <br>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                      <label for="inputCity" class="form-label">Profil</label>
+                                      <select class="form-select" name="user_profil" required>
+                                          <option value="{{ele.profil_id}}">
+                                            {% if ele.profil_id==1 %}
+                                           Administrateur
+                                            {% elif ele.profil_id==2 %}
+                                          Superviseur
+
+                                              {% elif ele.profil_id==3 %}
+                                                      Manager
+                                              {% elif ele.profil_id==4 %}
+                                              Pilote
+
+                                              {% elif ele.profil_id==5 %}
+                                              Conseiller
+
+                                              {% elif ele.profil_id==6 %}
+                                              Reporting
+                                             {% endif%}
+
+                                          </option>
+                                        {% for ele in role %}
+                                        <option value="{{ele.idrole}}">{{ele.name}}</option>
+                                        {% endfor %}
+
+                                        
+                                      </select>
+                      
+                                    </div>
+                                    <div class="col-6">
+                                      <label for="inputState" class="form-label">Plateau</label>
+                                      <select name="user_plateau" class="form-select" value="{{ele.libelle}}">
+                                        <option value="{{ele.plateau_id}}">{{ele.libelle}}</option>
+                                        {% for ele in plateau %}
+                                        <option value="{{ele.idplat}}">{{ele.libelle}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                      </div>
+<br>
+                      <div class="row">
+                        <br>
+                                    <div class="col-6">
+
+
+                                 {% if ele.statut==1 %}
+                                      <div class="form-check">
+                                        
+                                       
+                                        
+                                            <input class="form-check-input" type="checkbox"  value="1" name="user_actif" checked>
+                                        
+                                        <label class="form-check-label" for="gridCheck">
+                                       Connecté
+                                        </label>
+
+                                        
+                                      </div>
+
+                                        {% elif ele.statut==0 %}
+                                          <div class="form-check">
+                                          
+                                            <input class="form-check-input" type="checkbox" value="0" name="user_actif" checked>
+                                          
+                                            
+                                          
+                                            <label class="form-check-label" for="gridCheck">
+                                            Non connecté
+                                            </label>
+                                          </div>
+
+                                         
+                                          {% endif %}
+                                    </div>
+
+                                   
+
+      <br>
+                                   
+                                    <div class="col-12">
+                                      <br>
+                                      <div class="d-grid gap-2">
+                                        <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i> Modifier</button>
+                      
+                                      </div>
+                      
+                                    </div>
+                      
+                                  </div><!-- media-body -->
+                      
+                      
+                      
+                      
+                                </div><!-- modal-body -->
+                      </form>
+                              </div><!-- modal-content -->
+                            </div><!-- modal -->
+                      
+                          </div>
+                        </div>
+                      </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div><!-- table-responsive -->
+
+                <br><br>
+                <a href="#AddUser" data-bs-toggle="modal">
+                
+                  <button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Ajouter"><i class="ri-add-fill"></i></button></a>
+            
+                  &nbsp; <a href="#ImportUser" data-bs-toggle="modal">
+                  
+                    <button type="button" class="btn btn-warning btn-sm " data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="Importer"><i class="ri-upload-2-fill"></i></button></a>
+          </div><!-- card-body -->
+      
+        </div><!-- card -->
+
+        
+
+        
+        
+            <div class="modal fade" id="AddUser" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+            
+                  <div class="modal-body">
+                    <div class="card card-title">
+            
+                      <div class="card-header bg-light">
+                        <h5 id="section11" class="main-subtitle text-dark"><i class="ri-stack-fill"></i> AJOUT UTILISATEUR</h5>
+                      </div>
+            
+                      <div class="card-body">
+            <form action="/add_utilisateur" method="POST">
+              <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+
+            
+                        <div class="media-body">
+            
+                          <div class="row">
+                            <div class="col-6">
+                              <label for="inputEmail4" class="form-label">Prénoms</label>
+                              <input type="text" class="form-control" name="user_prenom" required>
+                            </div>
+                            
+                            <div class="col-6">
+
+                             
+                                <label for="inputEmail4" class="form-label">Nom</label>
+                                <input type="text" class="form-control" name="user_nom" required>
+                              </div>
+                             
+            
+                          </div>
+                          <br>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <label for="inputEmail4" class="form-label">Matricule</label>
+                              <input type="text" class="form-control" name="user_login" required>
+                            </div>
+                            <div class="col-6">
+                          
+                          
+                              <label for="inputEmail4" class="form-label">Email</label>
+                              <input type="text" class="form-control" name="user_email" required>
+                            </div>
+                          
+                          
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-4">
+                              <label for="inputAddress" class="form-label">Profil</label>
+                              <select class="form-select" name="user_profil" required>
+                                <option label="Choisir Profil"></option>
+                                {% for ele in role %}
+                                <option value="{{ ele.name}}">{{ele.name }}</option>
+                                {% endfor %}
+            
+            
+            
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <label for="inputAddress2" class="form-label">Entité</label>
+            
+                            <select class="form-select" name="user_plateau" required>
+                              <option label="Choisir plateau"></option>
+                              {% for ele in plateau %}
+                              <option value="{{ ele.id}}">{{ele.libelle}}</option>
+                              {% endfor %}
+                            
+                            
+                            
+                            </select>
+                            </div>
+
+                              <div class="col-4">
+                                <label for="inputAddress2" class="form-label">Équipe</label>
+                              
+                                <select class="form-select" name="user_plateau" required>
+                                  <option label="Choisir équipe"></option>
+                                  {% for ele in equipe %}
+                                  <option value="{{ ele.idequip}}">{{ele.libelle}}</option>
+                                  {% endfor %}
+                              
+                              
+                              
+                                </select>
+                              </div>
+            
+                          </div>
+            
+                          <br>
+                         
+                        
+            
+                          <div class="col-12">
+                            <br>
+                            <div class="d-grid gap-2">
+                              <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i> Valider</button>
+            
+                            </div>
+            
+                          </div>
+            
+                        </div><!-- media-body -->
+            
+            </form>
+            
+            
+                      </div><!-- modal-body -->
+            
+                    </div><!-- modal-content -->
+                  </div><!-- modal -->
+            
+                </div>
+              </div>
+            </div><!-- modal -->
+
+  <div class="modal fade" id="ImportUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <div class="modal-body">
+          <div class="card card-title">
+  
+            <div class="card-header bg-light">
+              <h5 id="section2" class="main-subtitle text-dark"><i class="ri-upload-2-fill"></i> IMPORTER UTILISATEUR</h5>
+            </div>
+            <div class="card-body">
+  
+  
+              <div class="media-body">
+  
+                <form action="/upload_file" class="row g-3" method="post" enctype=multipart/form-data></form>
+  
+                <br>
+                
+             
+               
+                <div class="col-md-12">
+                  <label for="inputFile" class="form-label">Fichier Excel</label>
+                  <input type="file" class="form-control" id="inputFile" name="file">
+                </div>
+  
+  
+  
+                <div class="col-12">
+                  <br><br>
+                  <div class="d-grid gap-2">
+                    <a href="#">
+                      <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i> Valider</button>
+                    </a>
+                  </div>
+  
+                </div>
+                </form>
+              </div><!-- media-body -->
+  
+  
+  
+            </div><!-- card-body -->
+          </div>
+        </div><!-- modal-body -->
+  
+      </div><!-- modal-content -->
+    </div><!-- modal-content -->
+  </div><!-- modal -->
+
+    
+    </div><!-- main --><br><br>
+</div></div></div>
+    {% endblock content %}
+<script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/db.data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/db.finance.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+
+<script
+  src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+
+<script
+  src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/prismjs/prism.js"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+    <script src="../static/assets/js/script.js"></script>
+    <script>
+      'use strict'
+
+
+     
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+         pagination: true,
+           sort: false
+      });
+
+
+    
+    </script>
+
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+<link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
+  rel="stylesheet">
+
+
+<link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+  rel="stylesheet">
+<link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+<!-- Template CSS -->
+<link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+
+<!-- Vendor CSS -->
+<link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+<link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+  rel="stylesheet">
+<link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+<!-- Template CSS -->
+  {% block css %}{% endblock css %}
+  <!-- Vendor CSS -->
+ 
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+  {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+
+            <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folders-fill"></i> ANALYSES
+            </h5>
+           
+     
+
+       
+<br>
+   
+
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0" id="tableGrid3" >
+  
+                <thead>
+                  <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Libelle </th>
+                  <th scope="col">Effectif</th>
+                 
+                  <th scope="col">Responsable</th>
+                            <th scope="col">Métrique</th>
+                  <th scope="col" class="text-center">Type</th>
+                  <th scope="col">Périodicité</th>
+                  <th scope="col">Chargé le</th>
+                  <th scope="col" class="text-center">Action</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ele in dataset %}
+                 
+                  <tr>
+                    <td>{{ele.idfic}}</td>
+                      <td>{{ele.libelle}}</td>
+                    <td>{{ele.effectif}}</td>
+                 
+                    <td>{{ele.prenom}} {{ele.nom}}</td>
+                    
+                    <td>{{ele.metrique}}</td>
+                    <td align="center">{{ele.type}}</td>
+                    <td>{{ele.periodicite}}</td>
+                    <td>{{ele.date.strftime('%d/%m/%Y')}}</td>
+                    <td class="text-center">
+
+                    <a  href="{{ url_for('abberation',id=ele.idfic) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Valeurs Aberrantes">
+                      <button type="button" class="btn btn-primary btn-sm" ><i class="ri-menu-unfold-fill fs-13 lh-1"></i></button></a>
+                   
+                    </a>
+                     
+                    
+                      
+                     
+                      
+                      </td>
+                  </tr>
+                 
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <br><br>
+              
+              
+              <a href="#Export" data-bs-toggle="modal">
+              
+                <button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Exporter"><i class="ri-download-2-fill"></i></button></a>
+            </div><!-- table-responsive -->
+          </div><!-- card-body -->
+      
+        </div><!-- card -->
+
+        <br>
+
+    
+    </div><!-- main -->
+
+    <div class="modal fade" id="Export" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+          <div class="modal-body">
+            <div class="card card-title">
+    
+              <div class="card-header bg-light">
+                <h5 id="section2" class="main-subtitle text-dark"><i class="ri-download-2-fill"></i> EXPORTER ANALYSES
+                </h5>
+              </div>
+              <div class="card-body">
+    
+    
+                <div class="media-body">
+                  <form action="{{ url_for('export_analyse')}}" method="post" class="row g-3">
+    
+                    <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+                    <input type="text" name="user_email" class="form-control wd-380" value="{{session.so_email}}" hidden>
+    
+                    <br>
+    
+                    <div class="col-md-12">
+    
+                      <label for="inputCity" class="form-label">Métrique</label>
+    
+                      <select name="kpi" id="inputKpi" class="form-select select2" required>
+                        <option selected>Choisir le libelle de l'analyse</option>
+                        {% for ele in metriq %}
+                        <option value="{{ele.idkpi}}">{{ele.description}}</option>
+                        {% endfor %}
+                        <option value="ALL">Tous les métriques</option>
+                      </select>
+                    </div>
+                    <br>
+    
+    
+    
+    
+                    <div class="col-12">
+                      <br><br>
+                      <div class="d-grid gap-2">
+    
+                        <button class="btn btn-primary btn-sm" type="submit"><i class="ri-download-2-line"></i>
+                          Exporter</button>
+    
+                      </div>
+    
+                    </div>
+                  </form>
+                </div><!-- media-body -->
+    
+    
+    
+              </div><!-- card-body -->
+            </div>
+          </div><!-- modal-body -->
+    
+        </div><!-- modal-content -->
+      </div><!-- modal-content -->
+    </div><!-- modal -->
+
+</div>
+</div>
+{% endblock content %}
+
+
+   <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+  <script
+    src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+  <script
+    src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+  
+  <script
+    src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+  
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+  
+  <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+  
+  <script src="../static/assets/js/script.js"></script>
+  <script src="../static/lib/jquery/jquery.min.js'"></script>
+  <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
+  <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
+  
+  
+  
+  
+  <script>
+    'use strict'
+
+
+
+
+    // Search
+    $("#tableGrid3").Grid({
+      className: {
+        table: 'table table-striped mb-0'
+      },
+      search: true,
+      pagination: true,
+      sort: false
+    });
+
+
+
+  </script>
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  </script>
+
+  
+  
+  
+  </body>
+  
+  </html>
+    
+   

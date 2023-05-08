@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="">
+  <meta name="author" content="SONATEL">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+  <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon"
+    href="{{ url_for('static', filename='../static/assets/img/favicon.png') }}" rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='../static/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link
+    href="{{ url_for('static', filename='../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='../static/lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+  <!-- Template CSS -->
+  <link href="{{ url_for('static', filename='../static/css/style.min.css') }}" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+
+
+  <link href="{{ url_for('static', filename='../static/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link
+    href="{{ url_for('static', filename='../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='../static/lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+
+
+
+
+<body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+
+  <div class="main main-app p-3 p-lg-4">
+
+    {% extends 'index.html' %}
+
+    {% block content %}
+
+
+
+    <div class="col-xl-12">
+
+      <div class="card card-title ">
+
+
+        <div class="card-body">
+
+
+
+
+          <div class="row g-3">
+
+
+
+
+
+
+            <h5 id="section11" class="main-subtitle text-dark"><i class="ri-book-mark-fill"></i> ANALYSES TERMINÉES</h5>
+            <br>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+
+
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+            <div class="card">
+
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0" id="tableGrid3">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Conseiller</th>
+                        <th scope="col">Probléme </th>
+
+
+                        <th scope="col">Effectué par</th>
+                        <th scope="col">Métrique</th>
+
+                        <th scope="col">Date Analyse</th>
+
+                        <th scope="col" class="text-center">Action</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for ele in datasett %}
+                      <tr>
+                        <td>{{ele.idproblem}}</td>
+                        <td>{{ele.conseiller}}</td>
+                        <td>{{ele.probleme}}</td>
+
+                        <td>{{ele.prenom}} {{ele.nom}}</td>
+
+                        <td>{{ele.metrique}}</td>
+
+                        <td>{{ele.date_analyse}}</td>
+
+
+
+                        <td>
+                          <a href="#info{{ele.idproblem}}" data-bs-toggle="modal" data-target="#info{{ele.idproblem}}">
+                            <button type="button" class="btn btn-primary  btn-sm  align-items-center gap-2"
+                              data-bs-toggle="tooltip" data-bs-placement="top" title="Détails"><i
+                                class="ri-edit-line fs-11 lh-1"></i></button>
+                          </a>
+
+
+                          <a href="{{ url_for('delete_user',id=ele.idproblem) }}"
+                            onclick="return confirm('Voulez vous supprimer utilisateur : {{ele.prenom}}  {{ele.nom}}?')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+
+                            <button type="button" class="btn btn-danger btn-sm"><i
+                                class="ri-delete-bin-5-fill fs-11 lh-1"></i></button>
+                          </a>
+
+
+                        </td>
+                      </tr>
+
+                      <div class="modal fade" id="info{{ele.idproblem}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+
+                            <div class="modal-body">
+                              <div class="card card-title">
+
+                                <div class="card-header bg-light">
+                                  <h5 id="section2" class="main-subtitle text-dark"><i
+                                      class="ri-user-follow-fill fs-15 lh-1"></i> MODIFIER UTILISATEUR</h5>
+                                </div>
+                                <form action="/update_utilisateur/{{ele.idproblem}}" method="POST">
+
+                                  <input type="text" name="user_session" class="form-control wd-380"
+                                    value="{{session.so_login}}" hidden>
+
+                                  <div class="card-body">
+
+
+                                    <div class="media-body">
+
+                                      <div class="row">
+                                        <div class="col-6">
+                                          <label for="inputEmail4" class="form-label">Prénoms</label>
+                                          <input type="text" class="form-control" value="{{ele.prenom}}"
+                                            name="user_prenom" required>
+                                        </div>
+                                        <div class="col-6">
+                                          <label for="inputPassword4" class="form-label">Nom</label>
+                                          <input type="text" class="form-control" name="user_nom" value="{{ele.nom}}"
+                                            required>
+                                        </div>
+
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-6">
+                                          <label for="inputAddress" class="form-label">Login</label>
+                                          <input type="text" class="form-control" name="user_login"
+                                            value="{{ele.username}}" required>
+                                        </div>
+                                        <div class="col-6">
+                                          <label for="inputAddress2" class="form-label">Email</label>
+                                          <input type="email" class="form-control" name="user_email"
+                                            value="{{ele.email}}" required>
+                                        </div>
+
+                                      </div>
+
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <label for="inputCity" class="form-label">Profil</label>
+                                          <select class="form-select" name="user_profil" required>
+                                            <option value="{{ele.profil_id}}">
+                                              {% if ele.profil_id==1 %}
+                                              Administrateur
+                                              {% elif ele.profil_id==2 %}
+                                              Superviseur
+
+                                              {% elif ele.profil_id==3 %}
+                                              Manager
+                                              {% elif ele.profil_id==4 %}
+                                              Pilote
+
+                                              {% elif ele.profil_id==5 %}
+                                              Conseiller
+
+                                              {% elif ele.profil_id==6 %}
+                                              Reporting
+                                              {% endif%}
+
+                                            </option>
+                                            {% for ele in role %}
+                                            <option value="{{ele.idrole}}">{{ele.name}}</option>
+                                            {% endfor %}
+
+
+                                          </select>
+
+                                        </div>
+                                        <div class="col-6">
+                                          <label for="inputState" class="form-label">Plateau</label>
+                                          <select name="user_plateau" class="form-select" value="{{ele.libelle}}">
+                                            <option value="{{ele.plateau_id}}">{{ele.libelle}}</option>
+                                            {% for ele in plateau %}
+                                            <option value="{{ele.idplat}}">{{ele.libelle}}</option>
+                                            {% endfor %}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <br>
+                                        <div class="col-6">
+
+
+                                          {% if ele.statut==1 %}
+                                          <div class="form-check">
+
+
+
+                                            <input class="form-check-input" type="checkbox" value="1" name="user_actif"
+                                              checked>
+
+                                            <label class="form-check-label" for="gridCheck">
+                                              Connecté
+                                            </label>
+
+
+                                          </div>
+
+                                          {% elif ele.statut==0 %}
+                                          <div class="form-check">
+
+                                            <input class="form-check-input" type="checkbox" value="0" name="user_actif"
+                                              checked>
+
+
+
+                                            <label class="form-check-label" for="gridCheck">
+                                              Non connecté
+                                            </label>
+                                          </div>
+
+
+                                          {% endif %}
+                                        </div>
+
+
+
+                                        <br>
+
+                                        <div class="col-12">
+                                          <br>
+                                          <div class="d-grid gap-2">
+                                            <button class="btn btn-primary btn-sm" type="submit"><i
+                                                class="ri-save-2-line"></i> Modifier</button>
+
+                                          </div>
+
+                                        </div>
+
+                                      </div><!-- media-body -->
+
+
+
+
+                                    </div><!-- modal-body -->
+                                </form>
+                              </div><!-- modal-content -->
+                            </div><!-- modal -->
+
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div><!-- table-responsive -->
+
+                <br><br>
+
+
+                &nbsp; <a href="#ImportUser">
+
+                  <button type="button" class="btn btn-warning btn-sm " data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Importer"><i class="ri-upload-2-fill"></i></button></a>
+              </div><!-- card-body -->
+
+            </div><!-- card -->
+
+
+
+
+
+
+
+
+
+          </div><!-- main --><br><br>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='../../static/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='../../static/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+    <script
+      src="{{ url_for('static', filename='../static/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/lib/select2/js/select2.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='../static/lib/jquery/jquery.min.js') }}"></script>
+
+    <script src="../../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+    <script src="../static/assets/js/script.js"></script>
+    <script src="../static/lib/jquery/jquery.min.js'"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
+
+
+
+
+    <script>
+      'use strict'
+
+
+
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+        pagination: true,
+        sort: false
+      });
+
+
+
+    </script>
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    </script>
+
+
+
+
+</body>
+    {% endblock content %}
+</html>

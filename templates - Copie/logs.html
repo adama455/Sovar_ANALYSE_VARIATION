@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="">
+    <meta name="author" content="Themepixels">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/assets/img/favicon.png">
+
+    <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
+    
+    {% block css %}{% endblock css %}
+    <!-- Vendor CSS -->
+    <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+    
+    
+    
+    <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
+      rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
+    <!-- Template CSS -->
+    <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+    <link href="../static/lib/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="../static/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet">
+    <link href="../static/lib/select2/css/select2.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="../static/lib/remixicon/fonts/remixicon.css">
+      <link rel="stylesheet" href="../static/lib/prismjs/themes/prism.min.css">
+      
+      <!-- Template CSS -->
+      <link rel="stylesheet" href="../static/assets/css/style.min.css">
+    </head>
+    
+    <body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
+    
+      <div class="main main-app p-3 p-lg-4">
+       
+        {% extends 'index.html' %}
+    
+        {% block content %}
+    
+    
+    
+        <div class="col-xl-12">
+    
+          <div class="card card-title">
+    
+    
+            <div class="card-body">
+    
+    
+    
+    
+              <div class="row g-3">
+
+
+       
+
+   
+
+
+        <h5 id="section11" class="main-subtitle text-dark"><i class="ri-user-settings-line"></i> Transactions</h5>
+        <br>
+
+        <div class="card">
+          <div class="card-body">
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+            
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            
+            {% endif %}
+            {% endwith %}
+            
+            
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+            
+            {% for message in messages %}
+            
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            {% endfor %}
+            
+            {% endif %}
+            {% endwith %}
+            <div class="table-responsive">
+              <table class="table table-striped mb-0" id="tableGrid3" >
+  
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Utilisateur</th>
+                    
+                    <th scope="col">Profil</th>
+                    <th scope="col">Transaction</th>
+                    <th scope="col">Date et Heure</th>
+                    <th scope="col">Entité</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ele in transacs %}
+                  <tr>
+                    <td>{{ele.id_transac}}</td>
+                    <td>{{ele.prenom}} {{ele.nom}} ({{ele.username}})</td>
+                    
+                    <td>{{ele.profil}}</td>
+                    <td>{{ele.nom_transac}}</td>
+                  <td>{{ele.heure}}</td>
+                    <td>{{ele.libelle}}</td>
+                    
+                  </tr>
+                 
+                    
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <br><br>
+              
+              <a href="#">
+              
+                <button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Exporter"><i class="ri-download-2-fill"></i></button></a>
+            &nbsp;
+              <a href="{{ url_for('truncate_bd') }}"
+                onclick="return confirm('Voulez vous vider les logs de la base?')" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Vider Logs">
+            
+              <button type="button" class="btn btn-danger  btn-sm"><i class="ri-delete-bin-2-fill"></i></button></a>
+            
+              </div><!-- table-responsive -->
+          </div><!-- card-body -->
+        <br><br>
+        </div><!-- card -->
+
+        <br><br><br>
+
+       
+
+    
+    </div><!-- main -->
+</div>
+
+  <br><br>
+</div></div>
+  {% endblock content %}
+  
+  
+  
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  </script>
+
+<script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/db.data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/db.finance.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+
+<script
+  src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+
+<script
+  src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/prismjs/prism.js"></script>
+    <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../static/lib/gridjs-jquery/gridjs.production.min.js"></script>
+
+    <script src="../static/assets/js/script.js"></script>
+    <script>
+      'use strict'
+
+
+     
+
+      // Search
+      $("#tableGrid3").Grid({
+        className: {
+          table: 'table table-striped mb-0'
+        },
+        search: true,
+         pagination: true,
+           sort: false
+      });
+
+
+    
+    </script>
+  </body>
+</html>
