@@ -498,35 +498,35 @@ def details_AV(id):
         
         return render_template('details_AV.html',mois=mois[0]['mois'],annee=annee[0]['annee'],axes=axes,p1=p1,p2=p2,p3=p3,p4=p4,p5=p5,problem=problem,actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq ) 
 
-def nbre_pa():
+def compter_nbre_pa(id_mesure):
     tab_nbr_pa = []
     total_pa = []
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM analysevariation.action_individuelle as a,analysevariation.pourquoi1 as p where a.marque=%s and a.valeur_aberrante_id=p.valeur_aberrante_id',["pa1"])
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s ',["pa1",id_mesure])
     taille_pa1 = cur.fetchall()
-    tab_nbr_pa.append(len(taille_pa1))
+    tab_nbr_pa.append(len(taille_pa1))  
     
-    # cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s',["pa2"])
-    # taille_pa2 = cur.fetchall()
-    # tab_nbr_pa.append(len(taille_pa2))
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s',["pa2",id_mesure])
+    taille_pa2 = cur.fetchall()
+    tab_nbr_pa.append(len(taille_pa2))
     
-    # cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s',["pa3"])
-    # taille_pa3 = cur.fetchall()
-    # tab_nbr_pa.append(len(taille_pa3))
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s',["pa3", id_mesure])
+    taille_pa3 = cur.fetchall()
+    tab_nbr_pa.append(len(taille_pa3))
     
-    # cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s',["pa4"])
-    # taille_pa4 = cur.fetchall()
-    # tab_nbr_pa.append(len(taille_pa4))
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s',["pa4", id_mesure])
+    taille_pa4 = cur.fetchall()
+    tab_nbr_pa.append(len(taille_pa4))
     
-    # cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s',["pa5"])
-    # taille_pa5 = cur.fetchall()
-    # tab_nbr_pa.append(len(taille_pa5))
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s',["pa5", id_mesure])
+    taille_pa5 = cur.fetchall()
+    tab_nbr_pa.append(len(taille_pa5))
     
-    # cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s',["pa6"])
-    # taille_pa6 = cur.fetchall()
-    # tab_nbr_pa.append(len(taille_pa6))
+    cur.execute('SELECT * FROM analysevariation.action_individuelle where marque=%s and valeur_aberrante_id=%s',["pa6", id_mesure])
+    taille_pa6 = cur.fetchall()
+    tab_nbr_pa.append(len(taille_pa6))
     
-    total_pa.append(len(taille_pa1))
+    total_pa.append(len(taille_pa1)+len(taille_pa2)+len(taille_pa3)+len(taille_pa4)+len(taille_pa5)+len(taille_pa6))
     # print("nbr_pa1=============>",nbr_pa1)
     # print("nbr_pa2=============>",nbr_pa2)
     # print("nbr_pa3=============>",nbr_pa3)
@@ -585,8 +585,8 @@ def saisipa():
         
         # Répartition des nombres de pa de chaque dernier pourquoi.....tab_nbr_pa
         # et le nombre de pa total.....total_pa
-        tab_nbr_pa=nbre_pa()[0]
-        total_pa=nbre_pa()[1]
+        tab_nbr_pa=compter_nbre_pa(id_mesure)[0]
+        total_pa=compter_nbre_pa(id_mesure)[1]
         print("Tab_nbr_pa=============>",tab_nbr_pa)
         print("total_pa=============>",total_pa)
         print("id-mesure===>",id_mesure)
@@ -611,7 +611,7 @@ def saisipa():
             #     act_exist = ActionIndividuelle.query.filter_by(pourquoi5_id=p5_id,reference_action=act[0]).first() 
             #     if not act_exist:
                 cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,pourquoi5_id,valeur_aberrante_id,marque) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",1,id_mesure,act[3]))
+                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,cause_racine,valeur_aberrante_id,marque) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",act[3],id_mesure,act[4]))
                 mysql.connection.commit() 
         except AttributeError:
             print('echec de recuperation des elements, erreur attribut')
@@ -781,7 +781,7 @@ def datafic(idgss):
 @app.route("/sonatel-sovar/actions-programme", methods=['POST','GET'])
 def programme(): 
     cur = mysql.connection.cursor()
-    cur.execute ("SELECT * from analysevariation.programme_pourquoi5 order by idprogram ASC")
+    cur.execute ("SELECT * from analysevariation.action_programme order by idprogram ASC")
     programme= cur.fetchall()
     cur.execute ("SELECT * from analysevariation.action_programme ")
     actions= cur.fetchall()
@@ -792,20 +792,25 @@ def programme():
     cur.execute ("SELECT * from analysevariation.equipe ")
     equipe= cur.fetchall()
     cur.close()
-    dim = date.today() 
+    dim = date.today()
     date_saisi= dim.strftime('%d-%m-%Y')
     return render_template('actions-programme.html',equipe=equipe,date_saisi=date_saisi,programme=programme,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq) 
     
 
 @app.route("/sonatel-sovar/actions-individuelles", methods=['POST','GET'])
 def individuelles():
-    cur = mysql.connection.cursor()
-    cur.execute ("SELECT * from analysevariation.programme_pourquoi5 order by idprogram ASC")
-    programme= cur.fetchall()
-    cur.execute ("SELECT * from analysevariation.action_programme ")
+    cur = mysql.connection.cursor() 
+    cur.execute ("SELECT * from analysevariation.action_individuelle order by idindiv ASC")
     actions= cur.fetchall()
+
+    # print("Tous les actions===>", actions)
     cur.execute ("SELECT count(*) as nbre from analysevariation.fichier")
     nbre= cur.fetchall()
+    # print("Tous les fichiers===>", nbre)
+    cur.execute ("SELECT * from analysevariation.valeurs_aberante as v, analysevariation.pourquoi1 as p where v.idvaleur=p.valeur_aberrante_id")
+    valeurs= cur.fetchall()
+    print("Tous les valeurs===>", len(valeurs)) 
+    # print("Tous les valeurs===>", len(val)) 
     cur.execute ("SELECT * from analysevariation.kpi ")
     metriq= cur.fetchall()
     cur.execute ("SELECT * from analysevariation.equipe ")
@@ -813,8 +818,7 @@ def individuelles():
     cur.close()
     dim = date.today() 
     date_saisi= dim.strftime('%d-%m-%Y')
-    return render_template('actions-individuelles.html',equipe=equipe,date_saisi=date_saisi,programme=programme,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq)
-
+    return render_template('actions-individuelles.html',equipe=equipe,date_saisi=date_saisi,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq)
 
 
 
