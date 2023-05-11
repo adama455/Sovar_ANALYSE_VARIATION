@@ -97,7 +97,7 @@
                         <td>{{ele.echeance}}</td>
                         <td>{{ele.status}}</td>
                         <td>
-                          <a href="#info{{ele.id}}" data-bs-toggle="modal" data-target="#info{{ele.id}}">
+                          <a href="#info{{ele.idindiv}}" data-bs-toggle="modal" data-target="#info{{ele.idindiv}}">
                             <button type="button" class="btn btn-secondary  btn-sm d-flex align-items-center gap-2"
                               data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i
                                 class="ri-edit-line fs-13 lh-1"></i></button>
@@ -105,7 +105,7 @@
                         </td>
                       </tr>
 
-                      <div class="modal fade" id="info{{ele.id}}" tabindex="-1" aria-hidden="true">
+                      <div class="modal fade" id="info{{ele.idindiv}}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
 
@@ -114,62 +114,42 @@
 
                                 <div class="card-header bg-light">
                                   <h5 id="section11" class="main-subtitle text-dark"><i class="ri-stack-fill"></i>
-                                    MODIFIER MÉTRIQUES</h5>
+                                    MODIFIER ACTION INDIVIDUELLE</h5>
                                 </div>
 
                                 <div class="card-body">
 
 
                                   <div class="media-body">
-
+                                  <form action="/update_action_indiv/{{ele.idindiv}}" method="post" >
                                     <div class="row">
                                       <div class="col-6">
-                                        <label for="inputEmail4" class="form-label">Libelle</label>
-                                        <input type="text" class="form-control" value="{{ele.metrique}}" name="metrique"
+                                        <label for="inputEmail4" class="form-label">Libelle action</label>
+                                        <input type="text" class="form-control" value="{{ele.libelle_action}}" name="libelle"
                                           required>
                                       </div>
                                       <div class="col-6">
-                                        <label for="inputPassword4" class="form-label">Type</label>
-
-                                        <select class="form-select" name="type" value="{{ele.type}}" required>
-                                          <option value="Service">Service</option>
-
-                                          <option value="Qualité">Qualité</option>
-                                          <option value="Service">Service</option>
-
-
-                                        </select>
+                                        <label for="inputEmail4" class="form-label">Porteur</label>
+                                        <input type="text" class="form-control" value="{{ele.porteur}}" name="porteur"
+                                          required>
                                       </div>
-
                                     </div>
                                     <br>
                                     <div class="row">
                                       <div class="col-6">
-                                        <label for="inputAddress" class="form-label">Périodicité</label>
-                                        <select class="form-select" name="periodicite" value="{{ele.periodicite}}"
+                                        <label for="inputEmail4" class="form-label">Echeance</label>
+                                        <input type="text" class="form-control" value="{{ele.echeance}}" name="echeance"
                                           required>
-                                          <option value="Service">Hebdomadaire</option>
-
-                                          <option value="Qualité">Mensuel</option>
-                                          <option value="Service">Service</option>
-
-
-
-
-                                        </select>
                                       </div>
+
                                       <div class="col-6">
-                                        <label for="inputAddress2" class="form-label">Niveau Analyse</label>
-
-                                        <select class="form-select" name="analyse" value="{{ele.niveau}}" required>
-                                          <option value="Conseiller">Conseiller</option>
-
-                                          <option value="Manager">Manager</option>
-                                          <option value="Prestataire">Prestataire</option>
-
-
-
-
+                                        <label for="inputPassword4" class="form-label">Status</label>
+                                        <select class="form-select" name="status" value="{{ele.status}}" required>
+                                          <option value="DEFAULT" disabled>Choisir status ...</option>
+                                          <option value="{{ele.status}}">{{ele.status}}</option>
+                                          <option value="Valide">Valide</option>
+                                          <option value="Cloture">Cloture</option>
+                                          <option value="Annule">Annule</option>
                                         </select>
                                       </div>
 
@@ -178,9 +158,9 @@
                                     <br>
                                     <div class="row">
                                       <div class="col-md-12">
-                                        <label for="inputCity" class="form-label">Description</label>
+                                        <label for="inputCity" class="form-label">Commentaire</label>
                                         <input type="text" class="form-control" value="{{ele.description}}"
-                                          name="description" required>
+                                          name="commentaire" required>
 
                                       </div>
 
@@ -192,10 +172,10 @@
                                       <div class="d-grid gap-2">
                                         <button class="btn btn-primary btn-sm" type="submit"><i
                                             class="ri-save-2-line"></i> Modifier</button>
-
                                       </div>
 
                                     </div>
+                                  </form>
 
                                   </div><!-- media-body -->
 

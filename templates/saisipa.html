@@ -547,35 +547,61 @@
                           {% for ele in axes %}
                           <td scope="row">{{ele.a1}}</td>
                           {% endfor %}
-                          
-                          <td scope="row" >
-                              {% for ele in pa %}
-                              {% if ele.marque == "pa1"  %}
-                                <p>{{ele.libelle_action}}</p>
-                              {% endif %}
-                              {% endfor %}
+
+                          <!-- DEBUT de la partie: les actions du premier derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa1"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row" >
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa1" %}
-                              <p>{{ele.porteur}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa1"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa1" %}
-                              <p>{{ele.echeance}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa1"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row" class="col-1">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa1"  %}
-                              <p>{{ele.status}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa1"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du premier derniére cause racine -->
                           
                         </tr>
 
@@ -601,37 +627,60 @@
                           <td scope="row"> {{ele.a2}}</td>
                           {% endfor %}
 
-                          <td scope="row" >
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa2"  %}
-                              <p>{{ele.libelle_action}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <!-- DEBUT de la partie: les actions du deuxieme derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa2"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa2"  %}
-                              <p class="text-center">{{ele.porteur}}</p> 
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa2"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa2"  %}
-                              <p>{{ele.echeance}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa2"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa2"  %}
-                              <p class="text-center">{{ele.status}}</p>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa2"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du deuxieme derniére cause racine -->
 
                         </tr>
 
@@ -662,34 +711,60 @@
                           <td scope="row">{{ele.a3}}</td>
                           {% endfor %}
 
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa3"  %}
-                              <div>{{ele.libelle_action}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <!-- DEBUT de la partie: les actions du troisiéme derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa3"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa3"  %}
-                              <div>{{ele.porteur}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa3"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa3"  %}
-                              <div>{{ele.echeance}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa3"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa3"  %}
-                              <div>{{ele.status}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa3"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du troisieme derniére cause racine -->
                         </tr>
                         
                         <tr>
@@ -713,38 +788,63 @@
                           <td scope="row"> {{ele.a4}}</td>
                           {% endfor %}
 
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa4"  %}
-                              <div>{{ele.libelle_action}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <!-- DEBUT de la partie: les actions du quatréme derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa4"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa4"  %}
-                              <div>{{ele.porteur}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa4"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa4"  %}
-                              <div>{{ele.echeance}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa4"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa4"  %}
-                              <div>{{ele.status}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa4"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du quatriéme derniére cause racine -->
                         </tr>
                         {% endif %}
                         {% endfor %}
-
 
                         <!--////////// Partie corespondant au pourquoi13 ///////////////-->
                         {% for el in pourquoi1 %}
@@ -775,34 +875,60 @@
                           <td scope="row">{{ele.a5}}</td>
                           {% endfor %}
 
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa5"  %}
-                              <div>{{ele.libelle_action}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <!-- DEBUT de la partie: les actions du cinquiéme derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa5"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa5"  %}
-                              <div>{{ele.porteur}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa5"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa5"  %}
-                              <div>{{ele.echeance}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa5"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa5"  %}
-                              <div>{{ele.status}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa5"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du cinquiéme derniére cause racine -->
                         </tr>
 
                         <tr>
@@ -830,34 +956,60 @@
                           <td scope="row"> {{ele.a6}}</td>
                           {% endfor %}
 
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa6" %}
-                              <div>{{ele.libelle_action}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <!-- DEBUT de la partie: les actions du deuxieme derniére cause racine -->
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa6"  %}
+                                <tr class="paa">
+                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa6"  %}
-                              <div>{{ele.porteur}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa6"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa6"  %}
-                              <div>{{ele.echeance}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa6"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
-                          <td scope="row">
-                            {% for ele in pa %}
-                            {% if ele.marque =="pa6"  %}
-                              <div>{{ele.status}}</div>
-                            {% endif %}
-                            {% endfor %}
+                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                            <table class="table">
+                              <tbody>
+                                {% for ele in pa %} 
+                                {% if ele.marque == "pa6"  %}
+                                <tr class="paa">
+                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
                           </td>
+                          <!-- FIN de la partie: les actions du sixéme derniére cause racine -->
                         </tr>
                         {% endif %}
                         {% endfor %}

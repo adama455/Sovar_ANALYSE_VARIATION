@@ -492,11 +492,15 @@ def details_AV(id):
         mois=cur.fetchall()
         cur.execute("SELECT YEAR(date_analyse) as annee FROM analysevariation.probleme as p where p.id_mesure=%s  ", [id])
         annee=cur.fetchall()
+        
+        #recupération des action_individuelle...
+        cur.execute('SELECT * FROM analysevariation.action_individuelle where valeur_aberrante_id=%s', [id])
+        act_indiv=cur.fetchall()
         cur.close()
         dim = date.today() 
         date_saisi= dim.strftime('%d-%m-%Y')
         
-        return render_template('details_AV.html',mois=mois[0]['mois'],annee=annee[0]['annee'],axes=axes,p1=p1,p2=p2,p3=p3,p4=p4,p5=p5,problem=problem,actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq ) 
+        return render_template('details_AV.html',mois=mois[0]['mois'],annee=annee[0]['annee'],axes=axes,p1=p1,p2=p2,p3=p3,p4=p4,p5=p5,pa=act_indiv,problem=problem,actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq ) 
 
 def compter_nbre_pa(id_mesure):
     tab_nbr_pa = []
@@ -774,7 +778,7 @@ def datafic(idgss):
         equipe= cur.fetchall()
         cur.close()
         dim = date.today() 
-        date_saisi= dim.strftime('%d-%m-%Y')
+        date_saisi= dim.strftime('%d-%m-%Y') 
         return render_template('datafic.html',effectif=effectif[0]['effectif'],equipe=equipe,files=files,date_saisi=date_saisi,results=results,fic=fic,nbre=nbre[0]['nbre'],metriq=metriq ) 
 
 
@@ -783,8 +787,6 @@ def programme():
     cur = mysql.connection.cursor()
     cur.execute ("SELECT * from analysevariation.action_programme order by idprogram ASC")
     programme= cur.fetchall()
-    cur.execute ("SELECT * from analysevariation.action_programme ")
-    actions= cur.fetchall()
     cur.execute ("SELECT count(*) as nbre from analysevariation.fichier")
     nbre= cur.fetchall()
     cur.execute ("SELECT * from analysevariation.kpi ")
@@ -794,8 +796,26 @@ def programme():
     cur.close()
     dim = date.today()
     date_saisi= dim.strftime('%d-%m-%Y')
-    return render_template('actions-programme.html',equipe=equipe,date_saisi=date_saisi,programme=programme,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq) 
-    
+    return render_template('actions-programme.html',equipe=equipe,date_saisi=date_saisi,programme=programme,nbre=nbre[0]['nbre'],metriq=metriq) 
+
+@app.route('/update_action_program/<string:id>', methods=['GET','POST'])
+def update_action_program(id):
+    cur = mysql.connection.cursor() 
+    if request.method == 'POST':
+        libelle_action= request.form['libelle']
+        commentaire = request.form['commentaire']
+        porteur=request.form['porteur']
+        echeance=request.form['echeance']
+        status=request.form['status']
+        cur.execute ("""
+               UPDATE analysevariation.action_programme as p
+               SET p.libelle_action=%s,p.commentaire=%s,p.porteur=%s,p.echeance=%s,p.status=%s
+               WHERE p.idprogram=%s 
+            """, (libelle_action,commentaire,porteur,echeance,status,id)) 
+        
+        flash("Les données plateau sont bien mises à jour",'success')
+        mysql.connection.commit()
+        return redirect(url_for('programme'))
 
 @app.route("/sonatel-sovar/actions-individuelles", methods=['POST','GET'])
 def individuelles():
@@ -818,9 +838,27 @@ def individuelles():
     cur.close()
     dim = date.today() 
     date_saisi= dim.strftime('%d-%m-%Y')
+    
     return render_template('actions-individuelles.html',equipe=equipe,date_saisi=date_saisi,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq)
 
-
+@app.route('/update_action_indiv/<string:id>', methods=['GET','POST'])
+def update_action_indiv(id):
+    cur = mysql.connection.cursor() 
+    if request.method == 'POST':
+        libelle_action= request.form['libelle']
+        commentaire = request.form['commentaire']
+        porteur=request.form['porteur']
+        echeance=request.form['echeance']
+        status=request.form['status']
+        cur.execute ("""
+               UPDATE analysevariation.action_individuelle as a
+               SET a.libelle_action=%s,a.commentaire=%s,a.porteur=%s,a.echeance=%s,a.status=%s
+               WHERE a.idindiv=%s 
+            """, (libelle_action,commentaire,porteur,echeance,status,id)) 
+        
+        flash("Les données plateau sont bien mises à jour",'success')
+        mysql.connection.commit()
+        return redirect(url_for('individuelles'))
 
 @app.route("/sonatel-sovar/data-abberrantes", methods=['POST','GET'])
 def abberations():
