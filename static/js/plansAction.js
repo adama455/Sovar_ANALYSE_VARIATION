@@ -86,14 +86,14 @@ def.forEach((element) => {
   element.addEventListener('click', ()=>{
     var k = element.getAttribute('id').split('_').pop()
     console.log(k);
-    numero = k  //numero du button cliquer..........
-    alert("Click")
+    numero = k  //numero du button cliquer.....................
+    // alert("Click")
     $('#modal_action').modal('show');
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
       bloc_actions(form_input, k);
       document.getElementById("autre-act").addEventListener('click', ()=>{
-        alert("SAlam::Click")
+        // alert("SAlam::Click")
         bloc_actions(form_input, k);
       })
     })
@@ -153,7 +153,7 @@ var valider = document.getElementById("bouton_valider_action")
 var cause_racine
 // var cause = document.getElementById("dernier-pourquoi").textContent
 // console.log("causecausecause",cause);
-//valider.addEventListener("click", (e)=>{    
+//valider.addEventListener("click", (e)=>{
   // event.preventDefault();
   $(document).ready(function () {
     $("#bouton_valider_action").click(function (event) {
@@ -182,7 +182,9 @@ var cause_racine
       ajax(method, data, url);
       window.location.reload();
   });
+
 });
+
 
 // Fonction pour récuperer les derniérs pourquoi.............
 function les_dernier_pourquoi(tmp){
@@ -222,3 +224,17 @@ document.getElementById('action_programme').firstElementChild.addEventListener('
   //sessionStorage.setItem('causes_racines',causes_racines)
 
 })
+
+// $(document).ready(function () {
+//   $("#btn-terminer").click(function (event) {
+//     event.preventDefault();
+//     alert('Voulez vous reellement terminer cette analyse ?')
+//     stat = "terminer"
+    
+//     method = "POST";
+//     data = stat.toString();
+//     url = "http://127.0.0.1:9000/sonatel-sovar/analyse/saisi-pa";
+//     ajax(method, data, url);
+//     window.location.reload();
+//   })
+// })

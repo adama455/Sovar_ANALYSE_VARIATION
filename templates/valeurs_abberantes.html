@@ -238,19 +238,25 @@
                         <td>{{ele.idvaleur}}</td>
                         <td>{{ele.conseiller}}</td>
                         <td>{{ele.valeur}}</td>
-                              <td>
-                                {% if ele.statut=="Encours"  %}
-                                <span class="badge bg-warning tx-13">{{ele.statut}}</span>
-                                {% else %}
-                                <span class="badge bg-success">{{ele.statut}}</span>
-                                {% endif %}
-                              </td>
-
+                        <td>
+                          {% if ele.statut=="Encours"  %}
+                          <span class="badge bg-warning tx-13 w-50">{{ele.statut}}</span>
+                          {% elif ele.statut=="Validation" %}
+                          <span class="badge  w-50" style="background-color:#FF7900">{{ele.statut}}</span>
+                          {% else %}
+                          <span class="badge bg-success w-50">{{ele.statut}}</span>
+                          {% endif %}
+                        </td>
                         <td>
                           {# {% if (session.so_equipe==ele.idequipe) or (session.so_login==ele.user_login)%} #}
-                          <a href="{{ url_for('debuter_AV',id=ele.idvaleur) }}" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Analyser">
-                            <button type="button" class="btn btn-info btn-sm"><i class="ri-eye-line fs-13 lh-1 text-white"></i></button></a>
+                          {# <a href="{{ url_for('debuter_AV',id=ele.idvaleur) }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Analyser" class="{% if ele.statut != 'Encours' %} disabled-link {% endif %}" >
+                            <button type="button" class="btn btn-info btn-sm {% if ele.statut != 'Encours' %} disabled {% endif %} "><i class="ri-eye-line fs-13 lh-1 text-white"></i></button></a>
+                          
+                          </a> #}
+                          <a href=" {% if ele.statut == 'Encours' %} {{ url_for('debuter_AV',id=ele.idvaleur) }} {% endif %}" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Analyser" class="{% if ele.statut != 'Encours' %} disabled-link {% endif %}" >
+                            <button type="button" class="btn btn-info btn-sm {% if ele.statut != 'Encours' %} disabled {% endif %} "><i class="ri-eye-line fs-13 lh-1 text-white"></i></button></a>
                           
                           </a>
                           

@@ -38,13 +38,14 @@
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="../static/assets/css/style.min.css">
-  
+
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="{{ url_for('static',filename= 'lib/jquery/jquery.min.js') }} "></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/table2excel.js') }}"></script>
 
 
 
-  
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
@@ -248,7 +249,8 @@
                       <tbody>
                         {% for ele in pourquoi1 %}
                         <tr>
-                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 1">pourquoi 1</th>
+                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 1">pourquoi 1
+                          </th>
                           <td colspan="2"><input type="text" name="input_1" value="{{ele.p11}}" class="form-control">
                           </td>
                           <td colspan="2"><input type="text" name="input_12" value="{{ele.p12}}" class="form-control">
@@ -259,47 +261,75 @@
                         {% endfor %}
 
                         <tr>
-                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 2">pourquoi 2</th>
+                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 2">pourquoi 2
+                          </th>
                           {% for ele in pourquoi2 %}
-                          <td><input type="text" id="input_21" name="input_2" class="form-control" value="{{ele.p21}}"></td>
-                          <td><input type="text" id="input_22" name="input_22" class="form-control" value="{{ele.p22}}"></td>
-                          <td><input type="text" id="input_23" name="input_23" class="form-control" value="{{ele.p23}}"></td>
-                          <td><input type="text" id="input_24" name="input_24" class="form-control" value="{{ele.p24}}"></td>
-                          <td><input type="text" id="input_25" name="input_25" class="form-control" value="{{ele.p25}}"></td>
-                          <td><input type="text" id="input_26" name="input_26" class="form-control" value="{{ele.p26}}"></td>
+                          <td><input type="text" id="input_21" name="input_2" class="form-control" value="{{ele.p21}}">
+                          </td>
+                          <td><input type="text" id="input_22" name="input_22" class="form-control" value="{{ele.p22}}">
+                          </td>
+                          <td><input type="text" id="input_23" name="input_23" class="form-control" value="{{ele.p23}}">
+                          </td>
+                          <td><input type="text" id="input_24" name="input_24" class="form-control" value="{{ele.p24}}">
+                          </td>
+                          <td><input type="text" id="input_25" name="input_25" class="form-control" value="{{ele.p25}}">
+                          </td>
+                          <td><input type="text" id="input_26" name="input_26" class="form-control" value="{{ele.p26}}">
+                          </td>
                           {% endfor %}
                         </tr>
                         <tr>
-                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">pourquoi 3</th>
+                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">pourquoi 3
+                          </th>
                           {% for ele in pourquoi3 %}
-                          <td><input type="text" id="input_31" name="input_3" class="form-control" value="{{ele.p31}}"></td>
-                          <td><input type="text" id="input_32" name="input_32" class="form-control" value="{{ele.p32}}"></td>
-                          <td><input type="text" id="input_33" name="input_33" class="form-control" value="{{ele.p33}}"></td>
-                          <td><input type="text" id="input_34" name="input_34" class="form-control" value="{{ele.p34}}"></td>
-                          <td><input type="text" id="input_35" name="input_35" class="form-control" value="{{ele.p35}}"></td>
-                          <td><input type="text" id="input_36" name="input_36" class="form-control" value="{{ele.p36}}"></td>
+                          <td><input type="text" id="input_31" name="input_3" class="form-control" value="{{ele.p31}}">
+                          </td>
+                          <td><input type="text" id="input_32" name="input_32" class="form-control" value="{{ele.p32}}">
+                          </td>
+                          <td><input type="text" id="input_33" name="input_33" class="form-control" value="{{ele.p33}}">
+                          </td>
+                          <td><input type="text" id="input_34" name="input_34" class="form-control" value="{{ele.p34}}">
+                          </td>
+                          <td><input type="text" id="input_35" name="input_35" class="form-control" value="{{ele.p35}}">
+                          </td>
+                          <td><input type="text" id="input_36" name="input_36" class="form-control" value="{{ele.p36}}">
+                          </td>
                           {% endfor %}
                         </tr>
                         <tr>
-                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">pourquoi 4</th>
+                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">pourquoi 4
+                          </th>
                           {% for ele in pourquoi4 %}
-                          <td><input type="text" id="input_41" name="input_4" class="form-control" value="{{ele.p41}}"></td>
-                          <td><input type="text" id="input_42" name="input_42" class="form-control" value="{{ele.p42}}"></td>
-                          <td><input type="text" id="input_43" name="input_43" class="form-control" value="{{ele.p43}}"></td>
-                          <td><input type="text" id="input_44" name="input_44" class="form-control" value="{{ele.p44}}"></td>
-                          <td><input type="text" id="input_45" name="input_45" class="form-control" value="{{ele.p45}}"></td>
-                          <td><input type="text" id="input_46" name="input_46" class="form-control" value="{{ele.p46}}"></td>
+                          <td><input type="text" id="input_41" name="input_4" class="form-control" value="{{ele.p41}}">
+                          </td>
+                          <td><input type="text" id="input_42" name="input_42" class="form-control" value="{{ele.p42}}">
+                          </td>
+                          <td><input type="text" id="input_43" name="input_43" class="form-control" value="{{ele.p43}}">
+                          </td>
+                          <td><input type="text" id="input_44" name="input_44" class="form-control" value="{{ele.p44}}">
+                          </td>
+                          <td><input type="text" id="input_45" name="input_45" class="form-control" value="{{ele.p45}}">
+                          </td>
+                          <td><input type="text" id="input_46" name="input_46" class="form-control" value="{{ele.p46}}">
+                          </td>
                           {% endfor %}
                         </tr>
                         <tr id="pourquoi-5">
-                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">pourquoi 5</th>
+                          <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">pourquoi 5
+                          </th>
                           {% for ele in pourquoi5 %}
-                          <td><input type="text" id="input_51" name="input_5" class="form-control" value="{{ele.p51}}"></td>
-                          <td><input type="text" id="input_52" name="input_52" class="form-control" value="{{ele.p52}}"></td>
-                          <td><input type="text" id="input_53" name="input_53" class="form-control" value="{{ele.p53}}"></td>
-                          <td><input type="text" id="input_54" name="input_54" class="form-control" value="{{ele.p54}}"></td>
-                          <td><input type="text" id="input_55" name="input_55" class="form-control" value="{{ele.p55}}"></td>
-                          <td><input type="text" id="input_56" name="input_56" class="form-control" value="{{ele.p56}}"></td>
+                          <td><input type="text" id="input_51" name="input_5" class="form-control" value="{{ele.p51}}">
+                          </td>
+                          <td><input type="text" id="input_52" name="input_52" class="form-control" value="{{ele.p52}}">
+                          </td>
+                          <td><input type="text" id="input_53" name="input_53" class="form-control" value="{{ele.p53}}">
+                          </td>
+                          <td><input type="text" id="input_54" name="input_54" class="form-control" value="{{ele.p54}}">
+                          </td>
+                          <td><input type="text" id="input_55" name="input_55" class="form-control" value="{{ele.p55}}">
+                          </td>
+                          <td><input type="text" id="input_56" name="input_56" class="form-control" value="{{ele.p56}}">
+                          </td>
                           {% endfor %}
                         </tr>
                         <tr>
@@ -377,11 +407,10 @@
                           <td class="text-center" style="background-color: #FFFFFF;">
                             {% for ele in pourquoi1 %}
                             {% if ele.p11!=''%}
-                            <a href="#" >
+                            <a href="#">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_1" class="btn btn-warning btn-sm definir_action " type="button"
-                                   title="Définir les actions"><i
-                                    class="ri-menu-add-fill"></i>
+                                <button id="definir-action_1" class="btn btn-warning btn-sm definir_action "
+                                  type="button" title="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
@@ -394,9 +423,8 @@
                             {% if ele.p11 !=''%}
                             <a href="#" data-bs-toggle="modal">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_2" class="btn btn-warning btn-sm definir_action " type="submit"
-                                  title="Définir les actions"><i
-                                    class="ri-menu-add-fill"></i>
+                                <button id="definir-action_2" class="btn btn-warning btn-sm definir_action "
+                                  type="submit" title="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
@@ -406,11 +434,10 @@
                           <td class="text-center">
                             {% for ele in pourquoi1 %}
                             {% if ele.p12 !=''%}
-                            <a  data-bs-toggle="modal">
+                            <a data-bs-toggle="modal">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_3" class="btn btn-warning btn-sm definir_action " type="submit"
-                                  title="Définir les actions"><i
-                                    class="ri-menu-add-fill"></i>
+                                <button id="definir-action_3" class="btn btn-warning btn-sm definir_action "
+                                  type="submit" title="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
@@ -423,9 +450,8 @@
                             {% if ele.p12 !=''%}
                             <a href="#" data-bs-toggle="modal">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_4" class="btn btn-warning btn-sm definir_action " type="submit"
-                                  itle="Définir les actions"><i
-                                    class="ri-menu-add-fill"></i>
+                                <button id="definir-action_4" class="btn btn-warning btn-sm definir_action "
+                                  type="submit" itle="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
@@ -438,9 +464,8 @@
                             {% if ele.p13 !=''%}
                             <a href="#" data-bs-toggle="modal">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_5" class="btn btn-warning btn-sm definir_action " type="submit"
-                                 title="Définir les actions"><i
-                                    class="ri-menu-add-fill"></i>
+                                <button id="definir-action_5" class="btn btn-warning btn-sm definir_action "
+                                  type="submit" title="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
@@ -454,14 +479,13 @@
 
                             <a href="#" data-bs-toggle="modal">
                               <div class="d-grid gap-2">
-                                <button id="definir-action_6" class="btn  btn-sm btn-warning btn-block definir_action " type="button"
-                                  title="Définir les actions"
-                                  ><i class="ri-menu-add-fill"></i>
+                                <button id="definir-action_6" class="btn  btn-sm btn-warning btn-block definir_action "
+                                  type="button" title="Définir les actions"><i class="ri-menu-add-fill"></i>
                                   Définir Actions</button>
                               </div>
                             </a>
-                            {% endif%}
-                            {% endfor%}
+                            {% endif %}
+                            {% endfor %}
                           </td>
 
                         </tr>
@@ -470,10 +494,21 @@
                   </div><!-- table-responsive -->
 
                   <br><br>
-                  <div align="center">
+                  {# <div class="methodologie d-flex align-items-center">
+                      <label for="methodologie" class="fs-5 me-2 text-dark">Méthodologie respectée:</label>
+                      <input type="checkbox" name="methodologie_respecte" id="methodologie" 
+                      style="width: 15px;height:15px" value="respectée" required>
+                  </div> #}
 
-                    <button class="btn btn-primary btn-sm text-white" type="button" id="btn-terminer"><i
-                        class="ri-auction-fill text-white"></i> Terminer l'analyse</button>
+                  <div align="center">
+                    {% for ele in results %}
+                    <a href="{{ url_for('terminer_AV', id=ele.idvaleur) }}"
+                      onclick="return confirm('Voulez vous Terminer lanalyse ?')" data-bs-toggle="tooltip"
+                      data-bs-placement="top" title="Terminer">
+                      <button class="btn btn-primary btn-sm text-white" type="button" id="btn-terminer"><i
+                          class="ri-auction-fill text-white"></i> Terminer l'analyse</button>
+                    </a>
+                    {% endfor %}
 
                   </div>
 
@@ -516,7 +551,7 @@
                       <tbody>
                         <tr>
 
-                          {% for ele in results %}                          
+                          {% for ele in results %}
                           <td scope="row" rowspan="6"> <br><br><br><br><br>{{ele.conseiller}}</td>
 
                           <td class="text-center" rowspan="6" scope="row"><br><br><br><br><br> {{ele.valeur}}</td>
@@ -552,10 +587,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa1"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -565,10 +600,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa1"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -578,23 +613,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa1"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa1"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -602,7 +638,7 @@
                             </table>
                           </td>
                           <!-- FIN de la partie: les actions du premier derniére cause racine -->
-                          
+
                         </tr>
 
                         <tr>
@@ -631,10 +667,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa2"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -644,10 +680,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa2"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -657,23 +693,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa2"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa2"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -715,10 +752,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa3"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -728,10 +765,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa3"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -741,23 +778,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa3"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa3"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -766,7 +804,7 @@
                           </td>
                           <!-- FIN de la partie: les actions du troisieme derniére cause racine -->
                         </tr>
-                        
+
                         <tr>
                           {% for ele in pourquoi2 %}
                           <td scope="row"> {{ele.p24}}</td>
@@ -792,10 +830,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa4"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -805,10 +843,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa4"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -818,23 +856,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa4"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa4"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -879,10 +918,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa5"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -892,10 +931,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa5"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -905,23 +944,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa5"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa5"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -960,10 +1000,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa6"  %}
                                 <tr class="paa">
-                                  <td height="70" >{{ ele.libelle_action }}</td>
+                                  <td height="70">{{ ele.libelle_action }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -973,10 +1013,10 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa6"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.porteur }}</td>
+                                  <td height="70" align="center">{{ ele.porteur }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -986,23 +1026,24 @@
                           <td scope="row" align="center" style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa6"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.echeance }}</td>
+                                  <td height="70" align="center">{{ ele.echeance }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
                               </tbody>
                             </table>
                           </td>
-                          <td scope="row" class="col-1" align="center" style="padding: 0 !important;margin:0 !important">
+                          <td scope="row" class="col-1" align="center"
+                            style="padding: 0 !important;margin:0 !important">
                             <table class="table">
                               <tbody>
-                                {% for ele in pa %} 
+                                {% for ele in pa %}
                                 {% if ele.marque == "pa6"  %}
                                 <tr class="paa">
-                                  <td height="70" align="center" >{{ ele.status }}</td>
+                                  <td height="70" align="center">{{ ele.status }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -1018,25 +1059,25 @@
                     </table>
                   </div><!-- table-responsive --><br>
                   <div class=" d-flex justify-content-between ">
-                    &nbsp; <a href="#ImportUser"class="col-6">
+                    &nbsp; <a href="#ImportUser" class="col-6">
 
-                      <button id="export" type="button" class="btn btn-info btn-sm float-start" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Importer"><i class="ri-upload-2-fill text-white"></i></button></a>
+                      <button id="export" type="button" class="btn btn-info btn-sm float-start" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Importer"><i
+                          class="ri-upload-2-fill text-white"></i></button></a>
 
-                        <script>
-                          var table2excel = new Table2Excel();
-                    
-                          document.getElementById('export').addEventListener('click', function() {
-                            table2excel.export(document.getElementById('solid'));
-                          });
-                        </script>
+                    <script>
+                      var table2excel = new Table2Excel();
 
-                      <a href="{{ url_for("saisiap") }}" class="definir-ap col-6" id="action_programme">
-                          <button class="btn btn-sm btn-warning definir_action_programme float-end  " type="button"
-                            title="Définir les actions programme"
-                            ><i class="ri-menu-add-fill"></i>
-                            Définir Actions Programme</button>
-                      </a>
+                      document.getElementById('export').addEventListener('click', function () {
+                        table2excel.export(document.getElementById('solid'));
+                      });
+                    </script>
+
+                    <a href="{{ url_for("saisiap") }}" class="definir-ap col-6" id="action_programme">
+                      <button class="btn btn-sm btn-warning definir_action_programme float-end  " type="button"
+                        title="Définir les actions programme"><i class="ri-menu-add-fill"></i>
+                        Définir Actions Programme</button>
+                    </a>
                   </div>
                 </div>
 
@@ -1051,12 +1092,9 @@
         </div><!-- card -->
 
 
-
-
         <div class="modal fade" id="modal_action" tabindex="-1" aria-hidden="true">
-          <div class="modal-dialog modal-lg ">
+          <div class="modal-dialog modal-lg" style="max-width: 90% !important;">
             <div class="modal-content">
-
               <div class="modal-body bg-light">
                 <div class="card card-title">
 
@@ -1068,7 +1106,8 @@
 
                     <div class="media-body">
                       <form action="" method="post" class="row g-3">
-                          <h5 class="main-subtitle"> <i class="ri-file-list-3-line fs-13 lh-1"></i> CAUSE RACINE: <em id="dernier-pourquoi"></em> </h5>
+                        <h5 class="main-subtitle"> <i class="ri-file-list-3-line fs-13 lh-1"></i> CAUSE RACINE: <em
+                            id="dernier-pourquoi"></em> </h5>
                         {# <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}"
                           hidden>
                         <br> #}
@@ -1076,23 +1115,22 @@
 
                         </div>
                         <div align="right" class="text-white">
-                          <button class="btn btn-info btn-sm text-white" type="button" id="autre-act"><i
-                            ></i>Nouvelle
+                          <button class="btn btn-info btn-sm text-white" type="button" id="autre-act"><i></i>Nouvelle
                             action</button>
-                            <button type="submit" id="bouton_valider_action" class="btn btn-success btn-sm text-white"
-                                    data-bs-dismiss="modal">valider</button>
+                          <button type="submit" id="bouton_valider_action" class="btn btn-success btn-sm text-white"
+                            data-bs-dismiss="modal">valider</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
-                </div><!-- modal-body -->
+              </div><!-- modal-body -->
 
-              </div><!-- modal-content -->
             </div><!-- modal-content -->
-          </div><!-- modal -->
+          </div><!-- modal-content -->
+        </div><!-- modal -->
 
-          {# <div class="modal fade" id="PA2" tabindex="-1" aria-hidden="true">
+        {# <div class="modal fade" id="PA2" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
@@ -1318,17 +1356,15 @@
             </div><!-- modal-content -->
           </div><!-- modal-content -->
         </div><!-- modal --> #}
-        </div><!-- main -->
+      </div><!-- main -->
 
-        <!--DEBUT CODES JS AJOUTER ACTION   -->
-        <script type="text/javascript" src="{{ url_for('static', filename='js/plansAction.js') }}"></script>
-        <!--FIN CODES JS AJOUTER ACTION    -->
-        
-        {# <script src=" {{ url_for("static", filename="assets/js/ajoutAction.js") }}"></script> #}
+      <!--DEBUT JS AJOUTER ACTION   -->
+      <script type="text/javascript" src="{{ url_for('static', filename='js/plansAction.js') }}"></script>
+      <!--FIN JS AJOUTER ACTION    -->
 
-        {% endblock content %}
+      {% endblock content %}
 
-        {# <script src="../static/lib/jquery/jquery.min.js"></script>
+      {# <script src="../static/lib/jquery/jquery.min.js"></script>
         <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../static/lib/prismjs/prism.js"></script>
         <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -1337,51 +1373,51 @@
         <script src="../static/assets/js/script.js"></script>
         <script src="../static/lib/select2/js/select2.full.min.js"></script> #}
 
-        {# <script>
-          'use strict'
+      {# <script>
+        'use strict'
 
-          // Basic usage
-          $('#select2A').select2({
-            placeholder: 'Choose one',
-            minimumResultsForSearch: Infinity
-          });
+        // Basic usage
+        $('#select2A').select2({
+          placeholder: 'Choose one',
+          minimumResultsForSearch: Infinity
+        });
 
-          // With search
-          $('#select2B').select2({
-            placeholder: 'Choose one'
-          });
+        // With search
+        $('#select2B').select2({
+          placeholder: 'Choose one'
+        });
 
-          $('#select2B').one('select2:open', function (e) {
-            $('input.select2-search__field').prop('placeholder', 'Search...');
-          });
+        $('#select2B').one('select2:open', function (e) {
+          $('input.select2-search__field').prop('placeholder', 'Search...');
+        });
 
-          // Disabled
-          $('#select2C').select2({
-            placeholder: 'Choose one',
-            minimumResultsForSearch: Infinity
-          });
+        // Disabled
+        $('#select2C').select2({
+          placeholder: 'Choose one',
+          minimumResultsForSearch: Infinity
+        });
 
-          // Multiple
-          $('#select2D').select2({
-            placeholder: 'Choose multiple',
-            minimumResultsForSearch: Infinity
-          });
+        // Multiple
+        $('#select2D').select2({
+          placeholder: 'Choose multiple',
+          minimumResultsForSearch: Infinity
+        });
 
-          // Clearable
-          $('#select2E').select2({
-            placeholder: 'Choose one',
-            allowClear: true,
-            minimumResultsForSearch: Infinity
-          });
+        // Clearable
+        $('#select2E').select2({
+          placeholder: 'Choose one',
+          allowClear: true,
+          minimumResultsForSearch: Infinity
+        });
 
-          // Limit selection
-          $('#select2F').select2({
-            placeholder: 'Choose one or two',
-            maximumSelectionLength: 2,
-            minimumResultsForSearch: Infinity
-          });
+        // Limit selection
+        $('#select2F').select2({
+          placeholder: 'Choose one or two',
+          maximumSelectionLength: 2,
+          minimumResultsForSearch: Infinity
+        });
 
-        </script> #}
+      </script> #}
 </body>
 
 </html>

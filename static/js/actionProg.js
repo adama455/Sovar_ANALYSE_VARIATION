@@ -1,4 +1,3 @@
-
 const tbody = document.getElementById("corps");
 const plus = document.getElementById("btn-plus");
 var nl = tbody.childNodes.length + 1;
@@ -16,7 +15,7 @@ function cre_input(Class, id_input, type, Valeur) {
 
 function cre_div(id,content) {
   div = document.createElement("div");
-  div.className = "fs-5 py-1 px-2 flex-wrap tx-center tx-dark"
+  div.className = "fs-5 px-2 flex-wrap text-dark"
   div.textContent = content
   div.setAttribute("id", `${id}`);
   return div;
@@ -70,8 +69,8 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
     tr = document.createElement("tr");
     tr.className = "";
     tr.setAttribute("id", `line_${nl}`);
-    //tr.appendChild(td_div(`cause_${nl}`, "cause rcacine"));
-    tr.appendChild(td_Input(`cause_${nl}`,"text", causes_racines[index]));
+    tr.appendChild(td_div(`cause_${nl}`, causes_racines[index]));
+    // tr.appendChild(td_Input(`cause_${nl}`,"text", causes_racines[index]));
     cre_td_plus(tr,`btn_plus_tr_${nl}`); //td5
     
     console.log(tr.childNodes.length);
@@ -121,7 +120,7 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
         for (let elem = 0; elem < moin_lines.length; elem++) {
             moin_lines[elem].addEventListener("click", (e) => { //Supprimer une action
             e.stopImmediatePropagation();
-            alert("Salam!!!!!");
+            // alert("Salam!!!!!");
             td1 = e.target.parentNode.previousSibling
             td2 = td1.previousSibling
             td3 = td2.previousSibling
@@ -131,7 +130,7 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
                 td2.lastChild.remove()
                 td3.lastChild.remove() 
             }else{
-                alert("il faut avoir aumoins deux Aactions!")
+                alert("Il faut avoir aumoins deux actions!")
             }
             });
         }

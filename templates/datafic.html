@@ -1,11 +1,8 @@
-
-
 {% if session.logged==True %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,13 +16,9 @@
 
   <title>SO'VAR - Outil d'analyse et de suivi de la variation</title>
   <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
-    rel="stylesheet">
-
-
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
-    rel="stylesheet">
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
   <!-- Template CSS -->
   <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
@@ -33,15 +26,15 @@
   <!-- Vendor CSS -->
   <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
 
-
   <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
-    rel="stylesheet">
+
+  <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
+
   <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
   <!-- Template CSS -->
+
   {% block css %}{% endblock css %}
   <!-- Vendor CSS -->
-
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navDocs" data-bs-offset="40">
@@ -51,38 +44,23 @@
 
     {% block content %}
 
-
-
-
     <div class="col-xl-12">
 
       <div class="card card-title  bg-light">
 
-
         <div class="card-body">
 
-
-
-
           <div class="row g-3" >
-
-
-
 
               <h5 id="section13" class="main-subtitle text-dark"><i class="ri-folders-line"></i> DONNÉES BRUTES </h5>
             <div class="card" style="background-color: #009088;">
               <div class="card-body ">
                 <div class="col-xl-12">
 
-
-
-
-
                   <div class="card card-title" style="background-color: #FF7900;">
 
 {% for ele in fic %}
 <div class="card-body">
-
 
   <div class="row row-cols-sm-auto g-4 g-md-5 g-xl-4 g-xxl-5">
     <div class="col">
@@ -132,8 +110,6 @@
       </div><!-- profile-item -->
     </div><!-- col -->
    
-
- 
     <div class="col">
       <div class="profile-item">
         <i class="ri-award-line text-white"></i>

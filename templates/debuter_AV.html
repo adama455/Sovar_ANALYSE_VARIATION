@@ -208,19 +208,159 @@
 
 
       <div class="card bg-light">
-        <form action="/add_pourquoi" method="POST">
-          <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
         {% for ele in results %}
+        {% if data_exist %} 
+        <form action="/update_pourquoi/{{ele.idvaleur}} " method="POST">
+        {% else %}
+        <form action="/add_pourquoi " method="POST">
+        {% endif %}
+          <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
           <input type="text" name="file_id" class="form-control wd-380" value="{{ele.idfic}}" hidden>
           <input type="text" name="id_mesure" class="form-control wd-380" value="{{ele.idvaleur}}" hidden>
           <input type="text" name="nom_cc" class="form-control wd-380" value="{{ele.conseiller}}" hidden>
-{% endfor %}
+        {% endfor %}
         <div class="card-body">
           <h5 id="section2" class="main-subtitle"> <i class="ri-apps-line fs-13 lh-1"></i> AXES D'ANALYSE </h5>
           <p>Analyse des <code>causes racines</code> de la mesure abberante.</p>
        
        <br>   <div class="table-responsive">
         <table class="table table-striped mb-0 table-bordered">
+          {% if data_exist %}
+          <thead>
+            <tr>
+              {% for ele in problem %}
+              <th scope="col" colspan="7">
+                <input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème au conseiller {{ele.conseiller}}" value="{{ ele.probleme }}">
+              </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for ele in pourquoi1 %}
+            <tr>
+            <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 1">pourquoi 1</th>
+              <td colspan="2"><input type="text" name="input_1" value="{{ele.p11}}" class="form-control">
+              </td>
+              <td colspan="2"><input type="text" name="input_12" value="{{ele.p12}}" class="form-control">
+              </td>
+              <td colspan="2"><input type="text" name="input_13" value="{{ele.p13}}" class="form-control"
+                  placeholder="pourquoi 1_3"></td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 2">pourquoi 2</th>
+              {% for ele in pourquoi2 %}
+              <td><input type="text" id="input_21" name="input_2" class="form-control" value="{{ele.p21}}"></td>
+              <td><input type="text" id="input_22" name="input_22" class="form-control" value="{{ele.p22}}"></td>
+              <td><input type="text" id="input_23" name="input_23" class="form-control" value="{{ele.p23}}"></td>
+              <td><input type="text" id="input_24" name="input_24" class="form-control" value="{{ele.p24}}"></td>
+              <td><input type="text" id="input_25" name="input_25" class="form-control" value="{{ele.p25}}"></td>
+              <td><input type="text" id="input_26" name="input_26" class="form-control" value="{{ele.p26}}"></td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">pourquoi 3</th>
+              {% for ele in pourquoi3 %}
+              <td><input type="text" id="input_31" name="input_3" class="form-control" value="{{ele.p31}}"></td>
+              <td><input type="text" id="input_32" name="input_32" class="form-control" value="{{ele.p32}}"></td>
+              <td><input type="text" id="input_33" name="input_33" class="form-control" value="{{ele.p33}}"></td>
+              <td><input type="text" id="input_34" name="input_34" class="form-control" value="{{ele.p34}}"></td>
+              <td><input type="text" id="input_35" name="input_35" class="form-control" value="{{ele.p35}}"></td>
+              <td><input type="text" id="input_36" name="input_36" class="form-control" value="{{ele.p36}}"></td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">pourquoi 4</th>
+              {% for ele in pourquoi4 %}
+              <td><input type="text" id="input_41" name="input_4" class="form-control" value="{{ele.p41}}"></td>
+              <td><input type="text" id="input_42" name="input_42" class="form-control" value="{{ele.p42}}"></td>
+              <td><input type="text" id="input_43" name="input_43" class="form-control" value="{{ele.p43}}"></td>
+              <td><input type="text" id="input_44" name="input_44" class="form-control" value="{{ele.p44}}"></td>
+              <td><input type="text" id="input_45" name="input_45" class="form-control" value="{{ele.p45}}"></td>
+              <td><input type="text" id="input_46" name="input_46" class="form-control" value="{{ele.p46}}"></td>
+              {% endfor %}
+            </tr>
+            <tr id="pourquoi-5">
+              <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">pourquoi 5</th>
+              {% for ele in pourquoi5 %}
+              <td><input type="text" id="input_51" name="input_5" class="form-control" value="{{ele.p51}}"></td>
+              <td><input type="text" id="input_52" name="input_52" class="form-control" value="{{ele.p52}}"></td>
+              <td><input type="text" id="input_53" name="input_53" class="form-control" value="{{ele.p53}}"></td>
+              <td><input type="text" id="input_54" name="input_54" class="form-control" value="{{ele.p54}}"></td>
+              <td><input type="text" id="input_55" name="input_55" class="form-control" value="{{ele.p55}}"></td>
+              <td><input type="text" id="input_56" name="input_56" class="form-control" value="{{ele.p56}}"></td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th scope="row"><i class="ri-menu-fill fs-13 lh-1" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Famille Causes"></i></th>
+              {% for ele in axes %}
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_1_analyse">
+                  <option value="{{ele.a1}}">{{ele.a1}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_2_analyse">
+                  <option value="{{ele.a2}}">{{ele.a2}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_3_analyse">
+                  <option value="{{ele.a3}}">{{ele.a3}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_4_analyse">
+                  <option value="{{ele.a4}}">{{ele.a4}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_5_analyse">
+                  <option value="{{ele.a5}}">{{ele.a5}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              <td>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                  name="axes_6_analyse">
+                  <option value="{{ele.a6}}">{{ele.a6}}</option>
+                  {% for ele in causes %}
+                  <option value="{{ele.libelle}}">{{ ele.libelle }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+
+              {% endfor %}
+
+            </tr>
+          </tbody>
+          {% else %}
           <thead>
             <tr>
               {% for ele in results %}
@@ -248,23 +388,21 @@
             </tr>
             <tr>
               <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 3">Pourquoi3</th>
-            <td><input type="text" name="input_3" class="form-control" placeholder="pourquoi 3"></td>
-            <td><input type="text" name="input_32" class="form-control" placeholder="pourquoi 3_2"></td>
-            <td><input type="text" name="input_33" class="form-control" placeholder="pourquoi 3_3"></td>
-            <td><input type="text" name="input_34" class="form-control" placeholder="pourquoi 3_4"></td>
-            <td><input type="text" name="input_35" class="form-control" placeholder="pourquoi 3_5"></td>
-            <td><input type="text" name="input_36" class="form-control" placeholder="pourquoi 3_6"></td>
-              
+              <td><input type="text" name="input_3" class="form-control" placeholder="pourquoi 3"></td>
+              <td><input type="text" name="input_32" class="form-control" placeholder="pourquoi 3_2"></td>
+              <td><input type="text" name="input_33" class="form-control" placeholder="pourquoi 3_3"></td>
+              <td><input type="text" name="input_34" class="form-control" placeholder="pourquoi 3_4"></td>
+              <td><input type="text" name="input_35" class="form-control" placeholder="pourquoi 3_5"></td>
+              <td><input type="text" name="input_36" class="form-control" placeholder="pourquoi 3_6"></td> 
             </tr>
             <tr>
               <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 4">Pourquoi4</th>
-                <td><input type="text" name="input_4" class="form-control" placeholder="pourquoi 4"></td>
-                <td><input type="text" name="input_42" class="form-control" placeholder="pourquoi 4_2"></td>
-                <td><input type="text" name="input_43" class="form-control" placeholder="pourquoi 4_3"></td>
-                <td><input type="text" name="input_44" class="form-control" placeholder="pourquoi 4_4"></td>
-                <td><input type="text" name="input_45" class="form-control" placeholder="pourquoi 4_5"></td>
-                <td><input type="text" name="input_46" class="form-control" placeholder="pourquoi 4_6"></td>
-            
+              <td><input type="text" name="input_4" class="form-control" placeholder="pourquoi 4"></td>
+              <td><input type="text" name="input_42" class="form-control" placeholder="pourquoi 4_2"></td>
+              <td><input type="text" name="input_43" class="form-control" placeholder="pourquoi 4_3"></td>
+              <td><input type="text" name="input_44" class="form-control" placeholder="pourquoi 4_4"></td>
+              <td><input type="text" name="input_45" class="form-control" placeholder="pourquoi 4_5"></td>
+              <td><input type="text" name="input_46" class="form-control" placeholder="pourquoi 4_6"></td>
             </tr>
             <tr>
               <th scope="row" data-bs-toggle="tooltip" data-bs-placement="top" title="pourquoi 5">Pourquoi5</th>
@@ -274,7 +412,6 @@
               <td><input type="text" name="input_54" class="form-control" placeholder="pourquoi 5_4"></td>
               <td><input type="text" name="input_55" class="form-control" placeholder="pourquoi 5_5"></td>
               <td><input type="text" name="input_56" class="form-control" placeholder="pourquoi 5_6"></td>
-             
             </tr>
             <tr>
             <th scope="row"><i class="ri-menu-fill fs-13 lh-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Famille Causes"></i></th>
@@ -333,21 +470,26 @@
             </select>
           </td>
             
-       
-        
-            
             </tr>
           </tbody>
+          {% endif %}
         </table>
         </div><!-- table-responsive -->
-
+        <br>
+        <div class="methodologie d-flex align-items-center">
+          <label for="methodologie" class="fs-5 me-2 text-dark">Méthodologie respectée:</label>
+          <input type="checkbox" name="methodologie_respecte" id="methodologie" 
+          style="width: 15px;height:15px" value="respectée" required>
+        </div>
           <br><br>
+          {% for ele in results %}
           <div class="d-grid gap-2">
         
             <button class="btn btn-primary btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="Valider"><i class="ri-save-2-line"></i> Valider</button>
+              title="Valider"><i class="ri-save-2-line"></i>{% if data_exist %} Modifier {% else %} Valider {% endif %} </button>
         
           </div>
+          {% endfor %}
         
         </div>
         </div><!-- card-body -->
@@ -428,7 +570,7 @@
 
 </html>
 
-{% else%}
+{% else %}
 
 
 <!DOCTYPE html>
@@ -545,4 +687,4 @@
 </html>
 
 
-{% endif%}
+{% endif %}

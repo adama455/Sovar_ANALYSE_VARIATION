@@ -20,8 +20,6 @@
   <!-- Vendor CSS -->
   <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
 
-
-
   <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
     rel="stylesheet">
@@ -56,16 +54,7 @@
         <div class="card-body">
 
 
-
-
           <div class="row g-3">
-
-
-
-
-
-
-
 
             <h5 id="section11" class="main-subtitle text-dark"><i class="ri-checkbox-multiple-line"></i> Actions Programme</h5>
             <br>
@@ -94,13 +83,29 @@
                         <td>{{ele.libelle_action}}</td>
                         <td>{{ele.porteur}}</td>
                         <td>{{ele.echeance}}</td>
-                        <td>{{ele.status}}</td>
                         <td>
+                          {% if ele.status=="En attente"  %}
+                          <span class="badge bg-warning w-50">{{ele.status}}</span>
+                          {% elif ele.status=="Valide" %}
+                          <span class="badge  w-50" style="background-color:#FF7900">{{ele.status}}</span>
+                          {% elif ele.status=="Cloture" %}
+                          <span class="badge bg-success w-50" >{{ele.status}}</span>
+                          {% else %}
+                          <span class="badge bg-danger">{{ele.status}}</span>
+                          {% endif %}
+                        </td>
+                        <td>
+
                           <a href="#info{{ele.idprogram}}" data-bs-toggle="modal" data-target="#info{{ele.idprogram}}">
-                            <button type="button" class="btn btn-secondary  btn-sm d-flex align-items-center gap-2"
+                            <button type="button" class="btn btn-secondary  btn-sm"
                               data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i
                                 class="ri-edit-line fs-13 lh-1"></i></button>
                           </a>
+                          <a href="{{ url_for('delete_ap',id=ele.idprogram) }}"  onclick="return confirm('Voulez vous supprimer action du Porteur : {{ele.porteur}}  ?')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer" style="margin-top: -25px;">
+                            <button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-5-fill fs-11 lh-1"></i></button>
+                          </a>
+
                         </td>
                       </tr>
 
@@ -200,8 +205,8 @@
             <br>
             <a href="#" >
 
-            <button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="Ajouter"><i class="ri-download-2-fill"></i></button></a>
+            <button id="export-btn" type="button" class="btn btn-warning  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Export"><i class="ri-download-2-fill"></i></button></a>
            
 
           </div><!-- main -->
@@ -222,10 +227,8 @@
     <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
-
     <script
       src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-
     <script
       src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
 
@@ -241,9 +244,6 @@
     <script>
       'use strict'
 
-
-
-
       // Search
       $("#tableGrid3").Grid({
         className: {
@@ -253,8 +253,6 @@
         pagination: true,
         sort: false
       });
-
-
 
     </script>
 </body>

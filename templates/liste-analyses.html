@@ -118,6 +118,7 @@
                         <th scope="col">Métrique</th>
 
                         <th scope="col">Date Analyse</th>
+                        <th scope="col">Statut</th>
 
                         <th scope="col" class="text-center">Action</th>
 
@@ -135,9 +136,14 @@
                         <td>{{ele.metrique}}</td>
 
                         <td>{{ele.date_analyse}}</td>
-
-
-
+                        <td> 
+                          {% if ele.statut=="EnCours"  %}
+                          <span class="badge bg-warning w-75">{{ele.statut}}</span>
+                          {% elif ele.statut=="Terminer" %}
+                          <span class="badge bg-success w-75 " >{{ele.statut}}</span>
+                          {% else %}
+                          <span class="badge  w-50" style="background-color:#FF7900">{{ele.statut}}</span>
+                          {% endif %}</td>
                         <td>
                         <a href="{{ url_for('details_AV',id=ele.id_mesure) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Détails">
                             <button type="button" class="btn btn-info  btn-sm  align-items-center gap-2"
@@ -145,7 +151,12 @@
                                 class="ri-menu-unfold-line fs-11 lh-1 text-white"></i></button>
                           </a>
 
-
+                          <a href="{{ url_for('delete_AV',id=ele.idproblem) }}"  onclick="return confirm('Voulez vous supprimer analyse du conseiller : {{ele.conseiller}} ?')"
+                            data-bs-toggle="tooltip"
+                             data-bs-placement="top" title="Supprimer">
+   
+                            <button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-5-fill fs-11 lh-1"></i></button>
+                          </a>
 
                         </td>
                       </tr>
@@ -220,7 +231,7 @@
 
                                               {% elif ele.profil_id==6 %}
                                               Reporting
-                                              {% endif%}
+                                              {% endif %}
 
                                             </option>
                                             {% for ele in role %}
@@ -317,8 +328,9 @@
 
                 &nbsp; <a href="#ImportUser">
 
-                  <button type="button" class="btn btn-info btn-sm " data-bs-toggle="tooltip" data-bs-placement="top"
+                  <button id="export-btn" type="button" class="btn btn-info btn-sm " data-bs-toggle="tooltip" data-bs-placement="top"
                     title="Importer"><i class="ri-upload-2-fill text-white"></i></button></a>
+
               </div><!-- card-body -->
 
             </div><!-- card -->

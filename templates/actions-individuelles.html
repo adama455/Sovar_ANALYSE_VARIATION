@@ -83,8 +83,8 @@
                       <th scope="col">Porteur</th>
                       <th scope="col">Echéance</th>
                       <th scope="col">Statut</th>
-
-                        <th scope="col">Action</th>
+                      <th scope="col">Efficacité</th>
+                      <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -95,16 +95,30 @@
                         <td>{{ele.libelle_action}}</td>
                         <td>{{ele.porteur}}</td>
                         <td>{{ele.echeance}}</td>
-                        <td>{{ele.status}}</td>
+                        <td>
+                          {% if ele.status=="En attente"  %}
+                          <span class="badge bg-warning w-50">{{ele.status}}</span>
+                          {% elif ele.status=="Valide" %}
+                          <span class="badge  w-50" style="background-color:#FF7900">{{ele.status}}</span>
+                          {% elif ele.status=="Cloture" %}
+                          <span class="badge bg-success w-50 " >{{ele.status}}</span>
+                          {% else %}
+                          <span class="badge bg-danger w-50">{{ele.status}}</span>
+                          {% endif %}
+                        </td>
+                        <td>{{ele.efficacite}}</td>
                         <td>
                           <a href="#info{{ele.idindiv}}" data-bs-toggle="modal" data-target="#info{{ele.idindiv}}">
-                            <button type="button" class="btn btn-secondary  btn-sm d-flex align-items-center gap-2"
+                            <button type="button" class="btn btn-secondary  btn-sm gap-2"
                               data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i
                                 class="ri-edit-line fs-13 lh-1"></i></button>
                           </a>
+                          <a href="{{ url_for('delete_pa',id=ele.idindiv) }}"  onclick="return confirm('Voulez vous supprimer analyse du Porteur : {{ele.porteur}}  ?')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+                            <button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-5-fill fs-11 lh-1"></i></button>
+                          </a>
                         </td>
                       </tr>
-
                       <div class="modal fade" id="info{{ele.idindiv}}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
@@ -118,8 +132,6 @@
                                 </div>
 
                                 <div class="card-body">
-
-
                                   <div class="media-body">
                                   <form action="/update_action_indiv/{{ele.idindiv}}" method="post" >
                                     <div class="row">
@@ -152,10 +164,16 @@
                                           <option value="Annule">Annule</option>
                                         </select>
                                       </div>
-
                                     </div>
 
                                     <br>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <label for="inputCity" class="form-label">Efficacité: </label>&nbsp;&nbsp;
+                                        Oui &nbsp;<input type="radio" name="efficacite" value="Oui" id="oui" style=" transform: scale(1.2); margin-right: 8px;">
+                                        Non &nbsp;<input type="radio" name="efficacite" value="Non" id="non" style="transform: scale(1.2); margin-right: 8px;">
+                                      </div>
+                                    </div>
                                     <div class="row">
                                       <div class="col-md-12">
                                         <label for="inputCity" class="form-label">Commentaire</label>
@@ -201,7 +219,7 @@
             <br>
             <a href="#" >
 
-            <button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+            <button id="export-btn" type="button" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Ajouter"><i class="ri-download-2-fill"></i></button></a>
            
 

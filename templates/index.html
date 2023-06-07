@@ -13,15 +13,12 @@
   <meta name="description" content="">
   <meta name="author" content="SONATEL">
 
- 
-<title>{% block title %}SO'VAR - Outil d'analyse et de suivi de la variation{% endblock %}</title>
-
+  <title>{% block title %}SO'VAR - Outil d'analyse et de suivi de la variation{% endblock %}</title>
 
   {% block css %}{% endblock css %}
   <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
-<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
-  rel="stylesheet">
-
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon.png') }}"
+    rel="stylesheet">
 
   <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
@@ -30,23 +27,27 @@
   <!-- Template CSS -->
   <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/pa.css') }}" rel="stylesheet">
+
   <!-- Vendor CSS -->
   <link href="{{ url_for('static', filename='lib/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
-
 
   <link href="{{ url_for('static', filename='lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}"
     rel="stylesheet">
   <link href="{{ url_for('static', filename='lib/select2/css/select2.min.csss') }}" rel="stylesheet">
   <!-- Template CSS -->
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
 </head>
 
 <body class="bg-white">
 
   <div class="sidebar">
     <div class="sidebar-header bg-light">
-      <a href="#" class="sidebar-logo"><i class="ri-bubble-chart-fill"></i><span
-          style="color: #FF7900; ">&nbsp;SO</span>'<span style="color: #009088; ">VAR</span></a>
+      <a href="{{ url_for('dashboard')}}" class="sidebar-logo"><i class="ri-bubble-chart-fill"></i>
+        <span style="color: #FF7900; ">&nbsp;SO</span>'<span style="color: #009088; ">VAR
+        </span>
+      </a>
     </div><!-- sidebar-header -->
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
@@ -71,16 +72,16 @@
               <a href="{{ url_for('individuelles')}}" class="nav-sub-link">Individuelles</a>
               <a href="{{ url_for('programme')}}" class="nav-sub-link">Programme</a>
 
+            </nav>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link has-sub"><i class="ri-bar-chart-2-fill"></i><span>Reporting</span></a>
+            <nav class="nav nav-sub">
+              <a href="{{ url_for('listeAV')}}" class="nav-sub-link">Analyses</a>
+              <a href="{{ url_for('reporting')}}" class="nav-sub-link">Métriques / KPI</a>
 
             </nav>
           </li>
-            <li class="nav-item">
-              <a href="" class="nav-link has-sub"><i class="ri-bar-chart-2-fill"></i><span>Reporting</span></a>
-              <nav class="nav nav-sub">
-                <a href="{{ url_for('listeAV')}}" class="nav-sub-link">Analyses</a>
-                <a href="{{ url_for('reporting')}}" class="nav-sub-link">Métriques / KPI</a>
-              </nav>
-            </li>
 
         </ul>
       </div><!-- nav-group -->
@@ -96,7 +97,6 @@
               <a href="{{ url_for('profile')}}" class="nav-sub-link">Profils</a>
               <a href="{{ url_for('logs')}}" class="nav-sub-link">Transactions</a>
               <a href="{{ url_for('equipes')}}" class="nav-sub-link">Équipes</a>
-
 
             </nav>
           </li>
@@ -129,7 +129,6 @@
                 Utilisateur</span></a>
           </li>
 
-
         </ul>
       </div><!-- nav-group -->
     </div><!-- sidebar-body -->
@@ -156,7 +155,7 @@
           <a href=""><i class="ri-question-line"></i> Help Center</a>
           <a href="#Password" data-bs-toggle="modal"><i class="ri-lock-line"></i> Password</a>
           <a href="#Logs" data-bs-toggle="modal"><i class="ri-user-settings-line"></i> Mes Logs</a>
-          <a href=""><i class="ri-logout-circle-r-line"></i> Log Out</a>
+          <a href="{{ url_for('logout')}}"><i class="ri-logout-circle-r-line"></i> Log Out</a>
         </nav>
       </div><!-- sidebar-footer-menu -->
     </div><!-- sidebar-footer -->
@@ -170,22 +169,17 @@
       <i class="ri-search-line"></i>
     </div><!-- form-search -->
 
-
     <div class="dropdown dropdown-notification ms-3 ms-xl-4">
-      <a href="" class="dropdown-link" data-bs-auto-close="outside" data-bs-toggle="tooltip"
-          data-bs-placement="left" title="Total analyse"><small>{{nbre}}</small><i
-          class="ri-notification-3-line text-white"></i></a>
+      <a href="" class="dropdown-link" data-bs-auto-close="outside" data-bs-toggle="tooltip" data-bs-placement="left"
+        title="Total analyse"><small>{{nbre}}</small><i class="ri-notification-3-line text-white"></i></a>
 
     </div><!-- dropdown -->
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="dropdown">
       <a href="{{ url_for('logout')}}" class="dropdown-link" data-bs-auto-close="outside" data-bs-toggle="tooltip"
-          data-bs-placement="top" title="Log Out"><i
-          class="ri-logout-circle-r-line text-white"></i></a>
+        data-bs-placement="top" title="Log Out"><i class="ri-logout-circle-r-line text-white"></i></a>
 
     </div><!-- dropdown -->
-
-
 
   </div><!-- header-main -->
 
@@ -198,7 +192,7 @@
       <h5 class="main-title mb-0">Welcome to SO'VAR</h5>
     </div>
     <div class="d-flex gap-2 mt-3 mt-md-0">
-        {% if session.so_profil_id==1 or session.so_profil_id==2 or session.so_profil_id==3 or session.so_profil_id==4%}
+      {% if session.so_profil_id==1 or session.so_profil_id==2 or session.so_profil_id==3 or session.so_profil_id==4%}
       <a href="#Play" data-bs-toggle="modal">
         <button type="button" class="btn btn-white btn-sm d-flex align-items-center gap-2" data-bs-toggle="tooltip"
           data-bs-placement="top" title="Demarrer AV"><i class="ri-alarm-warning-fill fs-18 lh-1"></i></button>
@@ -222,11 +216,6 @@
   {% block content %}
   <div class="row g-3">
 
-
-
-
-
-
   </div><!-- row -->
   {% endblock content %}
   <div class="main-footer mt-5">
@@ -242,7 +231,6 @@
 
           <div class="card card-title">
 
-
             <div class="card-body">
 
               <h5 id="section11" class="main-subtitle text-dark"><i class="ri-lock-2-line"></i> Modifier Password</h5>
@@ -250,20 +238,18 @@
 
               <div class="media-body">
 
-                <form class="row g-3" action="/updat_monprfil" method="POST">
+                <form class="row g-3" action="/reinitialiser_password" method="POST">
                   <input type="text" name="so_login" class="form-control wd-380" value="{{session.so_login}}" hidden>
 
                   <div class="col-12">
                     <label for="inputEmail4" class="form-label">Password</label>
-                    <input type="email" class="form-control" name="so_email" placeholder="Nouveau mot de passe">
+                    <input type="text" class="form-control" name="password" placeholder="Nouveau mot de passe">
                   </div>
+
                   <div class="col-12">
                     <label for="inputPassword4" class="form-label">Corfirm Password</label>
-                    <input type="text" class="form-control" name="so_contact" placeholder="Confirmer mot de passe">
+                    <input type="text" class="form-control" name="passwordconf" placeholder="Confirmer mot de passe">
                   </div>
-
-
-
 
                   <div class="col-12">
                     <br>
@@ -276,8 +262,6 @@
             </div><!-- card-body -->
 
           </div><!-- card -->
-
-
 
         </div><!-- modal-content -->
       </div><!-- modal-content -->
@@ -287,34 +271,32 @@
   <div class="modal fade" id="Profil" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-  
+
         <div class="modal-body bg-gray-200">
-  
+
           <div class="card card-title">
-  
-  
+
             <div class="card-body">
-  
-              <h5 id="section11" class="main-subtitle text-dark"><i class="ri-account-circle-line"></i> Modifier Profil</h5>
+
+              <h5 id="section11" class="main-subtitle text-dark"><i class="ri-account-circle-line"></i> Modifier Profil
+              </h5>
               <br>
-  
+
               <div class="media-body">
-  
-                <form class="row g-3" action="/updat_monprfil" method="POST">
+
+                <form class="row g-3" action="/reinitialiser_profil" method="POST">
                   <input type="text" name="so_login" class="form-control wd-380" value="{{session.so_login}}" hidden>
-  
+
                   <div class="col-12">
                     <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="so_email" value="{{session.so_email}}">
+                    <input type="email" class="form-control" name="so_email" value="{{session.so_email}}" required>
                   </div>
                   <div class="col-12">
                     <label for="inputPassword4" class="form-label">Contact</label>
-                    <input type="text" class="form-control" name="so_contact" value="{{session.so_contact}}">
+                    <input type="text" class="form-control" name="so_contact"
+                      placeholder="Entrer le nouveau contact ..." required>
                   </div>
-  
-  
-  
-  
+
                   <div class="col-12">
                     <br>
                     <button class="btn btn-primary btn-sm btn-sign" type="submit"><i class="ri-edit-2-line"></i>
@@ -322,93 +304,86 @@
                   </div>
                 </form>
               </div><!-- media-body -->
-  
+
             </div><!-- card-body -->
-  
+
           </div><!-- card -->
-  
-  
-  
+
         </div><!-- modal-content -->
       </div><!-- modal-content -->
     </div><!-- modal -->
   </div>
- 
 
   <div class="modal fade" id="Play" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-  
+
         <div class="modal-body">
           <div class="card card-title">
-  
+
             <div class="card-header bg-light">
-              <h5 id="section2" class="main-subtitle text-dark"><i class="ri-database-2-fill"></i> CHARGEMENT FICHIER</h5>
+              <h5 id="section2" class="main-subtitle text-dark"><i class="ri-database-2-fill"></i> CHARGEMENT FICHIER
+              </h5>
             </div>
             <div class="card-body">
-  
 
               <div class="media-body">
-  <form action="{{ url_for('add_analyse')}}" method="post"  class="row g-3">
-           
-  <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}" hidden>
+                <form action="{{ url_for('add_analyse')}}" method="post" class="row g-3">
 
+                  <input type="text" name="user_session" class="form-control wd-380" value="{{session.so_login}}"
+                    hidden>
 
-                <br>
-                <div class="col-12">
-                  <label for="inputCity" class="form-label">Libelle Analyse</label>
-                  
-                  <input type="text" class="form-control" name="libelle_analyse" id="inputCity" value="Analyse_Kpi_{{date_saisi}}"
-                    placeholder="Libelle analyse" required>
-                </div>
-                <br>
-                <div class="col-md-12">
-  
-                  <label for="inputCity" class="form-label">Métrique ou Kpi</label>
-  
-                  <select name="kpi" id="inputKpi" class="form-select select2" required>
-                    <option selected>Choose...</option>
-                          {% for ele in metriq %}
-                    <option value="{{ele.idkpi}}">{{ele.metrique}} - {{ele.description}}</option>
-                        {% endfor  %}
-                  </select>
-                </div>
-                <br>
+                  <br>
+                  <div class="col-12">
+                    <label for="inputCity" class="form-label">Libelle Analyse</label>
 
-                <div class="col-md-12">
-                
-                  <label for="inputCity" class="form-label">Équipe Analyse</label>
-                
-                  <select name="equipe_id" id="inputKpi" class="form-select select2" required>
-                    <option selected>Choose...</option>
-                    {% for ele in equipe %}
-                    <option value="{{ele.idequipe}}">{{ele.libelle}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-                <br>
-                
-  
-  
-  
-                <div class="col-12">
-                  <br><br>
-                  <div class="d-grid gap-2">
-                    
-                      <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i> Valider</button>
-                   
+                    <input type="text" class="form-control" name="libelle_analyse" id="inputCity"
+                      value="Analyse_Kpi_{{date_saisi}}" placeholder="Libelle analyse" required>
                   </div>
-  
-                </div>
+                  <br>
+                  <div class="col-md-12">
+
+                    <label for="inputCity" class="form-label">Métrique ou Kpi</label>
+
+                    <select name="kpi" id="inputKpi" class="form-select select2" required>
+                      <option selected>Choose...</option>
+                      {% for ele in metriq %}
+                      <option value="{{ele.idkpi}}">{{ele.metrique}} - {{ele.description}}</option>
+                      {% endfor  %}
+                    </select>
+                  </div>
+                  <br>
+
+                  <div class="col-md-12">
+
+                    <label for="inputCity" class="form-label">Équipe Analyse</label>
+
+                    <select name="equipe_id" id="inputKpi" class="form-select select2" required>
+                      <option selected>Choose...</option>
+                      {% for ele in equipe %}
+                      <option value="{{ele.idequipe}}">{{ele.libelle}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <br>
+
+                  <div class="col-12">
+                    <br><br>
+                    <div class="d-grid gap-2">
+
+                      <button class="btn btn-primary btn-sm" type="submit"><i class="ri-save-2-line"></i>
+                        Valider</button>
+
+                    </div>
+
+                  </div>
                 </form>
               </div><!-- media-body -->
-  
-  
-  
+
             </div><!-- card-body -->
           </div>
         </div><!-- modal-body -->
-  
+
       </div><!-- modal-content -->
     </div><!-- modal-content -->
   </div><!-- modal -->
@@ -426,7 +401,6 @@
             </div>
             <div class="card-body">
 
-
               <div class="media-body">
 
                 <div class="table-responsive">
@@ -436,11 +410,9 @@
                       <tr>
 
                         <th scope="col">Libelle</th>
-
                         <th scope="col">Porteur</th>
                         <th scope="col">Echéance</th>
                         <th scope="col">Statut</th>
-
 
                       </tr>
                     </thead>
@@ -453,10 +425,7 @@
                         <td>{{ele.echeance}}</td>
                         <td>{{ele.status}}</td>
 
-
-
                       </tr>
-
 
                       {% endfor %}
                     </tbody>
@@ -466,8 +435,6 @@
                 </div><!-- table-responsive -->
               </div><!-- media-body -->
 
-
-
             </div><!-- card-body -->
           </div>
         </div><!-- modal-body -->
@@ -475,6 +442,10 @@
       </div><!-- modal-content -->
     </div><!-- modal-content -->
   </div><!-- modal -->
+  <!-- DEBUT JS Exportation -->
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/exportation.js') }}"></script>
+  <!-- FIN JS Exportation  -->
   <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url_for('static', filename='lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
@@ -486,7 +457,7 @@
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
   </script>
@@ -501,12 +472,8 @@
   <script src="../static/lib/chart.js/chart.min.js"></script>
   <script src="../static/lib/peity/jquery.peity.min.js"></script>
 
-
-
   <script>
-
     'use strict'
-
     // Current Ticket Status
     var ctx1 = document.getElementById('chartJS1').getContext('2d');
     var chart1 = new Chart(ctx1, {
@@ -562,8 +529,6 @@
         }
       }
     });
-
-
     // Complaints Received
     var flot1 = $.plot('#flotChart1', [{
       data: dp3,
@@ -576,7 +541,9 @@
       series: {
         stack: 0,
         shadowSize: 0,
-        lines: { show: true }
+        lines: {
+          show: true
+        }
       },
       grid: {
         borderWidth: 0,
@@ -593,10 +560,8 @@
         max: 40
       }
     });
-
     // Time to Resolved Complaint
     $('.peity-donut').peity('donut');
-
     // Tickets By Request Type
     var ctx2 = document.getElementById('chartJS2').getContext('2d');
     var chart2 = new Chart(ctx2, {
@@ -651,7 +616,6 @@
         }
       }
     });
-
     // Agent Performance Score
     var flot2 = $.plot('#flotChart2', [{
       data: dp3,
@@ -659,13 +623,21 @@
       lines: {
         lineWidth: 1.5,
         fill: true,
-        fillColor: { colors: [{ opacity: 0 }, { opacity: 0.2 }] }
+        fillColor: {
+          colors: [{
+            opacity: 0
+          }, {
+            opacity: 0.2
+          }]
+        }
       }
     }], {
       series: {
         stack: 0,
         shadowSize: 0,
-        lines: { show: true }
+        lines: {
+          show: true
+        }
       },
       grid: {
         borderWidth: 0,
@@ -679,27 +651,35 @@
       },
       xaxis: {
         show: true,
-        ticks: [[0, ''], [8, 'Jan'], [16, 'Feb'], [24, 'Mar'], [32, 'Apr'], [40, 'May'], [48, 'Jun'], [56, 'Jul'], [64, 'Aug'], [72, 'Sep'], [80, 'Oct'], [88, 'Nov'], [96, 'Dec']],
+        ticks: [
+          [0, ''],
+          [8, 'Jan'],
+          [16, 'Feb'],
+          [24, 'Mar'],
+          [32, 'Apr'],
+          [40, 'May'],
+          [48, 'Jun'],
+          [56, 'Jul'],
+          [64, 'Aug'],
+          [72, 'Sep'],
+          [80, 'Oct'],
+          [88, 'Nov'],
+          [96, 'Dec']
+        ],
         color: 'rgba(80,110,216,.08)'
       }
     });
-
-    
-
   </script>
-
-  
-
-
 
   <script src="{{ url_for('static', filename='lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ url_for('static', filename='lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
-  <script
-    src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}">
+  </script>
+  <script src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}">
+  </script>
 
-  <script
-    src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}">
+  </script>
   <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
 
   <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
@@ -711,15 +691,8 @@
   <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js'"></script>
   <script src="../static/lib/perfect-scrollbar/perfect-scrollbar.min.js'"></script>
 
-
-
-
   <script>
     'use strict'
-
-
-
-
     // Search
     $("#tableGrid3").Grid({
       className: {
@@ -730,22 +703,15 @@
       resizable: true,
       sort: true
     });
-
-
-
   </script>
   <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
   </script>
   <script>
     'use strict'
-
-
-
-
     // Search
     $("#tableGrid4").Grid({
       className: {
@@ -755,17 +721,10 @@
       pagination: true,
       sort: false
     });
-
-
-
   </script>
 
   <script>
     'use strict'
-
-
-
-
     // Search
     $("#tableGrid5").Grid({
       className: {
@@ -775,17 +734,10 @@
       pagination: true,
       sort: false
     });
-
-
-
   </script>
 
   <script>
     'use strict'
-
-
-
-
     // Search
     $("#tableGrid6").Grid({
       className: {
@@ -795,17 +747,10 @@
       pagination: true,
       sort: false
     });
-
-
-
   </script>
 
   <script>
     'use strict'
-
-
-
-
     // Search
     $("#tableGrid7").Grid({
       className: {
@@ -815,41 +760,26 @@
       pagination: true,
       sort: false
     });
-
-
-
   </script>
 
-
-<script>
-  'use strict'
-
-
-
-
-  // Search
-  $("#tableGrid11").Grid({
-    className: {
-      table: 'table table-striped mb-0'
-    },
-    search: true,
-    pagination: true,
-    sort: false
-  });
-
-
-
-</script>
-
-  
+  <script>
+    'use strict'
+    // Search
+    $("#tableGrid11").Grid({
+      className: {
+        table: 'table table-striped mb-0'
+      },
+      search: true,
+      pagination: true,
+      sort: false
+    });
+  </script>
 
 </body>
 
 </html>
 
-
 {% else%}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -878,12 +808,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-
-  $(document).ready(function () {
-    $("#myform").on("submit", function () {
+  $(document).ready(function() {
+    $("#myform").on("submit", function() {
       $("#pageloader").fadeIn();
-    });//submit
-  });//document ready
+    }); //submit
+  }); //document ready
 </script>
 <style>
   #pageloader {
@@ -922,7 +851,6 @@
           <p class="card-text">Renseigner vos paramétres de connexion.</p>
         </div><!-- card-header -->
 
-
         <form action="{{url_for('home')}}" method="post" id="myform">
           <div class="card-body">
             <div id="pageloader">
@@ -941,8 +869,6 @@
             </div>
             <button class="btn btn-primary btn-sign " type="submit"><i class="ri-login-box-line"></i> Connexion</button>
 
-
-
           </div><!-- card-body -->
 
         </form>
@@ -955,14 +881,11 @@
       </div><!-- card -->
     </div><!-- col -->
 
-
-
     <script src="../static/lib/jquery/jquery.min.js"></script>
     <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
 </html>
-
 
 {% endif%}

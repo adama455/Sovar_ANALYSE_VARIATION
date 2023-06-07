@@ -90,6 +90,8 @@ def logout():
 def recover():
     return render_template('forgot-password.html')
 
+
+#======================================================PASSWORD=============================================================   
 @app.route('/reinitialiser_password',methods=['GET','POST'])
 def reinitialiser_password():
     msg = ''
@@ -98,11 +100,10 @@ def reinitialiser_password():
         password = request.form['password']
         passwordconf = request.form['passwordconf']
         if password != passwordconf:
-           
             flash('Mots de passe saisis ne correspondent pas! Merci de vérifier.','error')
             return render_template('change-password.html')
         password = request.form['password']
-        username = request.form['username']
+        username = request.form['so_login']
         statut = 1
         password = hashlib.md5(password.encode()).hexdigest()
         # password = bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt())
@@ -404,7 +405,8 @@ def export_analyse():
 def abberation(id):
         id = id
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM analysevariation.valeurs_aberante where file_id=%s and statut='Encours' ",[id])
+        # cur.execute("SELECT * FROM analysevariation.valeurs_aberante where file_id=%s and statut='Encours' ",[id])
+        cur.execute("SELECT * FROM analysevariation.valeurs_aberante where file_id=%s ",[id])
         results=cur.fetchall()
         cur.execute("SELECT count(*) as nbabber FROM analysevariation.valeurs_aberante where file_id=%s ",[id])
         nbabber=cur.fetchall()
@@ -436,7 +438,7 @@ def abberation(id):
 
 @app.route('/sonatel-sovar/analyser/mesure-<id>', methods=['POST','GET'])
 def debuter_AV(id):
-   
+        data_exist = 0
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM analysevariation.valeurs_aberante where idvaleur=%s ",[id])
         results=cur.fetchall()
@@ -450,21 +452,45 @@ def debuter_AV(id):
         equipe= cur.fetchall()
         cur.execute ("SELECT * from analysevariation.action_programme ")
         actions =cur.fetchall()
-        cur.close()
         dim = date.today() 
         date_saisi= dim.strftime('%d-%m-%Y')
         
-        return render_template('debuter_AV.html',actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq ) 
+        #//////////////// plus ////////////
+        cur.execute("SELECT * FROM analysevariation.pourquoi1 where valeur_aberrante_id=%s ",[id])
+        datacc = cur.fetchone()
+        print("datacc===========>",datacc)
+        if datacc:
+            data_exist=1
+            cur.execute('SELECT * FROM analysevariation.probleme where id_mesure=%s ', [id])
+            probleme=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.pourquoi1 where valeur_aberrante_id=%s ', [id])
+            pourquoi1=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.pourquoi2 where valeur_aberrante_id=%s ', [id])
+            pourquoi2=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.pourquoi3 where valeur_aberrante_id=%s ', [id])
+            pourquoi3=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.pourquoi4 where valeur_aberrante_id=%s ', [id])
+            pourquoi4=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.pourquoi5 where valeur_aberrante_id=%s ', [id])
+            pourquoi5=cur.fetchall()
+            cur.execute('SELECT * FROM analysevariation.axes_analyses where valeur_aberrante_id=%s ', [id])
+            axes=cur.fetchall()
+            return render_template('debuter_AV.html',data_exist=data_exist,actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq,
+                              problem=probleme, pourquoi1=pourquoi1,pourquoi2=pourquoi2,pourquoi3=pourquoi3,pourquoi4=pourquoi4,pourquoi5=pourquoi5,axes=axes) 
+
+        cur.close()
+
+        return render_template('debuter_AV.html',actions=actions,equipe=equipe,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq) 
 
 
 @app.route('/sonatel-sovar/détails/analyse-<id>', methods=['POST','GET'])
 def details_AV(id):
-   
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM analysevariation.valeurs_aberante where idvaleur=%s ",[id])
         results=cur.fetchall()
         cur.execute("SELECT * FROM analysevariation.info_probleme where id_mesure=%s ",[id])
         problem=cur.fetchall()
+        print("--------------------------------problème:",problem)
         cur.execute("SELECT * FROM analysevariation.pourquoi1 where valeur_aberrante_id=%s ",[id])
         p1=cur.fetchall()
         
@@ -542,6 +568,35 @@ def compter_nbre_pa(id_mesure):
     
     cur.close()
     return tab_nbr_pa,total_pa
+
+@app.route('/sonatel-sovar/analyse/terminer_AV/<string:id>', methods=['GET','POST'])
+def terminer_AV(id):
+    status = "Terminer"
+    cur = mysql.connection.cursor()
+    
+    
+    cur.execute ("""
+        UPDATE analysevariation.probleme as p
+        SET p.statut=%s WHERE p.id_mesure=%s
+    """, (status,id))
+    
+    print ("--------------------------------id::",id)
+    cur.execute("""
+               UPDATE analysevariation.valeurs_fichier
+               SET valeurs_fichier.statut=%s
+               WHERE valeurs_fichier.idvaleur=%s 
+            """, (status,id)) 
+    # cur.execute ("""
+    #     UPDATE analysevariation.valeurs_aberante as a
+    #     SET a.statut=%s WHERE a.idvaleur=%s
+    # """, (status,id))
+    mysql.connection.commit() 
+    return redirect(url_for('listeAV'))
+
+    
+        
+        
+        
     
 @app.route('/sonatel-sovar/analyse/saisi-pa', methods=['POST','GET'])
 def saisipa():
@@ -615,15 +670,19 @@ def saisipa():
             #     act_exist = ActionIndividuelle.query.filter_by(pourquoi5_id=p5_id,reference_action=act[0]).first() 
             #     if not act_exist:
                 cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,cause_racine,valeur_aberrante_id,marque) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",act[3],id_mesure,act[4]))
+                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,cause_racine,valeur_aberrante_id,marque,efficacite) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",act[3],id_mesure,act[4],"Oui/Non"))
                 mysql.connection.commit() 
         except AttributeError:
             print('echec de recuperation des elements, erreur attribut')
             
+        status = request.form.get('donnee')
+        print('status==========>',status)
+        
+            
         return render_template('saisipa.html',mois=mois[0]['mois'],annee=annee[0]['annee'],pourquoi1=pourquoi1,id_mesure=id_mesure, idproblem= idproblem,problem=problem,causes=causes,date_saisi= date_saisi,results=results,nbre=nbre[0]['nbre'],metriq=metriq,
                            pa=act_indiv,n=tab_nbr_pa,N=total_pa,equipe=equipe,pourquoi2=pourquoi2,pourquoi3=pourquoi3,pourquoi4=pourquoi4,pourquoi5=pourquoi5,axes=axes ) 
 
-
+    
 #----------------SAISI ACTION PROGRAMME ANALYSE---------------------------------
 @app.route('/sonatel-sovar/analyse/saisi-ap', methods=['POST','GET'])
 def saisiap():
@@ -669,7 +728,103 @@ def saisiap():
         print('echec de recuperation des elements')
     
     return render_template('saisiap.html',results=results)
-    
+
+
+#----------------UPDATE DATA ANALYSE---------------------------------
+@app.route('/update_pourquoi/<string:id>', methods=['POST'])
+def update_pourquoi(id):
+    if request.method == 'POST':
+        file_id= request.form['file_id']
+        id_mesure = request.form['id_mesure']
+        nom_cc= request.form['nom_cc']
+        user_session= request.form['user_session']
+        probleme= request.form['probleme']
+        input_1 = request.form['input_1']
+        input_12= request.form['input_12']
+        input_13= request.form['input_13']
+
+        input_2 = request.form['input_2']
+        input_22= request.form['input_22']
+        input_23= request.form['input_23']
+        input_24 = request.form['input_24']
+        input_25= request.form['input_25']
+        input_26= request.form['input_26']
+
+        input_3 = request.form['input_3']
+        input_32= request.form['input_32']
+        input_33= request.form['input_33']
+        input_34 = request.form['input_34']
+        input_35= request.form['input_35']
+        input_36= request.form['input_36']
+      
+        input_4 = request.form['input_4']
+        input_42= request.form['input_42']
+        input_43= request.form['input_43']
+        input_44 = request.form['input_44']
+        input_45= request.form['input_45']
+        input_46= request.form['input_46']
+      
+        input_5 = request.form['input_5']
+        input_52= request.form['input_52']
+        input_53= request.form['input_53']
+        input_54 = request.form['input_54']
+        input_55= request.form['input_55']
+        input_56= request.form['input_56']
+       
+        axes_1_analyse= request.form['axes_1_analyse']
+        axes_2_analyse= request.form['axes_2_analyse']
+        axes_3_analyse= request.form['axes_3_analyse']
+        axes_4_analyse= request.form['axes_4_analyse']
+        axes_5_analyse= request.form['axes_5_analyse']
+        axes_6_analyse= request.form['axes_6_analyse']
+        # methodologie= request.form['methodologie']
+       
+        cur = mysql.connection.cursor()
+        
+        cur.execute ("""
+               UPDATE analysevariation.probleme as p
+               SET p.probleme=%s WHERE p.id_mesure=%s 
+            """, (probleme,id))
+        
+        cur.execute ("""
+               UPDATE analysevariation.pourquoi1 as p
+               SET p.p11=%s,p.p12=%s,p.p13=%s WHERE p.valeur_aberrante_id=%s
+            """, (input_1,input_12,input_13,id))
+        
+        cur.execute ("""
+               UPDATE analysevariation.pourquoi2 as p
+               SET p.p21=%s,p.p22=%s,p.p23=%s,p.p24=%s,p.p25=%s,p.p26=%s WHERE p.valeur_aberrante_id=%s
+            """, (input_2,input_22,input_23,input_24,input_25,input_26,id))
+        
+        cur.execute ("""
+            UPDATE analysevariation.pourquoi3 as p
+            SET p.p31=%s,p.p32=%s,p.p33=%s,p.p34=%s,p.p35=%s,p.p36=%s WHERE p.valeur_aberrante_id=%s
+        """, (input_3,input_32,input_33,input_34,input_35,input_36,id))
+        
+        cur.execute ("""
+            UPDATE analysevariation.pourquoi4 as p
+            SET p.p41=%s,p.p42=%s,p.p43=%s,p.p44=%s,p.p45=%s,p.p46=%s WHERE p.valeur_aberrante_id=%s
+        """, (input_4,input_42,input_43,input_44,input_45,input_46,id))
+        
+        cur.execute ("""
+            UPDATE analysevariation.pourquoi5 as p
+            SET p.p51=%s,p.p52=%s,p.p53=%s,p.p54=%s,p.p55=%s,p.p56=%s WHERE p.valeur_aberrante_id=%s
+        """, (input_5,input_52,input_53,input_54,input_55,input_56,id))
+        cur.execute ("""
+            UPDATE analysevariation.axes_analyses as a
+            SET a.a1=%s,a.a2=%s,a.a3=%s,a.a4=%s,a.a5=%s,a.a6=%s WHERE a.valeur_aberrante_id=%s
+        """, (axes_1_analyse, axes_2_analyse, axes_3_analyse, axes_4_analyse, axes_5_analyse, axes_6_analyse,id))
+
+        # cur.execute("UPDATE transaction (users_transac,nom_transac,heure) VALUES (%s,'Insertion données AV',NOW())", (user_session,))
+        # cur.execute("""
+        #        UPDATE analysevariation.valeurs_fichier
+        #        SET valeurs_fichier.statut='Validation'
+        #        WHERE valeurs_fichier.idvaleur=%s 
+        #     """, (id_mesure,)) 
+        mysql.connection.commit()
+            
+        flash('Les données de votre analyse sont insérées avec succès','success')
+        return redirect(url_for('saisipa'))
 
 #----------------INSERT DATA ANALYSE---------------------------------
 @app.route('/add_pourquoi', methods=['POST'])
@@ -719,9 +874,10 @@ def add_pourquoi():
         axes_4_analyse= request.form['axes_4_analyse']
         axes_5_analyse= request.form['axes_5_analyse']
         axes_6_analyse= request.form['axes_6_analyse']
+        methodologie = request.form['methodologie_respecte']
        
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO analysevariation.probleme(nom_cc,id_mesure,probleme,fichier_id,user_log,date_analyse) VALUES (%s,%s,%s,%s,%s,NOW())", (nom_cc,id_mesure,probleme,file_id,user_session))
+        cur.execute("INSERT INTO analysevariation.probleme(nom_cc,id_mesure,probleme,fichier_id,user_log,date_analyse,methodologie) VALUES (%s,%s,%s,%s,%s,NOW(),%s)", (nom_cc,id_mesure,probleme,file_id,user_session,methodologie))
         cur.execute("INSERT INTO analysevariation.pourquoi1(p11,p12,p13,valeur_aberrante_id) VALUES (%s,%s,%s,%s)", (input_1,input_12,input_13,id_mesure))
         cur.execute("INSERT INTO analysevariation.pourquoi2(p21,p22,p23,p24,p25,p26,valeur_aberrante_id) VALUES (%s,%s,%s,%s,%s,%s,%s)", (input_2,input_22,input_23,input_24,input_25,input_26,id_mesure))
         cur.execute("INSERT INTO analysevariation.pourquoi3(p31,p32,p33,p34,p35,p36,valeur_aberrante_id) VALUES (%s,%s,%s,%s,%s,%s,%s)", (input_3,input_32,input_33,input_34,input_35,input_36,id_mesure))
@@ -733,7 +889,8 @@ def add_pourquoi():
                UPDATE analysevariation.valeurs_fichier
                SET valeurs_fichier.statut='Validation'
                WHERE valeurs_fichier.idvaleur=%s 
-            """, (id_mesure,)) 
+            """, (id_mesure,))
+        
         mysql.connection.commit() 
             
         flash('Les données de votre analyse sont insérées avec succès','success')
@@ -758,6 +915,17 @@ def listeAV():
     date_saisi= dim.strftime('%d-%m-%Y')
     return render_template('liste-analyses.html',equipe=equipe,date_saisi=date_saisi,datasett=datasett,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq) 
 
+# Supprimer une analyse...............
+@app.route('/delete_AV/<string:id>', methods=['GET'])
+def delete_AV(id):
+        
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM analysevariation.probleme WHERE idproblem=%s", (id,))
+        cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Suppression analyse',NOW())", (session['so_login'],))
+        mysql.connection.commit()
+        flash('Analyse est supprimé avec succès','success')
+        return redirect(url_for('listeAV'))
+    
 
 @app.route('/sonatel-sovar/donnees-brutes/AV-<idgss>', methods=['POST','GET'])
 def datafic(idgss):
@@ -813,13 +981,25 @@ def update_action_program(id):
                WHERE p.idprogram=%s 
             """, (libelle_action,commentaire,porteur,echeance,status,id)) 
         
-        flash("Les données plateau sont bien mises à jour",'success')
+        flash("Les données de l'action programme sont bien mises à jour",'success')
         mysql.connection.commit()
         return redirect(url_for('programme'))
 
+# Supprimer une action programme...............
+@app.route('/delete_ap/<string:id>', methods=['GET'])
+def delete_ap(id):
+        
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM analysevariation.action_programme WHERE idprogram=%s", (id,))
+    cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Suppression action',NOW())", (session['so_login'],))
+    mysql.connection.commit()
+    flash('Action est supprimé avec succès','success')
+    return redirect(url_for('programme'))
+    
+
 @app.route("/sonatel-sovar/actions-individuelles", methods=['POST','GET'])
 def individuelles():
-    cur = mysql.connection.cursor() 
+    cur = mysql.connection.cursor()
     cur.execute ("SELECT * from analysevariation.action_individuelle order by idindiv ASC")
     actions= cur.fetchall()
 
@@ -850,16 +1030,29 @@ def update_action_indiv(id):
         porteur=request.form['porteur']
         echeance=request.form['echeance']
         status=request.form['status']
+        efficacite=request.form['efficacite']
         cur.execute ("""
                UPDATE analysevariation.action_individuelle as a
-               SET a.libelle_action=%s,a.commentaire=%s,a.porteur=%s,a.echeance=%s,a.status=%s
+               SET a.libelle_action=%s,a.commentaire=%s,a.porteur=%s,a.echeance=%s,a.status=%s,a.efficacite=%s
                WHERE a.idindiv=%s 
-            """, (libelle_action,commentaire,porteur,echeance,status,id)) 
+            """, (libelle_action,commentaire,porteur,echeance,status,efficacite,id))
         
-        flash("Les données plateau sont bien mises à jour",'success')
+        flash("Les données de l'action sont bien mises à jour",'success')
         mysql.connection.commit()
         return redirect(url_for('individuelles'))
 
+# Supprimer une action individuelle...............
+@app.route('/delete_pa/<string:id>', methods=['GET'])
+def delete_pa(id):
+        
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM analysevariation.action_individuelle WHERE idindiv=%s", (id,))
+    cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Suppression action',NOW())", (session['so_login'],))
+    mysql.connection.commit()
+    flash('Action est supprimé avec succès','success')
+    return redirect(url_for('individuelles'))
+    
+    
 @app.route("/sonatel-sovar/data-abberrantes", methods=['POST','GET'])
 def abberations():
     cur = mysql.connection.cursor()
@@ -1224,8 +1417,6 @@ def import_data():
       
     flash("Votre fichier importé avec success!!!!!",'success')
     return redirect(url_for('folders'))
-
-
 #---------------DEBUT MENU ADMINISTRATION---------------------
 @app.route("/sonatel-sovar/utilisateurs", methods=['POST','GET'])
 def users():
@@ -1433,6 +1624,71 @@ def truncate_bd():
         flash('les logs de la base sont vidés avec succès','success')
         return redirect(url_for('logs'))
 
+#======================================================UPDATE PASSWORD=============================================================   
+@app.route('/update_password',methods=['GET','POST'])
+def update_pswd():
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        
+        so_login= request.form['so_login']
+        so_password= request.form['so_password']
+        password = hashlib.md5(so_password.encode()).hexdigest()
+        cur.execute("UPDATE users SET recover = %s WHERE username = %s", (so_password, session['so_login']))
+        cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Modification profil',NOW())", (so_login,))
+        cur.connection.commit() 
+        flash('Vos données sont modifiées avec succès.','success')
+        return redirect(url_for('monprofil'))
+    
+
+#==============================================REINITIALISATION PROFIL========================================================
+@app.route('/reinitialiser_profil',methods=['GET','POST'])
+def reinitialiser_profil():
+    msg = ''
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        email = request.form['so_email']
+        contact = request.form['so_contact']
+        username = request.form['so_login']
+        statut = 1
+        if contact == '':
+            flash('le champs est obligatoire ...')
+        else:
+            cur.execute("UPDATE users set email =%s,statuts=%s,contact =%s  WHERE id =%s" , (email, statut,contact,session['so_user'])) 
+            cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Changement Password',NOW())", (username,))
+            cur.connection.commit() 
+        #return render_template('reinitialiserpwd.html',msg=msg)
+        # return render_template('login.html')
+    return render_template('dashboard.html')
+
+#==============================================METRIQUES========================================================
+@app.route('/update_metrique/<string:id>', methods=['GET','POST'])
+def update_metrique(id):
+    if request.method == 'POST':
+        print('===>DEBUG',request.form)
+        metrique= request.form['metrique']
+        description = request.form['description']
+        types = request.form['type']
+        periodicite = request.form['periodicite']
+        niveau= request.form['analyse']
+        user_session=request.form['user_session']
+        
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE analysevariation.kpi
+            SET 
+            kpi.metrique=%s,
+            kpi.description=%s,
+            kpi.type=%s,
+            kpi.periodicite=%s,
+            kpi.niveau=%s
+            WHERE kpi.idkpi=%s
+        """, (metrique,description, types, periodicite,niveau, id))
+
+        cur.execute("INSERT INTO transaction (users_transac,nom_transac,heure) VALUES (%s,'Modification cause',NOW())", (user_session,))
+       
+        flash("Les données plateau sont bien mises à jour",'success')
+        mysql.connection.commit()
+        return redirect(url_for('metriques'))
 
 #----------------FIN---------------------------------
 
