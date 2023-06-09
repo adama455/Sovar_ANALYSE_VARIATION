@@ -113,8 +113,6 @@
                           {% endfor %}
                       </tr>
             
-                    
-            
                       <tr>
                         <th scope="row">Limite Contrôle Supérieure</th>
                         {% for ele in results %}
@@ -127,15 +125,12 @@
                         <td class="text-center">{{ele.min|round(2,'floor')}}</td>
                         {% endfor %}
                       </tr>
-                        <tr>
-                          <th scope="row">Conseiller</th>
-                          {% for ele in results %}
-                          <th class="text-center" scope="row"> {{ele.conseiller}}</th>
-                          {% endfor %}
-                        </tr>
-            
-            
-            
+                      <tr>
+                        <th scope="row">Identifiant</th>
+                        {% for ele in results %}
+                        <th class="text-center" scope="row"> {{ele.conseiller}}</th>
+                        {% endfor %}
+                      </tr>
                     </tbody>
                   </table>
                 </div><!-- table-responsive -->
@@ -230,7 +225,7 @@
             <tr>
               {% for ele in problem %}
               <th scope="col" colspan="7">
-                <input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème au conseiller {{ele.conseiller}}" value="{{ ele.probleme }}">
+                <input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème identifié" value="{{ ele.probleme }}">
               </th>
               {% endfor %}
             </tr>
@@ -364,7 +359,7 @@
           <thead>
             <tr>
               {% for ele in results %}
-              <th scope="col" colspan="7"><input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème au conseiller {{ele.conseiller}}"></th>
+              <th scope="col" colspan="7"><input type="text" name="probleme" id="probleme"  class="form-control" placeholder="Problème identifié"></th>
               {% endfor %}
             </tr>
           </thead>

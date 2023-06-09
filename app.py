@@ -670,8 +670,18 @@ def saisipa():
             #     act_exist = ActionIndividuelle.query.filter_by(pourquoi5_id=p5_id,reference_action=act[0]).first() 
             #     if not act_exist:
                 cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,cause_racine,valeur_aberrante_id,marque,efficacite) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",act[3],id_mesure,act[4],"Oui/Non"))
+                cur.execute ("SELECT probleme from analysevariation.probleme as p where p.id_mesure=%s", [id_mesure])
+                probleme= cur.fetchone()
+                problem = probleme["probleme"]
+                
+                cur.execute ("SELECT libelle from analysevariation.valeurs_aberante as v where v.idvaleur=%s", [id_mesure])
+                nom_analyse= cur.fetchone()
+                nom_anal = nom_analyse["libelle"]
+
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO analysevariation.action_individuelle(libelle_action,porteur,echeance,status,commentaire,cause_racine,valeur_aberrante_id,marque,efficacite,probleme,nom_analyse) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (act[0], act[1], act[2],"En attente"," ",act[3],id_mesure,act[4],"Oui/Non",problem,nom_anal))
                 mysql.connection.commit() 
+                cur.close()
         except AttributeError:
             print('echec de recuperation des elements, erreur attribut')
             
@@ -1015,11 +1025,14 @@ def individuelles():
     metriq= cur.fetchall()
     cur.execute ("SELECT * from analysevariation.equipe ")
     equipe= cur.fetchall()
+    cur.execute ("SELECT * from analysevariation.probleme as p, analysevariation.action_individuelle as q where q.valeur_aberrante_id=p.id_mesure")
+    problem= cur.fetchall()
+    print("\n==============probleme:::==============",problem)
     cur.close()
     dim = date.today() 
     date_saisi= dim.strftime('%d-%m-%Y')
     
-    return render_template('actions-individuelles.html',equipe=equipe,date_saisi=date_saisi,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq)
+    return render_template('actions-individuelles.html',problem=problem,equipe=equipe,date_saisi=date_saisi,actions=actions,nbre=nbre[0]['nbre'],metriq=metriq)
 
 @app.route('/update_action_indiv/<string:id>', methods=['GET','POST'])
 def update_action_indiv(id):

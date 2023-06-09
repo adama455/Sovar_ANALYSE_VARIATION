@@ -78,6 +78,8 @@
                     <thead>
                       <tr>
                       <th scope="col">ID</th>
+                      <th scope="col">Non analyse</th>
+                      <th scope="col">Problème</th>
                       <th scope="col">Cause</th>
                       <th scope="col">Actions</th>
                       <th scope="col">Porteur</th>
@@ -91,19 +93,21 @@
                       {% for ele in actions %}
                       <tr>
                         <td>{{ele.idindiv}}</td>
+                        <td>{{ ele.nom_analyse }}</td>
+                        <td>{{ ele.probleme }}</td>
                         <td>{{ele.cause_racine}}</td>
                         <td>{{ele.libelle_action}}</td>
                         <td>{{ele.porteur}}</td>
                         <td>{{ele.echeance}}</td>
                         <td>
                           {% if ele.status=="En attente"  %}
-                          <span class="badge bg-warning w-50">{{ele.status}}</span>
+                          <span class="badge bg-warning w-75">{{ele.status}}</span>
                           {% elif ele.status=="Valide" %}
                           <span class="badge  w-50" style="background-color:#FF7900">{{ele.status}}</span>
                           {% elif ele.status=="Cloture" %}
-                          <span class="badge bg-success w-50 " >{{ele.status}}</span>
+                          <span class="badge bg-success w-75 " >{{ele.status}}</span>
                           {% else %}
-                          <span class="badge bg-danger w-50">{{ele.status}}</span>
+                          <span class="badge bg-danger w-75">{{ele.status}}</span>
                           {% endif %}
                         </td>
                         <td>{{ele.efficacite}}</td>
@@ -119,6 +123,7 @@
                           </a>
                         </td>
                       </tr>
+                      
                       <div class="modal fade" id="info{{ele.idindiv}}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">

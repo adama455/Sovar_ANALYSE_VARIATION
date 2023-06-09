@@ -69,8 +69,8 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
     tr = document.createElement("tr");
     tr.className = "";
     tr.setAttribute("id", `line_${nl}`);
-    tr.appendChild(td_div(`cause_${nl}`, causes_racines[index]));
     // tr.appendChild(td_Input(`cause_${nl}`,"text", causes_racines[index]));
+    tr.appendChild(td_div(`cause_${nl}`, causes_racines[index]));
     cre_td_plus(tr,`btn_plus_tr_${nl}`); //td5
     
     console.log(tr.childNodes.length);
@@ -124,11 +124,11 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
             td1 = e.target.parentNode.previousSibling
             td2 = td1.previousSibling
             td3 = td2.previousSibling
-            // console.log( td3 = td2.previousSibling);
+            // console.log(td3 = td2.previousSibling);
             if (td1.childNodes.length>1) {
                 td1.lastChild.remove()
                 td2.lastChild.remove()
-                td3.lastChild.remove() 
+                td3.lastChild.remove()
             }else{
                 alert("Il faut avoir aumoins deux actions!")
             }
@@ -137,7 +137,6 @@ for (let index = 0; index <causes_racines.length; index++) { // causes_racines.l
         });
     }
     }
-
 function ajax(method, data, Url) {
     var url = new URL(window.location.href);
     //var id_va = url.searchParams.get("id_va");
@@ -175,7 +174,8 @@ $("#action_programme").click(function (event) {
         var colonnes = [];
         for (let k = 0; k < element.children[1].childNodes.length; k++) { 
         console.log(element.childNodes[1].childNodes.length);
-        colonnes.push(element.children[0].childNodes[0].value);
+        // colonnes.push(element.children[0].childNodes[0].value);
+        colonnes.push(element.children[0].childNodes[0].textContent);
         console.log("cause===>>",element.children[0].childNodes[0].value);
         colonnes.push(element.children[1].childNodes[k].value);
         colonnes.push(element.children[2].childNodes[k].value);
